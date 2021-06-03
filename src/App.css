@@ -1,38 +1,85 @@
-.App {
-  text-align: center;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
+
+:root {
+	--col-text-liked: #ff449f;
+	--col-text-unliked: #232323;
+	--col-bg-liked: #f6dfeb;
+	--col-bg-unliked: #fdfdfd;
+	--col-border-liked: #e4bad4;
+	--col-border-unliked: #8888;
+	--col-bg-body: #fdfdfd;
+	--col1: hsl(116, 66%, 67%);
+	--col2: hsl(59, 66%, 67%);
+	--col3: hsl(293, 66%, 67%);
+	--col4: hsl(271, 56%, 56%);
+	--shadow: 0 10px 40px -10px rgb(0, 64, 128, 0.2);
+	--btn-shadow: 0 0 10px -5px rgb(0, 28, 64, 0.4);
+	--in-shadow: inset 5px 5px 15px -7px #3348;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+	font-family: "Poppins", sans-serif !important;
+	font-weight: 600;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+html,
+body {
+	font-size: 16px; /*dont change this*/
+	overflow-x: hidden;
+	background-color: var(--col-bg-body);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+body {
+	padding-top: 4rem;
 }
 
-.App-link {
-  color: #61dafb;
+a {
+	text-decoration: none;
+	color: inherit;
+	cursor: pointer;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+li {
+	list-style: none;
+}
+
+.btn {
+	display: inline-block;
+	border: none;
+	cursor: pointer;
+	border: 1px solid var(--col-border-unliked);
+	background-color: var(--col-bg-unliked);
+	border-radius: 0.25rem;
+	padding: 0.3rem 0.5rem;
+	box-shadow: var(--btn-shadow);
+	overflow: hidden;
+}
+
+.btn:hover {
+	background-color: #eee;
+}
+.btn:active {
+	color: #ddd;
+	background-color: #000;
+}
+
+.container {
+	width: 100%;
+}
+
+.tip {
+	position: absolute;
+	top: 0;
+	z-index: 5555;
+	font-size: 0.8rem;
+	padding: 0.2rem 0.3rem;
+	background-color: var(--col-bg-unliked);
 }

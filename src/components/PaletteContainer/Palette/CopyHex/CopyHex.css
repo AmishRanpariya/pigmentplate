@@ -1,0 +1,26 @@
+.Palette .color span.copy,
+.LikedPalette .color span.copy {
+	font-family: "Roboto Mono", monospace !important;
+	line-height: 1;
+	display: inline-block;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	-webkit-transform: rotate(-90deg);
+	transform: rotate(-90deg);
+	padding: 0.2rem;
+	color: #fff;
+	font-size: 0.8rem;
+	text-align: center;
+	background-color: #88888835;
+	opacity: 0;
+	transition: all 0.2s ease-in-out;
+}
+.Palette .color:hover span.copy,
+.LikedPalette .color:hover span.copy {
+	-webkit-transform: translate(-35%, -115%) rotate(-90deg);
+	transform: translate(-35%, -115%) rotate(-90deg);
+	opacity: 1;
+	cursor: copy;
+	transition: all 0.2s ease-in-out;
+}

@@ -1,0 +1,35 @@
+.NavBar {
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: row;
+	flex-direction: row;
+	-webkit-justify-content: space-between;
+	justify-content: space-between;
+	-webkit-align-items: center;
+	align-items: center;
+	padding: 1rem 2rem;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	background-color: var(--col-bg-body);
+	box-shadow: var(--shadow);
+	z-index: 100;
+}
+
+.NavBar ul {
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: row;
+	flex-direction: row;
+	gap: 1rem;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-align-items: center;
+	align-items: center;
+}
+
+@media (max-width: 668px) {
+	#createBtnLink {
+		display: none;
+	}
+}

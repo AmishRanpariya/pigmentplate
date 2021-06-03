@@ -1,0 +1,124 @@
+.Palette {
+	-webkit-flex: 1 1 240px;
+	flex: 1 1 240px;
+	min-width: 200px;
+	max-width: 300px;
+	display: grid;
+	grid-template-rows: 7fr 2fr;
+	gap: 0.5rem;
+	background-color: var(--col-bg-body);
+	border-radius: 0.6rem;
+	box-shadow: var(--shadow);
+	overflow: hidden;
+	padding: 0.6rem;
+	transition: all 0.1s ease-in-out;
+}
+.Palette:hover {
+	-webkit-transform: translate(0, -5px);
+	transform: translate(0, -5px);
+	transition: all 0.1s ease-in-out;
+}
+.Palette .color-grid {
+	display: grid;
+	/* grid-template-columns: 67fr 55fr 43fr 33fr; */
+	grid-template-columns: repeat(4, 1fr);
+	border-radius: 0.3rem;
+	overflow: hidden;
+	z-index: 5;
+}
+
+.Palette .color {
+	box-shadow: var(--in-shadow);
+	height: 100%;
+	width: 100%;
+	position: relative;
+	transition: all 0.1s ease-in-out;
+}
+
+.Palette .metadata {
+	height: 100%;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-justify-content: space-between;
+	justify-content: space-between;
+	-webkit-align-items: flex-end;
+	align-items: flex-end;
+	position: relative;
+	font-size: 0.9rem;
+}
+.metadata .time {
+	color: gray;
+	font-weight: 400;
+}
+.Palette .metadata .styling {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	font-size: 6rem;
+	line-height: 0.3;
+	z-index: 0;
+	color: #ddd2;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.Palette .LikeButton.btn {
+	display: inline-block;
+	border: 1px solid var(--col-border-unliked);
+	background-color: var(--col-bg-unliked);
+	color: var(--col-text-unliked);
+	border-radius: 0.25rem;
+	padding: 0.3rem 0.5rem;
+	opacity: 0.8;
+}
+
+.Palette .LikeButton.btn.liked {
+	border-color: var(--col-border-liked);
+	background-color: var(--col-bg-liked);
+	color: var(--col-text-liked);
+}
+
+.Palette .LikeButton.btn:hover {
+	background-color: #eee;
+}
+.Palette .LikeButton.btn:active {
+	color: #ddd;
+	background-color: #000;
+}
+
+@media (max-width: 1080px) {
+	.Palette {
+		-webkit-flex: 1 1 225px;
+		flex: 1 1 225px;
+	}
+}
+@media (max-width: 800px) {
+	.Palette {
+		-webkit-flex: 1 1 220px;
+		flex: 1 1 220px;
+		min-height: 121px;
+		min-width: 121px;
+	}
+}
+
+@media (max-width: 530px) {
+	.Palette {
+		-webkit-flex: 1 1 181px;
+		flex: 1 1 181px;
+	}
+}
+
+/*now on mobile*/
+@media (max-width: 490px) {
+	.Palette {
+		-webkit-flex: 1 1 135px;
+		flex: 1 1 135px;
+		min-height: 121px;
+		min-width: 121px;
+	}
+	.Palette .metadata .time,
+	.Palette .metadata .styling {
+		display: none;
+	}
+}

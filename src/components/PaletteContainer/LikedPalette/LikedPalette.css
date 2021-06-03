@@ -1,0 +1,67 @@
+.LikedPalette {
+	-webkit-flex: 1 1 240px;
+	flex: 1 1 240px;
+	min-width: 200px;
+	min-height: 132px;
+	height: 132px;
+	max-width: 200px;
+	background-color: var(--col-bg-body);
+	border-radius: 0.5rem;
+	box-shadow: var(--shadow);
+	overflow: hidden;
+	padding: 0.5rem;
+	transition: all 0.1s ease-in-out;
+}
+.LikedPalette:hover {
+	-webkit-transform: translate(0, -2px);
+	transform: translate(0, -2px);
+	transition: all 0.1s ease-in-out;
+}
+.LikedPalette .color-grid {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	border-radius: 0.25rem;
+	overflow: hidden;
+	height: 100%;
+	z-index: 5;
+}
+
+.LikedPalette .color {
+	box-shadow: var(--in-shadow);
+	height: 100%;
+	width: 100%;
+	position: relative;
+	transition: all 0.1s ease-in-out;
+}
+
+@media (max-width: 1080px) {
+	.LikedPalette {
+		-webkit-flex: 1 1 225px;
+		flex: 1 1 225px;
+	}
+}
+@media (max-width: 800px) {
+	.LikedPalette {
+		-webkit-flex: 1 1 220px;
+		flex: 1 1 220px;
+		min-height: 121px;
+		min-width: 121px;
+	}
+}
+
+@media (max-width: 530px) {
+	.LikedPalette {
+		-webkit-flex: 1 1 181px;
+		flex: 1 1 181px;
+	}
+}
+
+/*now on mobile*/
+@media (max-width: 490px) {
+	.LikedPalette {
+		-webkit-flex: 1 1 135px;
+		flex: 1 1 135px;
+		min-height: 121px;
+		min-width: 121px;
+	}
+}
