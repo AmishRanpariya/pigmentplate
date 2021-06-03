@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { LOCALSTORAGE, USER_COLLECTION } from "../Const";
-import { db } from "./config";
+import { db } from "../firebase/config";
 
 //for App.js
 const useFetchFirestoreUser = () => {
@@ -47,7 +47,7 @@ const useFetchFirestoreUser = () => {
 							setIsPending(false);
 							setError(null);
 						} else {
-							throw Error("Snapshot not exists");
+							console.log("Error: Snapshot not exist");
 						}
 					},
 					(err) => {
@@ -63,6 +63,10 @@ const useFetchFirestoreUser = () => {
 			const userId = localStorage.getItem(LOCALSTORAGE.prefix_userId); //geting uid
 			//fetching userdata
 			unsub = setListenerProfile(userId);
+			localStorage.setItem(
+				LOCALSTORAGE.prefix_interaction,
+				+localStorage.getItem(LOCALSTORAGE.prefix_interaction) + 1
+			);
 		} else {
 			//if new user
 			const newUID = "ppu" + new Date().getTime(); //creating new user id  TODO: create randomization
@@ -71,6 +75,10 @@ const useFetchFirestoreUser = () => {
 
 			createProfile(userId);
 			unsub = setListenerProfile(userId);
+			localStorage.setItem(
+				LOCALSTORAGE.prefix_interaction,
+				+localStorage.getItem(LOCALSTORAGE.prefix_interaction) + 1
+			);
 		}
 		return () => unsub();
 	}, []);

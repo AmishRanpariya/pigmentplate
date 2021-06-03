@@ -1,20 +1,23 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Redirect, useParams } from "react-router";
+import { Redirect, useHistory, useParams } from "react-router";
+import * as htmlToImage from "html-to-image";
 
-import usePaletteListener from "../../../firebase/usePaletteListener";
-import useUpdatePaletteLike from "../../../firebase/useUpdatePaletteLike";
-import TimeStamp from "../TimeStamp/TimeStamp";
+import usePaletteListener from "../../../hooks/usePaletteListener";
+import useUpdatePaletteLike from "../../../hooks/useUpdatePaletteLike";
+import TimeStamp from "../../UI/TimeStamp/TimeStamp";
 import BigLikeButton from "./BigLikeButton/BigLikeButton";
 import "./DetailedPalette.css";
-
+import { BASEURL, LOCALSTORAGE } from "../../../Const";
+import { handleCopyToClipBoard } from "../../../funtions/handleCopyToClipBoard";
+import "./downloadPaletteStyle.css";
 //animation
 const container = {
 	hidden: { scale: 0, y: "20vh" },
 	visible: {
 		scale: 1,
 		y: 0,
-		transition: { delayChildren: 0.1, staggerChildren: 0.1 },
+		transition: { delayChildren: 0, staggerChildren: 0.1 },
 	},
 };
 //animation
@@ -22,14 +25,14 @@ const item = {
 	hidden: { y: "-80vh", opacity: 0 },
 	visible: { y: 0, opacity: 1 },
 };
-
 //for App.js
 const DetailedPalette = ({ userId }) => {
 	const params = useParams();
+	const history = useHistory();
 	const { palette, isPending, error } = usePaletteListener(params.id);
 
 	const [isLiked, setIsLiked] = useState(
-		localStorage.getItem("PigmentPlateLiked/" + params.id) > 0
+		localStorage.getItem(LOCALSTORAGE.prefix_liked + params.id) > 0
 	);
 	const [shouldUpdateLike, setShouldUpdateLike] = useState(0); //means dont do anything
 	useUpdatePaletteLike(userId, shouldUpdateLike, params.id);
@@ -38,7 +41,7 @@ const DetailedPalette = ({ userId }) => {
 		console.log("called");
 		e.preventDefault();
 		if (isLiked) {
-			localStorage.removeItem("PigmentPlateLiked/" + params.id);
+			localStorage.removeItem(LOCALSTORAGE.prefix_liked + params.id);
 			setIsLiked(false);
 			setShouldUpdateLike(-1); //dislike
 			setTimeout(() => {
@@ -46,7 +49,7 @@ const DetailedPalette = ({ userId }) => {
 			}, 1000);
 		} else {
 			localStorage.setItem(
-				"PigmentPlateLiked/" + params.id,
+				LOCALSTORAGE.prefix_liked + params.id,
 				new Date().getTime()
 			);
 			setIsLiked(true);
@@ -55,6 +58,50 @@ const DetailedPalette = ({ userId }) => {
 				setShouldUpdateLike(0);
 			}, 1000);
 		}
+	};
+
+	const handlePaletteDownload = (e) => {
+		e.preventDefault();
+		let paletteHTML = `
+			<div class="color-grid">
+				<div class="color" style="background-color: ${"#" + palette.colors[0]};">
+					<span class="copy">${"#" + palette.colors[0].toUpperCase()}</span>
+				</div>
+				<div class="color" style="background-color: ${"#" + palette.colors[1]};">
+					<span class="copy">${"#" + palette.colors[1].toUpperCase()}</span>
+				</div>
+				<div class="color" style="background-color: ${"#" + palette.colors[2]};">
+					<span class="copy">${"#" + palette.colors[2].toUpperCase()}</span>
+				</div>
+				<div class="color" style="background-color: ${"#" + palette.colors[3]};">
+					<span class="copy">${"#" + palette.colors[3].toUpperCase()}</span>
+				</div>
+			</div>
+			<div class="metadata">
+				<span><strong>PIGMENTPLATE</strong></span>
+				<span>${BASEURL}/palettes/${palette.id}</span>
+				<span class="styling">${palette.likeCount}</span>
+			</div>
+		`;
+		const paletteRef = document.createElement("div");
+		paletteRef.classList.add("downloadPaletteStyle");
+		paletteRef.innerHTML = paletteHTML;
+		document.body.appendChild(paletteRef);
+
+		htmlToImage
+			.toPng(document.querySelector(".downloadPaletteStyle"))
+			.then((dataUrl) => {
+				var link = document.createElement("a");
+				link.download = `PigmentPlate_${palette.id}.png`;
+				link.href = dataUrl;
+				link.click();
+				// download(dataUrl, "palette.png");
+			});
+		setTimeout(() => {
+			if (document.body.lastChild.classList.contains("downloadPaletteStyle")) {
+				document.body.lastChild.remove();
+			}
+		}, 3000);
 	};
 
 	return (
@@ -75,6 +122,7 @@ const DetailedPalette = ({ userId }) => {
 								className="color"
 								style={{ backgroundColor: "#" + color }}
 								variants={item}
+								onClick={handleCopyToClipBoard}
 							>
 								<span>{"#" + color.toUpperCase()}</span>
 							</motion.div>
@@ -84,6 +132,22 @@ const DetailedPalette = ({ userId }) => {
 					<BigLikeButton isLiked={isLiked} onclicked={LikeButtonClickHandler} />
 
 					<div className="metadata">
+						<button onClick={handlePaletteDownload} className="btn">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								className="h-6 w-6"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									strokeWidth={2}
+									d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+								/>
+							</svg>
+						</button>
 						<div className="tags">
 							{palette.tags.map((tag, index) => (
 								<a key={index} href={"#" + tag}>
@@ -91,8 +155,8 @@ const DetailedPalette = ({ userId }) => {
 								</a>
 							))}
 						</div>
-						<TimeStamp timestamp={palette.createdAt} />
-						<div className="styleing">{palette.likeCount}</div>
+						<TimeStamp classes="timestamp" timestamp={palette.createdAt} />
+						<div className="styling">{palette.likeCount}</div>
 					</div>
 				</motion.div>
 			)}

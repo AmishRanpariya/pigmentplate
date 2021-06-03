@@ -20,6 +20,7 @@
 	grid-template-columns: repeat(4, 1fr);
 	border-radius: 1rem 1rem 0 0;
 	z-index: 5;
+	background-color: #fff;
 }
 
 .DetailedPalette .color {
@@ -56,20 +57,25 @@
 	align-items: flex-end;
 	position: relative;
 	font-size: 0.9rem;
+	padding: 1rem;
 }
 .DetailedPalette .metadata .tags {
 	display: -webkit-flex;
 	display: flex;
 	gap: 1rem;
-	color: gray;
+	z-index: 1;
 }
 .DetailedPalette .metadata .tags a {
+	color: gray;
 	font-weight: 400;
 }
-.DetailedPalette .metadata .time {
-	color: gray;
+.DetailedPalette .metadata .btn {
+	font-size: inherit;
 }
-.DetailedPalette .metadata .styleing {
+.DetailedPalette .metadata .tags a:hover {
+	color: var(--col-text-unliked);
+}
+.DetailedPalette .metadata .styling {
 	position: absolute;
 	bottom: 0;
 	left: 0;
@@ -77,9 +83,9 @@
 	line-height: 0.3;
 	z-index: 0;
 	color: #ddd2;
-}
-.DetailedPalette .metadata {
-	padding: 1rem;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 .DetailedPalette .BigLikeButton {
 	height: 0;
@@ -90,7 +96,6 @@
 	border: 1px solid var(--col-border-unliked);
 	display: block;
 	margin: auto;
-	font-size: 2rem;
 	background-color: var(--col-bg-unliked);
 	color: var(--col-text-unliked);
 	box-shadow: var(--shadow);
@@ -98,13 +103,16 @@
 	position: absolute;
 	left: 0;
 	right: 0;
-	padding: 2.5rem 0;
-	height: 5rem;
-	width: 5rem;
-	top: -4rem;
+	padding: 1.45rem;
+	width: fit-content;
+	top: -4.5rem;
 	z-index: 45;
 	border-radius: 100%;
 	text-align: center;
+}
+.DetailedPalette .BigLikeButton span svg {
+	height: 2.2rem;
+	width: 2.2rem;
 }
 .DetailedPalette .BigLikeButton span:hover {
 	background-color: #eee;
@@ -148,7 +156,7 @@
 	.DetailedPalette .metadata .tags {
 		gap: 2.1vw;
 	}
-	.DetailedPalette .metadata .styleing {
+	.DetailedPalette .metadata .styling {
 		font-size: 25vw;
 	}
 	.DetailedPalette .metadata {
@@ -156,10 +164,24 @@
 	}
 	.DetailedPalette .BigLikeButton span {
 		font-size: 5vw;
-		padding: 6.3vw 3.15vw;
+		padding: 3.8vw;
 		line-height: 0;
-		width: 13vw;
-		height: 6.5vw;
-		top: -10vw;
+		top: -11.5vw;
+	}
+	.DetailedPalette .BigLikeButton span svg {
+		height: 5.5vw;
+		width: 5.5vw;
+	}
+	.DetailedPalette .metadata .btn {
+		padding: 0.5vw 3vw;
+		margin: 0;
+	}
+	.DetailedPalette .metadata .btn svg {
+		height: 2.5vw;
+	}
+}
+@media (max-width: 490px) {
+	.DetailedPalette .metadata .timestamp {
+		display: none;
 	}
 }

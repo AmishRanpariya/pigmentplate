@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import {
 	DEFAULT_PALETTE,
+	LOCALSTORAGE,
 	PALETTE_COLLECTION,
 	USER_COLLECTION,
 } from "../../Const";
@@ -18,12 +19,57 @@ const CreatePalette = ({ userId }) => {
 	const [error, setError] = useState(null);
 
 	const [tags, setTags] = useState("");
+
+	//default initial color
 	const [color1, setColor1] = useState("#" + palette.colors[0]);
 	const [color2, setColor2] = useState("#" + palette.colors[1]);
 	const [color3, setColor3] = useState("#" + palette.colors[2]);
 	const [color4, setColor4] = useState("#" + palette.colors[3]);
 
-	const history = useHistory();
+	const getRandomColor = () => {
+		const digits = [
+			"0",
+			"1",
+			"2",
+			"3",
+			"4",
+			"5",
+			"6",
+			"7",
+			"8",
+			"9",
+			"a",
+			"b",
+			"c",
+			"d",
+			"e",
+			"f",
+		];
+		const colors = [];
+		for (let j = 0; j < 4; j++) {
+			let _col = "#";
+			for (let i = 0; i < 6; i++) {
+				_col += digits[Math.floor(Math.random() * 16)];
+			}
+			colors.push(_col);
+		}
+		colors.sort();
+		if (Math.random() > 0.5) {
+			colors.reverse();
+		}
+		setColor1(colors[0]);
+		setColor2(colors[1]);
+		setColor3(colors[2]);
+		setColor4(colors[3]);
+		console.log(colors);
+		// return _col;
+	};
+	//for random initial color
+	useEffect(() => {
+		getRandomColor();
+	}, []);
+
+	const _history = useHistory();
 
 	const handleCreatePalette = (e) => {
 		e.preventDefault();
@@ -38,7 +84,7 @@ const CreatePalette = ({ userId }) => {
 				tags.split(" ").filter((tag) => tag.trim().match(/^[A-Za-z]{1,15}$/))
 			),
 		];
-		_tags = _tags.slice(0, Math.min(4, _tags.length));
+		_tags = _tags.slice(0, Math.min(10, _tags.length));
 
 		if (paletteId.match(/[a-f\d]{24}/)) {
 			const _palette = {
@@ -73,10 +119,14 @@ const CreatePalette = ({ userId }) => {
 					setIsPending(false);
 					setError(null);
 					localStorage.setItem(
-						"PigmentPlate/interactionCount",
-						+localStorage.getItem("PigmentPlate/interactionCount") + 1
+						LOCALSTORAGE.prefix_interaction,
+						+localStorage.getItem(LOCALSTORAGE.prefix_interaction) + 1
 					);
-					history.push("/palette/" + _palette.id);
+					localStorage.setItem(
+						LOCALSTORAGE.prefix_created + paletteId,
+						new Date().getTime()
+					);
+					_history.push("/palette/" + _palette.id);
 				})
 				.catch((err) => {
 					console.log(err);
@@ -124,11 +174,11 @@ const CreatePalette = ({ userId }) => {
 					/>
 				</div>
 				<div className="TagInput">
-					<form>
+					<form onSubmit={handleCreatePalette}>
 						<label htmlFor="tags">Tags:</label>
 						<input
 							name="tags"
-							placeholder="Lemon Yellow Summer"
+							placeholder="e.g. lemon lellow summer"
 							type="text"
 							value={tags}
 							onChange={(e) => setTags(e.target.value.toLowerCase())}

@@ -1,0 +1,62 @@
+.downloadPaletteStyle {
+	height: 400px;
+	width: 668px;
+	background-color: var(--col-bg-body);
+	border-radius: 0.5rem;
+	box-shadow: var(--shadow);
+	overflow: hidden;
+	padding: 0.5rem;
+}
+.downloadPaletteStyle .color-grid {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	border-radius: 0.25rem;
+	overflow: hidden;
+	height: 85%;
+	z-index: 5;
+}
+.downloadPaletteStyle .metadata {
+	height: 15%;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	padding: 0.4rem;
+	position: relative;
+}
+.downloadPaletteStyle .metadata span strong {
+	font-size: 1.2rem;
+}
+.downloadPaletteStyle .metadata span {
+	font-size: 0.7rem;
+}
+.downloadPaletteStyle .metadata span.styling {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	font-size: 10rem;
+	line-height: 0.3;
+	z-index: 0;
+	color: #ddd2;
+}
+.downloadPaletteStyle .color {
+	box-shadow: var(--in-shadow);
+	height: 100%;
+	width: 100%;
+	z-index: 5;
+	position: relative;
+}
+.downloadPaletteStyle .color span.copy {
+	font-family: "Roboto Mono", monospace !important;
+	line-height: 1;
+	display: inline-block;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	padding: 0.2rem;
+	color: #fff;
+	font-size: 0.8rem;
+	text-align: center;
+	background-color: #88888835;
+	-webkit-transform: translate(-35%, -115%) rotate(-90deg);
+	transform: translate(-35%, -115%) rotate(-90deg);
+}

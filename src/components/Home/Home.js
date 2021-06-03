@@ -4,7 +4,7 @@ import { db } from "../../firebase/config";
 
 import Palette from "../PaletteContainer/Palette/Palette";
 import "./Home.css";
-import { PALETTE_COLLECTION } from "../../Const";
+import { LOCALSTORAGE, PAGINATE, PALETTE_COLLECTION } from "../../Const";
 
 //for App.js
 const Home = ({ userId }) => {
@@ -19,11 +19,7 @@ const Home = ({ userId }) => {
 		yRange.onChange((v) => setIsScrollComplete(v >= 1)); //check if Scrolled to end, then set isScrollCompleted
 	}, [yRange]);
 
-	const getNextPalettePage = async (
-		callback,
-		firstBatchSize = 5,
-		subsequentBatchSize = 2
-	) => {
+	const getNextPalettePage = async (callback) => {
 		let newPalettes = [];
 		let snap;
 		if (!lastDoc) {
@@ -31,7 +27,7 @@ const Home = ({ userId }) => {
 			snap = await db
 				.collection(PALETTE_COLLECTION.collection_name)
 				.orderBy(PALETTE_COLLECTION.timeField, "desc")
-				.limit(firstBatchSize)
+				.limit(PAGINATE.initialFetchCount)
 				.get();
 		} else {
 			//next queries
@@ -39,7 +35,7 @@ const Home = ({ userId }) => {
 				.collection(PALETTE_COLLECTION.collection_name)
 				.orderBy(PALETTE_COLLECTION.timeField, "desc")
 				.startAfter(lastDoc)
-				.limit(subsequentBatchSize)
+				.limit(PAGINATE.subSequentFetchCount)
 				.get();
 		}
 		if (snap && !snap.empty) {
@@ -47,11 +43,19 @@ const Home = ({ userId }) => {
 				newPalettes.push(doc.data());
 			});
 			setLastDoc(snap.docs[snap.docs.length - 1]); //saving last reference for next query
+			localStorage.setItem(
+				LOCALSTORAGE.prefix_interaction,
+				+localStorage.getItem(LOCALSTORAGE.prefix_interaction) + 1
+			);
 			callback((palettes) => {
 				return palettes.concat(newPalettes);
 			});
 		} else {
 			//reached end
+			localStorage.setItem(
+				LOCALSTORAGE.prefix_interaction,
+				+localStorage.getItem(LOCALSTORAGE.prefix_interaction) + 1
+			);
 			setIsReachedEnd(true);
 			// throw new Error("no snaps");
 		}

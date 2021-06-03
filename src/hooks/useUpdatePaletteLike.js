@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { PALETTE_COLLECTION, USER_COLLECTION } from "../Const";
-import { db, firebase } from "./config";
+import { LOCALSTORAGE, PALETTE_COLLECTION, USER_COLLECTION } from "../Const";
+import { db, firebase } from "../firebase/config";
 
 //for
 //DetailedPalette.js
@@ -96,11 +96,18 @@ const useUpdatePaletteLike = (
 					setIsPending(false);
 				});
 		};
-		console.log("likeUpdate ran for userId", shouldUpdate);
 		if (shouldUpdate > 0) {
 			likePalette();
+			localStorage.setItem(
+				LOCALSTORAGE.prefix_interaction,
+				+localStorage.getItem(LOCALSTORAGE.prefix_interaction) + 1
+			);
 		} else if (shouldUpdate < 0) {
 			dislikePalette();
+			localStorage.setItem(
+				LOCALSTORAGE.prefix_interaction,
+				+localStorage.getItem(LOCALSTORAGE.prefix_interaction) + 1
+			);
 		} //else do nothing
 	}, [userId, shouldUpdate, paletteId]);
 

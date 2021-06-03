@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 
 import CopyHex from "./CopyHex/CopyHex";
 import LikeButton from "./LikeButton/LikeButton";
-import TimeStamp from "../TimeStamp/TimeStamp";
+import TimeStamp from "../../UI/TimeStamp/TimeStamp";
 import "./Palette.css";
-import useUpdatePaletteLike from "../../../firebase/useUpdatePaletteLike";
+import useUpdatePaletteLike from "../../../hooks/useUpdatePaletteLike";
 import { LOCALSTORAGE } from "../../../Const";
 
 //for Home.js
@@ -72,7 +72,7 @@ const Palette = ({ palette, userId }) => {
 					likeCount={Palette.likeCount}
 					onclicked={LikeButtonClickHandler}
 				/>
-				<TimeStamp timestamp={Palette.createdAt} />
+				<TimeStamp classes="timestamp" timestamp={Palette.createdAt} />
 				<div className="styling">{Palette.likeCount}</div>
 			</div>
 		</Link>

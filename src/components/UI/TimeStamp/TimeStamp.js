@@ -5,7 +5,9 @@ import { formatDistanceToNow } from "date-fns";
 //DetailedPalette.js
 //Palette.js
 
-const TimeStamp = ({ timestamp }) => {
-	return <div className="time">{formatDistanceToNow(new Date(timestamp))}</div>;
+const TimeStamp = ({ timestamp, classes }) => {
+	return (
+		<div className={classes}>{formatDistanceToNow(new Date(timestamp))}</div>
+	);
 };
 export default TimeStamp;

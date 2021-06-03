@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import CopyHex from "../Palette/CopyHex/CopyHex";
-import "./LikedPalette.css";
+import "./MinimalPalette.css";
 
 //for LikedPaletteContainer.js
-const LikedPalette = ({ palette }) => {
+const MinimalPalette = ({ palette }) => {
 	const [Palette] = useState(palette);
 
 	return (
@@ -25,4 +25,4 @@ const LikedPalette = ({ palette }) => {
 	);
 };
 
-export default LikedPalette;
+export default MinimalPalette;
