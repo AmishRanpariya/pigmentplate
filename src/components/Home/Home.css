@@ -12,6 +12,13 @@
 	justify-content: center;
 	-webkit-align-items: center;
 	align-items: center;
+
+	max-height: 100%;
+	overflow: auto;
+}
+
+.wrapper::-webkit-scrollbar {
+	display: none;
 }
 
 @media (max-width: 1080px) {

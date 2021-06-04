@@ -1,7 +1,7 @@
-import React from "react";
+import React, { memo } from "react";
 
 //for Palette.js
-const LikeButton = ({ isLiked, likeCount, onclicked }) => {
+const LikeButton = memo(({ isLiked, likeCount, onclicked }) => {
 	const toShortForm = (num, digits) => {
 		const lookup = [
 			{ value: 1, symbol: "" },
@@ -42,6 +42,6 @@ const LikeButton = ({ isLiked, likeCount, onclicked }) => {
 			<div>{likeCount > 0 ? toShortForm(likeCount, 0) : likeCount}</div>
 		</button>
 	);
-};
+});
 
 export default LikeButton;

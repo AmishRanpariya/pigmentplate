@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -6,47 +6,37 @@ import CopyHex from "./CopyHex/CopyHex";
 import LikeButton from "./LikeButton/LikeButton";
 import TimeStamp from "../../UI/TimeStamp/TimeStamp";
 import "./Palette.css";
-import useUpdatePaletteLike from "../../../hooks/useUpdatePaletteLike";
 import { LOCALSTORAGE } from "../../../Const";
+import handlePaletteLike from "../../../funtions/handlePaletteLike";
 
 //for Home.js
-const Palette = ({ palette, userId }) => {
+const Palette = memo((props) => {
 	const params = useParams();
+	const userId = localStorage.getItem(LOCALSTORAGE.prefix_userId);
 
-	const [Palette, setPalette] = useState(palette);
+	const [Palette, setPalette] = useState(props.palette);
 
-	const [isLiked, setIsLiked] = useState(
+	const isLiked = useRef(
 		localStorage.getItem(LOCALSTORAGE.prefix_liked + Palette.id) > 0
 	);
-	const [shouldUpdateLike, setShouldUpdateLike] = useState(0); //0 means dont do anything
-	useUpdatePaletteLike(userId, shouldUpdateLike, Palette.id, setPalette);
-
-	useEffect(() => {
-		setPalette(palette);
-	}, [palette]);
 
 	const LikeButtonClickHandler = (e) => {
 		e.preventDefault();
-		if (isLiked) {
+		if (isLiked.current == true) {
+			isLiked.current = false;
+			handlePaletteLike(Palette.id, userId, -1, setPalette);
 			localStorage.removeItem(LOCALSTORAGE.prefix_liked + Palette.id);
-			setIsLiked(false);
-			setShouldUpdateLike(-1); //dislike
-			setTimeout(() => {
-				setShouldUpdateLike(0);
-			}, 1000);
 		} else {
+			isLiked.current = true;
+			handlePaletteLike(Palette.id, userId, 1, setPalette);
 			localStorage.setItem(
 				LOCALSTORAGE.prefix_liked + Palette.id,
 				new Date().getTime()
 			);
-			setIsLiked(true);
-			setShouldUpdateLike(1); //like
-			setTimeout(() => {
-				setShouldUpdateLike(0);
-			}, 1000);
 		}
 	};
-	if (params && params.id && params.id === palette.id) {
+
+	if (params && params.id && params.id === props.palette.id) {
 		return null; //dont show this palette if Detailed palette is showing this palette there
 	}
 	return (
@@ -68,7 +58,7 @@ const Palette = ({ palette, userId }) => {
 			</motion.div>
 			<div className="metadata">
 				<LikeButton
-					isLiked={isLiked}
+					isLiked={isLiked.current == true}
 					likeCount={Palette.likeCount}
 					onclicked={LikeButtonClickHandler}
 				/>
@@ -77,6 +67,6 @@ const Palette = ({ palette, userId }) => {
 			</div>
 		</Link>
 	);
-};
+});
 
 export default Palette;

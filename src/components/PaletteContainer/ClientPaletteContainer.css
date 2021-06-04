@@ -1,15 +1,28 @@
 .ClientPaletteContainer {
 	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.ClientPaletteContainer .partition {
+	flex: 1 1 500px;
+	display: flex;
 	flex-direction: column;
 	text-align: center;
 	margin: 1rem 0;
 }
 
-.ClientPaletteContainer .heading {
+.ClientPaletteContainer .partition .heading {
 	font-size: 1rem;
 	width: 90%;
 	margin: 0.5rem auto;
 	margin-top: 2rem;
 	padding: 1rem 0;
 	border-bottom: 1px solid black;
+}
+
+.ClientPaletteContainer .partition .wrapper {
+	margin: 0.5rem auto;
+	padding: 0;
+	width: 90%;
 }

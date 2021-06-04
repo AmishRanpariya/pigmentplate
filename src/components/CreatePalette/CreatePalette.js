@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import {
 	DEFAULT_PALETTE,
@@ -9,7 +9,7 @@ import {
 
 import { db, firebase } from "../../firebase/config";
 
-import ColorPicker from "../UI/ColorPicker/ColorPicker";
+import ColorPicker from "./ColorPicker/ColorPicker";
 import "./CreatePalette.css";
 
 //for App.js
@@ -62,14 +62,35 @@ const CreatePalette = ({ userId }) => {
 		setColor3(colors[2]);
 		setColor4(colors[3]);
 		console.log(colors);
-		// return _col;
 	};
+
 	//for random initial color
 	useEffect(() => {
 		getRandomColor();
+		const handleKeyPress = (e) => {
+			if (e.keyCode === 43) {
+				getRandomColor();
+			}
+		};
+		window.addEventListener("keypress", handleKeyPress);
+		return () => {
+			window.removeEventListener("keypress", handleKeyPress);
+		};
 	}, []);
 
 	const _history = useHistory();
+	const handleChangeColor1 = useCallback((e) => {
+		setColor1(e.hex);
+	}, []);
+	const handleChangeColor2 = useCallback((e) => {
+		setColor2(e.hex);
+	}, []);
+	const handleChangeColor3 = useCallback((e) => {
+		setColor3(e.hex);
+	}, []);
+	const handleChangeColor4 = useCallback((e) => {
+		setColor4(e.hex);
+	}, []);
 
 	const handleCreatePalette = (e) => {
 		e.preventDefault();
@@ -148,30 +169,10 @@ const CreatePalette = ({ userId }) => {
 					<div className="color" style={{ backgroundColor: color4 }}></div>
 				</div>
 				<div className="PickerGrid">
-					<ColorPicker
-						color={color1}
-						onChangeHandler={(e) => {
-							setColor1(e.hex);
-						}}
-					/>
-					<ColorPicker
-						color={color2}
-						onChangeHandler={(e) => {
-							setColor2(e.hex);
-						}}
-					/>
-					<ColorPicker
-						color={color3}
-						onChangeHandler={(e) => {
-							setColor3(e.hex);
-						}}
-					/>
-					<ColorPicker
-						color={color4}
-						onChangeHandler={(e) => {
-							setColor4(e.hex);
-						}}
-					/>
+					<ColorPicker color={color1} onChangeHandler={handleChangeColor1} />
+					<ColorPicker color={color2} onChangeHandler={handleChangeColor2} />
+					<ColorPicker color={color3} onChangeHandler={handleChangeColor3} />
+					<ColorPicker color={color4} onChangeHandler={handleChangeColor4} />
 				</div>
 				<div className="TagInput">
 					<form onSubmit={handleCreatePalette}>
@@ -184,16 +185,13 @@ const CreatePalette = ({ userId }) => {
 							onChange={(e) => setTags(e.target.value.toLowerCase())}
 						/>
 					</form>
-					{isPending && (
-						<button className="btn" onClick={handleCreatePalette}>
-							Create
-						</button>
-					)}
-					{!isPending && (
-						<button className="btn" onClick={handleCreatePalette} disabled>
-							Create
-						</button>
-					)}
+					<button
+						className="btn"
+						onClick={handleCreatePalette}
+						disabled={!isPending}
+					>
+						Create
+					</button>
 				</div>
 			</div>
 			{error && <div>Something Went Wrong</div>}

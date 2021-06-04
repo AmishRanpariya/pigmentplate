@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useTransform, useViewportScroll } from "framer-motion";
 import { db } from "../../firebase/config";
 
 import Palette from "../PaletteContainer/Palette/Palette";
@@ -7,17 +6,29 @@ import "./Home.css";
 import { LOCALSTORAGE, PAGINATE, PALETTE_COLLECTION } from "../../Const";
 
 //for App.js
-const Home = ({ userId }) => {
+const Home = () => {
+	//for infinite scroll
 	const [lastDoc, setLastDoc] = useState(null); //lastDoc ref for pagination on firestore
 	const [isReachedEnd, setIsReachedEnd] = useState(false); //if last palette reached then no more request
-
-	const [isScrollComplete, setIsScrollComplete] = useState(false); //isSrolled to end,if so , reuest more palettes
-	const { scrollYProgress } = useViewportScroll(); //motion hook to get scroll position
-	const yRange = useTransform(scrollYProgress, [0, 0.9], [0, 1]); //motion hook for Y value
-
+	const [isScrollComplete, setIsScrollComplete] = useState(false); //isScrolled to end,if so , reuest more palettes
 	useEffect(() => {
-		yRange.onChange((v) => setIsScrollComplete(v >= 1)); //check if Scrolled to end, then set isScrollCompleted
-	}, [yRange]);
+		if (document.querySelector(".wrapper")) {
+			const wrapper = document.querySelector(".wrapper");
+			const handleScroll = (e) => {
+				if (!isReachedEnd) {
+					if (
+						wrapper.scrollHeight <=
+						wrapper.scrollTop + wrapper.offsetHeight + 30
+					) {
+						setIsScrollComplete(true);
+					} else {
+						setIsScrollComplete(false);
+					}
+				}
+			};
+			wrapper.addEventListener("scroll", handleScroll);
+		}
+	}, []);
 
 	const getNextPalettePage = async (callback) => {
 		let newPalettes = [];
@@ -57,6 +68,7 @@ const Home = ({ userId }) => {
 				+localStorage.getItem(LOCALSTORAGE.prefix_interaction) + 1
 			);
 			setIsReachedEnd(true);
+
 			// throw new Error("no snaps");
 		}
 		return newPalettes;
@@ -67,33 +79,22 @@ const Home = ({ userId }) => {
 		getNextPalettePage(setPalettes); //call for initial page
 	}, []);
 
-	const getMoreData = () => {
-		//checks Before fetching next batch
-		if (!isReachedEnd) {
-			getNextPalettePage(setPalettes);
-		}
-	};
-
 	useEffect(() => {
 		if (isScrollComplete) {
-			getMoreData(); //call fore next palettes
+			if (!isReachedEnd) {
+				getNextPalettePage(setPalettes); //call fore next palettes
+			}
 		}
 	}, [isScrollComplete]);
 
 	return (
-		<>
-			<div className="wrapper">
-				{palettes && palettes.length > 0
-					? palettes.map((palette) => (
-							<Palette
-								key={"HomePalette" + palette.id}
-								userId={userId}
-								palette={palette}
-							/>
-					  ))
-					: null}
-			</div>
-		</>
+		<div className="wrapper">
+			{palettes && palettes.length > 0
+				? palettes.map((palette) => (
+						<Palette key={palette.id} palette={palette} />
+				  ))
+				: null}
+		</div>
 	);
 };
 

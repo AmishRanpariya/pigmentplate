@@ -1,8 +1,10 @@
-import React from "react";
+import React, { memo } from "react";
 import InputColor from "react-input-color";
 
 //for CreatePalette.js
-const ColorPicker = ({ color, onChangeHandler }) => {
+const ColorPicker = memo(({ color, onChangeHandler }) => {
+	console.log("ColorPicker rendered");
+
 	return (
 		<div className="Picker">
 			<InputColor
@@ -12,6 +14,6 @@ const ColorPicker = ({ color, onChangeHandler }) => {
 			/>
 		</div>
 	);
-};
+});
 
 export default ColorPicker;

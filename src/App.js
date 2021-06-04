@@ -1,4 +1,4 @@
-import { Switch, Route, Link, Redirect } from "react-router-dom";
+import { Switch, Route, NavLink, Redirect } from "react-router-dom";
 
 import "./App.css";
 import CreatePalette from "./components/CreatePalette/CreatePalette";
@@ -11,20 +11,20 @@ import useFetchFirestoreUser from "./hooks/useFetchFirestoreUser";
 //for index.js
 const App = () => {
 	const { user, error } = useFetchFirestoreUser();
-
+	console.log("APP rendered", user, error);
 	return (
 		<>
 			<NavBar>
 				<ul>
 					<li>
-						<Link to="/">
+						<NavLink to="/">
 							<strong>PigmentPlate</strong>
-						</Link>
+						</NavLink>
 					</li>
 				</ul>
 				<ul>
 					<li>
-						<Link to="/likes" className="btn">
+						<NavLink to="/likes" className="btn">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								className="h-5 w-5"
@@ -38,11 +38,11 @@ const App = () => {
 								/>
 							</svg>
 							Fav
-						</Link>
+						</NavLink>
 					</li>
 
 					<li id="createBtnLink">
-						<Link to="/create" className="btn">
+						<NavLink to="/create" className="btn">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								className="h-6 w-6"
@@ -58,7 +58,7 @@ const App = () => {
 								/>
 							</svg>
 							Create
-						</Link>
+						</NavLink>
 					</li>
 				</ul>
 			</NavBar>
@@ -88,6 +88,7 @@ const App = () => {
 						<Route exact path="/palette/random">
 							random
 						</Route>
+
 						<Route exact path="/palette/:id([a-f\d]{24})">
 							{user ? (
 								<>
@@ -99,11 +100,7 @@ const App = () => {
 							)}
 						</Route>
 						<Route path="/" exact>
-							{user ? (
-								<Home userId={user.id} />
-							) : (
-								<div>Loading Palettes...</div>
-							)}
+							{user ? <Home /> : <div>Loading Palettes...</div>}
 						</Route>
 						<Route path="*">
 							<Redirect to="/" />
@@ -111,7 +108,7 @@ const App = () => {
 					</Switch>
 				</div>
 			) : (
-				<div>Something Went Wrong In App.js</div>
+				<div className="wrapper">Something Went Wrong In App.js</div>
 			)}
 		</>
 	);

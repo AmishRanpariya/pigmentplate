@@ -1,7 +1,9 @@
-import React from "react";
+import React, { memo } from "react";
 
 //for DetailedPalette.js
-const BigLikeButton = ({ isLiked, onclicked }) => {
+const BigLikeButton = memo(({ isLiked, onclicked }) => {
+	console.log("BigLikeButton rendered");
+
 	return (
 		<div
 			focusable
@@ -24,6 +26,5 @@ const BigLikeButton = ({ isLiked, onclicked }) => {
 			</span>
 		</div>
 	);
-};
-
+});
 export default BigLikeButton;

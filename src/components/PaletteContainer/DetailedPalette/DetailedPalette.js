@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { Redirect, useHistory, useParams } from "react-router";
 import * as htmlToImage from "html-to-image";
 
-import usePaletteListener from "../../../hooks/usePaletteListener";
-import useUpdatePaletteLike from "../../../hooks/useUpdatePaletteLike";
+// import usePaletteListener from "../../../hooks/usePaletteListener";
+// import useUpdatePaletteLike from "../../../hooks/useUpdatePaletteLike";
 import TimeStamp from "../../UI/TimeStamp/TimeStamp";
 import BigLikeButton from "./BigLikeButton/BigLikeButton";
 import "./DetailedPalette.css";
 import { BASEURL, LOCALSTORAGE } from "../../../Const";
 import { handleCopyToClipBoard } from "../../../funtions/handleCopyToClipBoard";
 import "./downloadPaletteStyle.css";
+import handlePaletteLike from "../../../funtions/handlePaletteLike";
+import useFetchPalette from "../../../hooks/useFetchPalette";
 //animation
 const container = {
 	hidden: { scale: 0, y: "20vh" },
@@ -26,37 +28,30 @@ const item = {
 	visible: { y: 0, opacity: 1 },
 };
 //for App.js
-const DetailedPalette = ({ userId }) => {
+const DetailedPalette = () => {
+	console.log("DetailedPalette rendered");
 	const params = useParams();
-	const history = useHistory();
-	const { palette, isPending, error } = usePaletteListener(params.id);
-
-	const [isLiked, setIsLiked] = useState(
+	const { palette, error, setPalette } = useFetchPalette(params.id);
+	// const [palette, setPalette] = useState(() => handlePaletteLike(params.id));
+	const userId = localStorage.getItem(LOCALSTORAGE.prefix_userId);
+	console.log(palette);
+	const isLiked = useRef(
 		localStorage.getItem(LOCALSTORAGE.prefix_liked + params.id) > 0
 	);
-	const [shouldUpdateLike, setShouldUpdateLike] = useState(0); //means dont do anything
-	useUpdatePaletteLike(userId, shouldUpdateLike, params.id);
 
 	const LikeButtonClickHandler = (e) => {
-		console.log("called");
 		e.preventDefault();
-		if (isLiked) {
+		if (isLiked.current == true) {
+			isLiked.current = false;
+			handlePaletteLike(params.id, userId, -1, setPalette);
 			localStorage.removeItem(LOCALSTORAGE.prefix_liked + params.id);
-			setIsLiked(false);
-			setShouldUpdateLike(-1); //dislike
-			setTimeout(() => {
-				setShouldUpdateLike(0);
-			}, 1000);
 		} else {
+			isLiked.current = true;
+			handlePaletteLike(params.id, userId, 1, setPalette);
 			localStorage.setItem(
 				LOCALSTORAGE.prefix_liked + params.id,
 				new Date().getTime()
 			);
-			setIsLiked(true);
-			setShouldUpdateLike(1); //like
-			setTimeout(() => {
-				setShouldUpdateLike(0);
-			}, 1000);
 		}
 	};
 
@@ -95,7 +90,6 @@ const DetailedPalette = ({ userId }) => {
 				link.download = `PigmentPlate_${palette.id}.png`;
 				link.href = dataUrl;
 				link.click();
-				// download(dataUrl, "palette.png");
 			});
 		setTimeout(() => {
 			if (document.body.lastChild.classList.contains("downloadPaletteStyle")) {
@@ -106,9 +100,9 @@ const DetailedPalette = ({ userId }) => {
 
 	return (
 		<>
-			{isPending && <div>Loading Detailed Palette...</div>}
 			{error && <Redirect to="/" />}
-			{palette && (
+			{!palette && <div>Loading Detailed Palette...</div>}
+			{palette && palette.colors && (
 				<motion.div
 					className="DetailedPalette"
 					variants={container}
@@ -129,7 +123,10 @@ const DetailedPalette = ({ userId }) => {
 						))}
 					</div>
 
-					<BigLikeButton isLiked={isLiked} onclicked={LikeButtonClickHandler} />
+					<BigLikeButton
+						isLiked={isLiked.current == true}
+						onclicked={LikeButtonClickHandler}
+					/>
 
 					<div className="metadata">
 						<button onClick={handlePaletteDownload} className="btn">
