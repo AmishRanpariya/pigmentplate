@@ -6,7 +6,6 @@ import "./MinimalPalette.css";
 
 //for LikedPaletteContainer.js
 const MinimalPalette = ({ palette }) => {
-	console.log("MinimalPalette rendered");
 	const [Palette] = useState(palette);
 
 	return (

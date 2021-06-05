@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 const ClientPaletteContainer = () => {
 	const [favPalettes, setFavPalettes] = useState([]);
 	const [myPalettes, setMyPalettes] = useState([]);
-	console.log("ClientPaletteContainer rendered");
 
 	const getLocalPalettes = (type, callback) => {
 		const palettes = [];

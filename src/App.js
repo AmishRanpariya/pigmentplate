@@ -11,7 +11,6 @@ import useFetchFirestoreUser from "./hooks/useFetchFirestoreUser";
 //for index.js
 const App = () => {
 	const { user, error } = useFetchFirestoreUser();
-	console.log("APP rendered", user, error);
 	return (
 		<>
 			<NavBar>
@@ -72,6 +71,7 @@ const App = () => {
 								<div>Loading Create Palette...</div>
 							)}
 						</Route>
+
 						<Route exact path="/likes">
 							<ClientPaletteContainer />
 						</Route>
@@ -92,15 +92,15 @@ const App = () => {
 						<Route exact path="/palette/:id([a-f\d]{24})">
 							{user ? (
 								<>
-									<DetailedPalette userId={user.id} />
-									<Home userId={user.id} />
+									<DetailedPalette />
+									<Home />
 								</>
 							) : (
 								<div>Loading Detailed Palettes...</div>
 							)}
 						</Route>
 						<Route path="/" exact>
-							<Home />
+							{user ? <Home /> : <div>Loading Palettes...</div>}
 						</Route>
 						<Route path="*">
 							<Redirect to="/" />

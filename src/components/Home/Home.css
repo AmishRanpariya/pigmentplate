@@ -1,6 +1,7 @@
 .wrapper {
-	margin: 1rem 2rem 2rem 2rem;
+	margin: 1rem 2rem 0rem 2rem;
 	padding: 1rem;
+	padding-bottom: 0rem;
 	display: -webkit-flex;
 	display: flex;
 	-webkit-flex-direction: row;
@@ -13,12 +14,12 @@
 	-webkit-align-items: center;
 	align-items: center;
 
-	max-height: 100%;
-	overflow: auto;
+	/* max-height: 100%; */
+	/* overflow: auto; */
 }
 
 .wrapper::-webkit-scrollbar {
-	display: none;
+	/* display: none; */
 }
 
 @media (max-width: 1080px) {

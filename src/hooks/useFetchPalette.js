@@ -9,7 +9,6 @@ const useFetchPalette = (paletteId) => {
 	const [palette, setPalette] = useState(null);
 	const [error, setError] = useState(null);
 	const _history = useHistory();
-
 	useEffect(() => {
 		db.collection(PALETTE_COLLECTION.collection_name)
 			.doc(paletteId)
@@ -19,7 +18,7 @@ const useFetchPalette = (paletteId) => {
 					console.log("db used for palette fetched at useFetchPalette");
 					setPalette(doc.data());
 					handleInteraction();
-					error && setError(null);
+					setError(null);
 				} else {
 					console.log("palette dont exit");
 					_history.push("/"); //redirect to home page if doesn't exist
@@ -29,7 +28,7 @@ const useFetchPalette = (paletteId) => {
 				console.log("useFetchPalette catch", err);
 				setError(err.message);
 			});
-	}, [paletteId]);
+	}, [paletteId, _history]);
 
 	return { palette, error, setPalette };
 };

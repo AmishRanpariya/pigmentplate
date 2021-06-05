@@ -22,7 +22,7 @@ const Palette = memo((props) => {
 
 	const LikeButtonClickHandler = (e) => {
 		e.preventDefault();
-		if (isLiked.current == true) {
+		if (isLiked.current === true) {
 			isLiked.current = false;
 			handlePaletteLike(Palette.id, userId, -1, setPalette);
 			localStorage.removeItem(LOCALSTORAGE.prefix_liked + Palette.id);
@@ -58,7 +58,7 @@ const Palette = memo((props) => {
 			</motion.div>
 			<div className="metadata">
 				<LikeButton
-					isLiked={isLiked.current == true}
+					isLiked={isLiked.current === true}
 					likeCount={Palette.likeCount}
 					onclicked={LikeButtonClickHandler}
 				/>

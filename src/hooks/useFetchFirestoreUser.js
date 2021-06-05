@@ -48,26 +48,26 @@ const useFetchFirestoreUser = () => {
 					setError(err.message);
 				});
 		};
-		const setListenerUser = (userId) => {
-			return db
-				.collection(USER_COLLECTION.collection_name)
-				.doc(userId)
-				.onSnapshot(
-					(doc) => {
-						if (doc.exists) {
-							console.log("user listener", doc);
-							setUser(doc.data());
-							error && setError(null);
-						} else {
-							console.log("Error: Snapshot not exist at setListenerUser");
-						}
-					},
-					(err) => {
-						console.log("setUserListener catch", err);
-						setError(err.message);
-					}
-				);
-		};
+		// const setListenerUser = (userId) => {
+		// 	return db
+		// 		.collection(USER_COLLECTION.collection_name)
+		// 		.doc(userId)
+		// 		.onSnapshot(
+		// 			(doc) => {
+		// 				if (doc.exists) {
+		// 					console.log("user listener", doc);
+		// 					setUser(doc.data());
+		// 					error && setError(null);
+		// 				} else {
+		// 					console.log("Error: Snapshot not exist at setListenerUser");
+		// 				}
+		// 			},
+		// 			(err) => {
+		// 				console.log("setUserListener catch", err);
+		// 				setError(err.message);
+		// 			}
+		// 		);
+		// };
 
 		handleInteraction();
 		if (localStorage.getItem(LOCALSTORAGE.prefix_userId)) {

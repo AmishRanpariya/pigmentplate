@@ -6,7 +6,6 @@ import { formatDistanceToNow } from "date-fns";
 //Palette.js
 
 const TimeStamp = memo(({ timestamp, classes }) => {
-	// console.log("TimeStamp rendered");
 	return (
 		<div className={classes}>{formatDistanceToNow(new Date(timestamp))}</div>
 	);

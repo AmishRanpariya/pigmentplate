@@ -2,8 +2,6 @@ import React, { memo } from "react";
 
 //for DetailedPalette.js
 const BigLikeButton = memo(({ isLiked, onclicked }) => {
-	console.log("BigLikeButton rendered");
-
 	return (
 		<div
 			focusable

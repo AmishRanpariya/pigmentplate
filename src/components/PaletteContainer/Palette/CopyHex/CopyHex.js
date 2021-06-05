@@ -7,8 +7,6 @@ import "./CopyHex.css";
 //LikedPalette.js
 //Palette.js
 const CopyHex = memo(({ color }) => {
-	// console.log("CopyHex rendered");
-
 	return (
 		<span className="copy" onClick={handleCopyToClipBoard}>
 			{"#" + color.toUpperCase()}

@@ -1,10 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import { motion } from "framer-motion";
-import { Redirect, useHistory, useParams } from "react-router";
+import { Redirect, useParams } from "react-router";
 import * as htmlToImage from "html-to-image";
 
-// import usePaletteListener from "../../../hooks/usePaletteListener";
-// import useUpdatePaletteLike from "../../../hooks/useUpdatePaletteLike";
 import TimeStamp from "../../UI/TimeStamp/TimeStamp";
 import BigLikeButton from "./BigLikeButton/BigLikeButton";
 import "./DetailedPalette.css";
@@ -13,6 +11,7 @@ import { handleCopyToClipBoard } from "../../../funtions/handleCopyToClipBoard";
 import "./downloadPaletteStyle.css";
 import handlePaletteLike from "../../../funtions/handlePaletteLike";
 import useFetchPalette from "../../../hooks/useFetchPalette";
+
 //animation
 const container = {
 	hidden: { scale: 0, y: "20vh" },
@@ -29,19 +28,17 @@ const item = {
 };
 //for App.js
 const DetailedPalette = () => {
-	console.log("DetailedPalette rendered");
 	const params = useParams();
 	const { palette, error, setPalette } = useFetchPalette(params.id);
 	// const [palette, setPalette] = useState(() => handlePaletteLike(params.id));
 	const userId = localStorage.getItem(LOCALSTORAGE.prefix_userId);
-	console.log(palette);
 	const isLiked = useRef(
 		localStorage.getItem(LOCALSTORAGE.prefix_liked + params.id) > 0
 	);
 
 	const LikeButtonClickHandler = (e) => {
 		e.preventDefault();
-		if (isLiked.current == true) {
+		if (isLiked.current === true) {
 			isLiked.current = false;
 			handlePaletteLike(params.id, userId, -1, setPalette);
 			localStorage.removeItem(LOCALSTORAGE.prefix_liked + params.id);
@@ -124,7 +121,7 @@ const DetailedPalette = () => {
 					</div>
 
 					<BigLikeButton
-						isLiked={isLiked.current == true}
+						isLiked={isLiked.current === true}
 						onclicked={LikeButtonClickHandler}
 					/>
 
