@@ -18,10 +18,10 @@ export const USER_COLLECTION = {
 };
 
 export const DEFAULT_PALETTE = {
-	id: "333333777777aaaaaacccccc",
-	colors: ["333333", "777777", "aaaaaa", "cccccc"],
+	id: "555555777777aaaaaacccccc",
+	colors: ["555555", "777777", "aaaaaa", "cccccc"],
 	likeCount: 0,
-	createdAt: "",
+	createdAt: 1622565372548,
 	createdBy: "",
 	likedBy: [],
 	interactionCount: 0,
@@ -34,4 +34,4 @@ export const LOCALSTORAGE = {
 	prefix_interaction: "PigmentPlate/interactionCount",
 };
 
-export const BASEURL = "www.pigmentplate.io";
+export const BASEURL = "pigmentplate.io";

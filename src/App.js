@@ -100,7 +100,7 @@ const App = () => {
 							)}
 						</Route>
 						<Route path="/" exact>
-							{user ? <Home /> : <div>Loading Palettes...</div>}
+							<Home />
 						</Route>
 						<Route path="*">
 							<Redirect to="/" />

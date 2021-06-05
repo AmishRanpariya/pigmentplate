@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { LOCALSTORAGE, USER_COLLECTION } from "../Const";
 import { db } from "../firebase/config";
+import handleInteraction from "../funtions/handleInteraction";
 
 //for App.js
 const useFetchFirestoreUser = () => {
@@ -8,7 +9,7 @@ const useFetchFirestoreUser = () => {
 	const [error, setError] = useState(null);
 
 	useEffect(() => {
-		let unsub;
+		let unsub = () => {};
 
 		const createUser = (userId) => {
 			const userData = {
@@ -20,32 +21,30 @@ const useFetchFirestoreUser = () => {
 			}; //initial user data
 
 			//creating user User
-			return db
-				.collection(USER_COLLECTION.collection_name)
+			db.collection(USER_COLLECTION.collection_name)
 				.doc(userId)
 				.set(userData)
 				.then(() => {
-					console.log("user Created");
+					console.log("db used for user Creation");
 				})
 				.catch((err) => {
-					console.log(err);
+					console.log("createUser catch", err);
 					setError(err.message);
 				});
 		};
 
 		const getUser = (userId) => {
-			return db
-				.collection(USER_COLLECTION.collection_name)
+			db.collection(USER_COLLECTION.collection_name)
 				.doc(userId)
 				.get()
 				.then((snap) => {
-					console.log("user fetched");
+					console.log("db used for user fetch");
 					if (snap && snap.exists) {
 						setUser(snap.data());
 					}
 				})
 				.catch((err) => {
-					console.log(err);
+					console.log("getUser catch", err);
 					setError(err.message);
 				});
 		};
@@ -60,26 +59,23 @@ const useFetchFirestoreUser = () => {
 							setUser(doc.data());
 							error && setError(null);
 						} else {
-							console.log("Error: Snapshot not exist");
+							console.log("Error: Snapshot not exist at setListenerUser");
 						}
 					},
 					(err) => {
-						console.log(err);
+						console.log("setUserListener catch", err);
 						setError(err.message);
 					}
 				);
 		};
-		// console.log("useFetchFirestorListener ran");
+
+		handleInteraction();
 		if (localStorage.getItem(LOCALSTORAGE.prefix_userId)) {
 			//if old user
 			const userId = localStorage.getItem(LOCALSTORAGE.prefix_userId); //geting uid
 			//fetching userdata
 			// unsub = setListenerUser(userId);
-			unsub = getUser(userId);
-			localStorage.setItem(
-				LOCALSTORAGE.prefix_interaction,
-				+localStorage.getItem(LOCALSTORAGE.prefix_interaction) + 1
-			);
+			getUser(userId);
 		} else {
 			//if new user
 			const newUID = "ppu" + new Date().getTime(); //creating new user id  TODO: create randomization
@@ -88,11 +84,7 @@ const useFetchFirestoreUser = () => {
 
 			createUser(userId);
 			// unsub = setListenerUser(userId);
-			unsub = getUser(userId);
-			localStorage.setItem(
-				LOCALSTORAGE.prefix_interaction,
-				+localStorage.getItem(LOCALSTORAGE.prefix_interaction) + 1
-			);
+			getUser(userId);
 		}
 		return () => unsub();
 	}, []);

@@ -4,6 +4,7 @@ import { db } from "../../firebase/config";
 import Palette from "../PaletteContainer/Palette/Palette";
 import "./Home.css";
 import { LOCALSTORAGE, PAGINATE, PALETTE_COLLECTION } from "../../Const";
+import SkeletonPalette from "../PaletteContainer/Palette/SkeletonPalette";
 
 //for App.js
 const Home = () => {
@@ -49,6 +50,7 @@ const Home = () => {
 				.limit(PAGINATE.subSequentFetchCount)
 				.get();
 		}
+		console.log("db used for page fetch");
 		if (snap && !snap.empty) {
 			snap.docs.forEach((doc) => {
 				newPalettes.push(doc.data());
@@ -93,9 +95,19 @@ const Home = () => {
 				? palettes.map((palette) => (
 						<Palette key={palette.id} palette={palette} />
 				  ))
-				: null}
+				: [
+						<SkeletonPalette key="1" />,
+						<SkeletonPalette key="2" />,
+						<SkeletonPalette key="3" />,
+						<SkeletonPalette key="4" />,
+						<SkeletonPalette key="5" />,
+						<SkeletonPalette key="6" />,
+						<SkeletonPalette key="7" />,
+						<SkeletonPalette key="8" />,
+						<SkeletonPalette key="9" />,
+						<SkeletonPalette key="10" />,
+				  ]}
 		</div>
 	);
 };
-
 export default Home;

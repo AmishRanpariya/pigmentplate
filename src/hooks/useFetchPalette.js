@@ -16,7 +16,7 @@ const useFetchPalette = (paletteId) => {
 			.get()
 			.then((doc) => {
 				if (doc && doc.exists) {
-					console.log("palette fetched", doc.data());
+					console.log("db used for palette fetched at useFetchPalette");
 					setPalette(doc.data());
 					handleInteraction();
 					error && setError(null);
@@ -26,7 +26,7 @@ const useFetchPalette = (paletteId) => {
 				}
 			})
 			.catch((err) => {
-				console.log(err);
+				console.log("useFetchPalette catch", err);
 				setError(err.message);
 			});
 	}, [paletteId]);

@@ -35,18 +35,12 @@ const handlePaletteLike = (
 		batch
 			.commit()
 			.then(() => {
-				console.log("palette liked");
-				return db
-					.collection(PALETTE_COLLECTION.collection_name)
-					.doc(paletteId)
-					.get();
-			})
-			.then((snap) => {
-				callback(snap.data());
-				palette = snap.data();
+				console.log("db used for palette liked");
+				getPalette(paletteId);
 			})
 			.catch((err) => {
 				console.log(err);
+				console.log("likePalette catch", err);
 			});
 	};
 
@@ -73,36 +67,27 @@ const handlePaletteLike = (
 		batch
 			.commit()
 			.then(() => {
-				console.log("palette disliked");
-				return db
-					.collection(PALETTE_COLLECTION.collection_name)
-					.doc(paletteId)
-					.get();
-			})
-			.then((snap) => {
-				callback(snap.data());
-				palette = snap.data();
+				console.log("db used for palette unliked");
+				getPalette(paletteId);
 			})
 			.catch((err) => {
-				console.log(err);
+				console.log("disLikePalette catch", err);
 			});
 	};
 
 	const getPalette = (paletteId) => {
-		return db
-			.collection(PALETTE_COLLECTION.collection_name)
+		db.collection(PALETTE_COLLECTION.collection_name)
 			.doc(paletteId)
 			.get()
 			.then((snap) => {
-				console.log("palette fetched");
+				console.log("db used for fetching palette");
 				if (snap && snap.exists) {
 					callback(snap.data());
 					palette = snap.data();
-					console.log(palette);
 				}
 			})
 			.catch((err) => {
-				console.log(err);
+				console.log("getPalette catch", err);
 			});
 	};
 
