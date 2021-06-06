@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { LOCALSTORAGE } from "../../Const";
+import { Link } from "react-router-dom";
 
+import { LOCALSTORAGE } from "../../Const";
 import MinimalPalette from "./MinimalPalette/MinimalPalette";
 import "./ClientPaletteContainer.css";
-import { Link } from "react-router-dom";
+
 //for App.js
 const ClientPaletteContainer = () => {
 	const [favPalettes, setFavPalettes] = useState([]);

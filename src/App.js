@@ -1,12 +1,20 @@
+import React, { Suspense } from "react";
 import { Switch, Route, NavLink, Redirect } from "react-router-dom";
 
+// import CreatePalette from "./components/CreatePalette/CreatePalette";
+// import ClientPaletteContainer from "./components/PaletteContainer/ClientPaletteContainer";
 import "./App.css";
-import CreatePalette from "./components/CreatePalette/CreatePalette";
-import NavBar from "./components/NavBar/NavBar";
-import DetailedPalette from "./components/PaletteContainer/DetailedPalette/DetailedPalette";
-import ClientPaletteContainer from "./components/PaletteContainer/ClientPaletteContainer";
-import Home from "./components/Home/Home";
 import useFetchFirestoreUser from "./hooks/useFetchFirestoreUser";
+import NavBar from "./components/NavBar/NavBar";
+import Home from "./components/Home/Home";
+import DetailedPalette from "./components/PaletteContainer/DetailedPalette/DetailedPalette";
+
+const CreatePalette = React.lazy(() =>
+	import("./components/CreatePalette/CreatePalette")
+);
+const ClientPaletteContainer = React.lazy(() =>
+	import("./components/PaletteContainer/ClientPaletteContainer")
+);
 
 //for index.js
 const App = () => {
@@ -65,15 +73,15 @@ const App = () => {
 				<div className="container">
 					<Switch>
 						<Route exact path="/create">
-							{user ? (
-								<CreatePalette userId={user.id} />
-							) : (
-								<div>Loading Create Palette...</div>
-							)}
+							<Suspense fallback={<div>Loading Create Palette...</div>}>
+								{user && <CreatePalette userId={user.id} />}
+							</Suspense>
 						</Route>
 
 						<Route exact path="/likes">
-							<ClientPaletteContainer />
+							<Suspense fallback={<div>Loading Favourite Palettes...</div>}>
+								<ClientPaletteContainer />
+							</Suspense>
 						</Route>
 
 						<Route exact path="/about">

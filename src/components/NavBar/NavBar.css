@@ -32,8 +32,7 @@
 }
 
 .NavBar .btn.active {
-	/* background-color: var(--col-border-unliked); */
-	display: none;
+	background-color: var(--col-border-unliked);
 }
 
 @media (max-width: 668px) {
