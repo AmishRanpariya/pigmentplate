@@ -1,2 +1,2 @@
 #redirect every path to /
-/*     /   301
+/*     /index.html   200
