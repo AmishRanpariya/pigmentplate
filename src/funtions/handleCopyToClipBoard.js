@@ -16,7 +16,6 @@ export const handleCopyToClipBoard = (e) => {
 		"😍",
 		"😘",
 		"👍",
-		"✌",
 		"🤞",
 		"💖",
 		"😉",
@@ -36,7 +35,6 @@ export const handleCopyToClipBoard = (e) => {
 		"💃",
 		"💪",
 		"🤙",
-		"🖐",
 		"👌",
 		"👏",
 		"🙌",
@@ -58,7 +56,6 @@ export const handleCopyToClipBoard = (e) => {
 		"🔥",
 		"⛄",
 	];
-
 	//tooltip
 	let tip = document.createElement("div");
 	tip.innerHTML = `

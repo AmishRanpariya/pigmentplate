@@ -31,6 +31,11 @@
 	align-items: center;
 }
 
+.NavBar .btn.active {
+	/* background-color: var(--col-border-unliked); */
+	display: none;
+}
+
 @media (max-width: 668px) {
 	#createBtnLink {
 		display: none;

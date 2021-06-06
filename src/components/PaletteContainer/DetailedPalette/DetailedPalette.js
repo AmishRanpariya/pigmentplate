@@ -30,7 +30,6 @@ const item = {
 const DetailedPalette = () => {
 	const params = useParams();
 	const { palette, error, setPalette } = useFetchPalette(params.id);
-	// const [palette, setPalette] = useState(() => handlePaletteLike(params.id));
 	const userId = localStorage.getItem(LOCALSTORAGE.prefix_userId);
 	const isLiked = useRef(
 		localStorage.getItem(LOCALSTORAGE.prefix_liked + params.id) > 0
@@ -55,6 +54,7 @@ const DetailedPalette = () => {
 	const handlePaletteDownload = (e) => {
 		e.preventDefault();
 		let paletteHTML = `
+			<div class="downloadPaletteStyle">
 			<div class="color-grid">
 				<div class="color" style="background-color: ${"#" + palette.colors[0]};">
 					<span class="copy">${"#" + palette.colors[0].toUpperCase()}</span>
@@ -74,9 +74,10 @@ const DetailedPalette = () => {
 				<span>${BASEURL}/palettes/${palette.id}</span>
 				<span class="styling">${palette.likeCount}</span>
 			</div>
+			</div>
 		`;
 		const paletteRef = document.createElement("div");
-		paletteRef.classList.add("downloadPaletteStyle");
+		paletteRef.classList.add("downloadPaletteStyleWrapper");
 		paletteRef.innerHTML = paletteHTML;
 		document.body.appendChild(paletteRef);
 
@@ -89,10 +90,14 @@ const DetailedPalette = () => {
 				link.click();
 			});
 		setTimeout(() => {
-			if (document.body.lastChild.classList.contains("downloadPaletteStyle")) {
+			if (
+				document.body.lastChild.classList.contains(
+					"downloadPaletteStyleWrapper"
+				)
+			) {
 				document.body.lastChild.remove();
 			}
-		}, 3000);
+		}, 5000);
 	};
 
 	return (
@@ -143,11 +148,13 @@ const DetailedPalette = () => {
 							</svg>
 						</button>
 						<div className="tags">
-							{palette.tags.map((tag, index) => (
-								<a key={index} href={"#" + tag}>
-									#{tag}
-								</a>
-							))}
+							{palette.tags
+								.slice(0, Math.min(5, palette.tags.length))
+								.map((tag, index) => (
+									<a key={index} href={"#" + tag}>
+										#{tag}
+									</a>
+								))}
 						</div>
 						<TimeStamp classes="timestamp" timestamp={palette.createdAt} />
 						<div className="styling">{palette.likeCount}</div>

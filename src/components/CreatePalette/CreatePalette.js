@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router";
+import { db, firebase } from "../../firebase/config";
+
 import {
 	DEFAULT_PALETTE,
 	LOCALSTORAGE,
 	PALETTE_COLLECTION,
 	USER_COLLECTION,
 } from "../../Const";
-
-import { db, firebase } from "../../firebase/config";
-
+import handleInteraction from "../../funtions/handleInteraction";
 import ColorPicker from "./ColorPicker/ColorPicker";
 import "./CreatePalette.css";
 
@@ -27,24 +27,7 @@ const CreatePalette = ({ userId }) => {
 	const [color4, setColor4] = useState("#" + palette.colors[3]);
 
 	const getRandomColor = () => {
-		const digits = [
-			"0",
-			"1",
-			"2",
-			"3",
-			"4",
-			"5",
-			"6",
-			"7",
-			"8",
-			"9",
-			"a",
-			"b",
-			"c",
-			"d",
-			"e",
-			"f",
-		];
+		const digits = "0123456789abcdef".split("");
 		const colors = [];
 		for (let j = 0; j < 4; j++) {
 			let _col = "#";
@@ -53,15 +36,10 @@ const CreatePalette = ({ userId }) => {
 			}
 			colors.push(_col);
 		}
-		colors.sort();
-		if (Math.random() > 0.5) {
-			colors.reverse();
-		}
 		setColor1(colors[0]);
 		setColor2(colors[1]);
 		setColor3(colors[2]);
 		setColor4(colors[3]);
-		console.log(colors);
 	};
 
 	//for random initial color
@@ -139,10 +117,7 @@ const CreatePalette = ({ userId }) => {
 				.then(() => {
 					setIsPending(false);
 					setError(null);
-					localStorage.setItem(
-						LOCALSTORAGE.prefix_interaction,
-						+localStorage.getItem(LOCALSTORAGE.prefix_interaction) + 1
-					);
+					handleInteraction();
 					localStorage.setItem(
 						LOCALSTORAGE.prefix_created + paletteId,
 						new Date().getTime()

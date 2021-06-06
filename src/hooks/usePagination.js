@@ -9,7 +9,6 @@ const usePagination = () => {
 	const [isScrollComplete, setIsScrollComplete] = useState(false); //isScrolled to end,if so , reuest more palettes
 	const lastDoc = useRef(null);
 	const isReachedEnd = useRef(false);
-	console.log("HOME rendered");
 
 	const getNextPalettePage = async (callback) => {
 		handleInteraction();
@@ -56,7 +55,8 @@ const usePagination = () => {
 		const handleScroll = (e) => {
 			if (!isReachedEnd.current) {
 				setIsScrollComplete(
-					container.scrollHeight <= container.scrollTop + container.offsetHeight
+					container.scrollHeight <=
+						container.scrollTop + container.offsetHeight + 20
 				);
 			}
 		};

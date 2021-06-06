@@ -1,4 +1,12 @@
+.downloadPaletteStyleWrapper {
+	position: fixed;
+	top: -100vh;
+	left: -100vw;
+}
 .downloadPaletteStyle {
+	/* position: fixed; */
+	/* top: 0; */
+	/* left: 0; */
 	height: 400px;
 	width: 668px;
 	background-color: var(--col-bg-body);

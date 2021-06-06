@@ -8,7 +8,7 @@ import handleInteraction from "../funtions/handleInteraction";
 const useFetchPalette = (paletteId) => {
 	const [palette, setPalette] = useState(null);
 	const [error, setError] = useState(null);
-	const _history = useHistory();
+	const history = useHistory();
 	useEffect(() => {
 		db.collection(PALETTE_COLLECTION.collection_name)
 			.doc(paletteId)
@@ -20,15 +20,15 @@ const useFetchPalette = (paletteId) => {
 					handleInteraction();
 					setError(null);
 				} else {
-					console.log("palette dont exit");
-					_history.push("/"); //redirect to home page if doesn't exist
+					console.log("palette not exit");
+					history.push("/"); //redirect to home page if doesn't exist
 				}
 			})
 			.catch((err) => {
 				console.log("useFetchPalette catch", err);
 				setError(err.message);
 			});
-	}, [paletteId, _history]);
+	}, [paletteId, history]);
 
 	return { palette, error, setPalette };
 };

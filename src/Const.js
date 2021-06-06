@@ -1,5 +1,3 @@
-export const DATABASE_ENDPOINT = "http://localhost:3002/";
-
 export const PALETTE_COLLECTION = {
 	collection_name: "palettes",
 	// collection_name: "test_palettes",
@@ -34,4 +32,4 @@ export const LOCALSTORAGE = {
 	prefix_interaction: "PigmentPlate/interactionCount",
 };
 
-export const BASEURL = "pigmentplate.io";
+export const BASEURL = "pigmentplate.netlify.app";

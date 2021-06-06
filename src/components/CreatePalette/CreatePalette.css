@@ -10,10 +10,9 @@
 .CreatePalette .ColorPicker {
 	margin: auto;
 	min-width: 500px;
-	aspect-ratio: 5/3;
 	max-width: 500px;
 	display: grid;
-	grid-template-rows: 7fr 1fr;
+	grid-template-rows: 8fr 1fr;
 	gap: 0.5rem;
 	background-color: var(--col-bg-body);
 	border-radius: 1rem;
@@ -51,7 +50,7 @@
 .CreatePalette .ColorPicker .TagInput {
 	display: -webkit-flex;
 	display: flex;
-	font-display: row;
+	flex-direction: row;
 	-webkit-align-items: center;
 	align-items: center;
 	-webkit-justify-content: space-between;
@@ -64,14 +63,14 @@
 	font-weight: 400;
 }
 .CreatePalette .ColorPicker .TagInput input {
-	margin-left: 1rem;
+	margin-left: 0.5rem;
 	text-decoration: none;
 	font-weight: 400;
 	background-color: inherit;
 	outline: none;
 	border: none;
 	border-bottom: 1px solid var(--col-text-unliked);
-	padding: 0.1rem 0.2rem;
+	padding: 0.1rem;
 	width: auto;
 }
 .CreatePalette .ColorPicker .btn {

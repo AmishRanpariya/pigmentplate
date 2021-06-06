@@ -105,6 +105,7 @@ const App = () => {
 						<Route path="*">
 							<Redirect to="/" />
 						</Route>
+						<Route />
 					</Switch>
 				</div>
 			) : (

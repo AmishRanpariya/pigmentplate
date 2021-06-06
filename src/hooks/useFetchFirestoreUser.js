@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { LOCALSTORAGE, USER_COLLECTION } from "../Const";
 import { db } from "../firebase/config";
-import handleInteraction from "../funtions/handleInteraction";
 
+import handleInteraction from "../funtions/handleInteraction";
+import { LOCALSTORAGE, USER_COLLECTION } from "../Const";
 //for App.js
 const useFetchFirestoreUser = () => {
 	const [user, setUser] = useState(null);
@@ -11,10 +11,38 @@ const useFetchFirestoreUser = () => {
 	useEffect(() => {
 		let unsub = () => {};
 
+		function createNewUserId() {
+			// Public Domain/MIT
+			var d = new Date().getTime(); //Timestamp
+			var d2 =
+				(performance && performance.now && performance.now() * 1000) || 0; //Time in microseconds since page-load or 0 if unsupported
+			return "xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+				var r = Math.random() * 16; //random number between 0 and 16
+				if (d > 0) {
+					//Use timestamp until depleted
+					r = (d + r) % 16 | 0;
+					d = Math.floor(d / 16);
+				} else {
+					//Use microseconds since page-load if supported
+					r = (d2 + r) % 16 | 0;
+					d2 = Math.floor(d2 / 16);
+				}
+				return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
+			});
+		}
+
+		const getUserIdFromLocalstorage = () => {
+			return localStorage.getItem(LOCALSTORAGE.prefix_userId); //geting uid
+		};
+		const setUserIdToLocalstorage = (userId) => {
+			localStorage.setItem(LOCALSTORAGE.prefix_userId, userId); //storing uid
+		};
+
 		const createUser = (userId) => {
+			const timenow = new Date().getTime();
 			const userData = {
 				id: userId,
-				createdAt: +userId.slice(3, userId.length),
+				createdAt: timenow,
 				interactionCount: 1,
 				likedPalette: [],
 				createdPalette: [],
@@ -26,6 +54,7 @@ const useFetchFirestoreUser = () => {
 				.set(userData)
 				.then(() => {
 					console.log("db used for user Creation");
+					setUser(userData);
 				})
 				.catch((err) => {
 					console.log("createUser catch", err);
@@ -41,6 +70,15 @@ const useFetchFirestoreUser = () => {
 					console.log("db used for user fetch");
 					if (snap && snap.exists) {
 						setUser(snap.data());
+					} else if (snap && !snap.exists) {
+						console.log("user depricated so new creating");
+						//means can not find user in firestore with given userId
+						//means userId is depricated
+						// so create new userId
+						//save it to localstorage and createUser then getUser.
+						const newUID = createNewUserId();
+						setUserIdToLocalstorage(newUID);
+						createUser(newUID);
 					}
 				})
 				.catch((err) => {
@@ -48,44 +86,19 @@ const useFetchFirestoreUser = () => {
 					setError(err.message);
 				});
 		};
-		// const setListenerUser = (userId) => {
-		// 	return db
-		// 		.collection(USER_COLLECTION.collection_name)
-		// 		.doc(userId)
-		// 		.onSnapshot(
-		// 			(doc) => {
-		// 				if (doc.exists) {
-		// 					console.log("user listener", doc);
-		// 					setUser(doc.data());
-		// 					error && setError(null);
-		// 				} else {
-		// 					console.log("Error: Snapshot not exist at setListenerUser");
-		// 				}
-		// 			},
-		// 			(err) => {
-		// 				console.log("setUserListener catch", err);
-		// 				setError(err.message);
-		// 			}
-		// 		);
-		// };
 
 		handleInteraction();
-		if (localStorage.getItem(LOCALSTORAGE.prefix_userId)) {
-			//if old user
-			const userId = localStorage.getItem(LOCALSTORAGE.prefix_userId); //geting uid
-			//fetching userdata
-			// unsub = setListenerUser(userId);
+		if (getUserIdFromLocalstorage()) {
+			//means old user
+			const userId = getUserIdFromLocalstorage();
 			getUser(userId);
 		} else {
-			//if new user
-			const newUID = "ppu" + new Date().getTime(); //creating new user id  TODO: create randomization
-			localStorage.setItem(LOCALSTORAGE.prefix_userId, newUID); //storing id
-			const userId = localStorage.getItem(LOCALSTORAGE.prefix_userId); //retrieving id
-
-			createUser(userId);
-			// unsub = setListenerUser(userId);
-			getUser(userId);
+			//means new user
+			const newUID = createNewUserId();
+			setUserIdToLocalstorage(newUID);
+			createUser(newUID);
 		}
+
 		return () => unsub();
 	}, []);
 
