@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Palette from "../PaletteContainer/Palette/Palette";
 import SkeletonPalette from "../PaletteContainer/Palette/SkeletonPalette";
@@ -7,7 +7,11 @@ import usePagination from "../../hooks/usePagination";
 //for App.js
 const Home = () => {
 	const { palettes } = usePagination();
-
+	useEffect(() => {
+		//scrolling to top for every home page visit
+		let bodyEle = document.querySelector("#root").offsetTop;
+		document.querySelector(".container").scrollTop = bodyEle - 61.2;
+	}, []);
 	return (
 		<div className="wrapper">
 			{palettes && palettes.length > 0
