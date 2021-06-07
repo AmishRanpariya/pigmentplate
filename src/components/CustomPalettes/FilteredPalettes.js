@@ -2,11 +2,13 @@ import React from "react";
 
 import Palette from "../PaletteContainer/Palette/Palette";
 import SkeletonPalette from "../PaletteContainer/Palette/SkeletonPalette";
-import usePagination from "../../hooks/usePagination";
+import useFilteredPagination from "../../hooks/useFilteredPagination";
+import { useParams } from "react-router";
 
 //for App.js
-const Home = () => {
-	const { palettes } = usePagination();
+const FilteredPalettes = () => {
+	const params = useParams();
+	const { palettes } = useFilteredPagination(params.tagname);
 
 	return (
 		<div className="wrapper">
@@ -29,4 +31,4 @@ const Home = () => {
 		</div>
 	);
 };
-export default Home;
+export default FilteredPalettes;

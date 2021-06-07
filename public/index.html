@@ -11,10 +11,80 @@
 		/>
 		<link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
 		<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+		<style>
+			.loader {
+				width: 250px;
+				height: 50px;
+				line-height: 50px;
+				text-align: center;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				font-family: helvetica, arial, sans-serif;
+				text-transform: uppercase;
+				font-weight: 900;
+				color: #14103b;
+				letter-spacing: 0.2em;
+			}
+			.loader::before,
+			.loader::after {
+				content: "";
+				display: block;
+				width: 15px;
+				height: 15px;
+				background: #14103b;
+				position: absolute;
+				-webkit-animation: load 0.7s infinite alternate ease-in-out;
+				animation: load 0.7s infinite alternate ease-in-out;
+			}
+			.loader::before {
+				top: 0;
+			}
+			.loader::after {
+				bottom: 0;
+			}
+
+			@-webkit-keyframes load {
+				0% {
+					left: 0;
+					height: 30px;
+					width: 15px;
+				}
+				50% {
+					height: 8px;
+					width: 40px;
+				}
+				100% {
+					left: 235px;
+					height: 30px;
+					width: 15px;
+				}
+			}
+
+			@keyframes load {
+				0% {
+					left: 0;
+					height: 30px;
+					width: 15px;
+				}
+				50% {
+					height: 8px;
+					width: 40px;
+				}
+				100% {
+					left: 235px;
+					height: 30px;
+					width: 15px;
+				}
+			}
+		</style>
 		<title>Pigment Plate</title>
 	</head>
 	<body>
 		<noscript>You need to enable JavaScript to run this app.</noscript>
-		<div id="root"></div>
+		<div id="root">
+			<div class="loader">Loading...</div>
+		</div>
 	</body>
 </html>

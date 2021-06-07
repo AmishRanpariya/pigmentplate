@@ -1,0 +1,17 @@
+.btn.roundedTag {
+	border-radius: 1000px;
+	padding: 0.35rem 0.7rem;
+	font-size: 0.9rem;
+}
+
+.btn.activeTag {
+	border-color: var(--col-border-liked);
+	color: var(--col-text-liked);
+}
+.btn.roundedTag:active {
+	background-color: var(--col-border-liked);
+}
+
+.tagWrapper {
+	gap: 0.5rem;
+}

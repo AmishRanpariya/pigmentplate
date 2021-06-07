@@ -5,7 +5,7 @@
 	min-width: 300px;
 	max-width: 700px;
 	min-height: 150px;
-	height: 420px;
+	height: 450px;
 	display: grid;
 	grid-template-rows: 7fr 0fr 2fr;
 	gap: 0.5rem;
@@ -59,22 +59,27 @@
 	font-size: 0.9rem;
 	padding: 1rem;
 }
+
 .DetailedPalette .metadata .tags {
 	display: -webkit-flex;
 	display: flex;
 	gap: 1rem;
 	z-index: 1;
 }
+
 .DetailedPalette .metadata .tags a {
 	color: gray;
 	font-weight: 400;
 }
+
 .DetailedPalette .metadata .btn {
 	font-size: inherit;
 }
+
 .DetailedPalette .metadata .tags a:hover {
 	color: var(--col-text-unliked);
 }
+
 .DetailedPalette .metadata .styling {
 	position: absolute;
 	bottom: 0;
@@ -87,11 +92,13 @@
 	-ms-user-select: none;
 	user-select: none;
 }
+
 .DetailedPalette .BigLikeButton {
 	height: 0;
 	position: relative;
 	cursor: pointer;
 }
+
 .DetailedPalette .BigLikeButton span {
 	border: 1px solid var(--col-border-unliked);
 	display: block;
@@ -110,17 +117,21 @@
 	border-radius: 100%;
 	text-align: center;
 }
+
 .DetailedPalette .BigLikeButton span svg {
 	height: 2.2rem;
 	width: 2.2rem;
 }
+
 .DetailedPalette .BigLikeButton span:hover {
 	background-color: #eee;
 }
+
 .DetailedPalette .BigLikeButton.liked span {
 	color: var(--col-text-liked);
 	border-color: var(--col-border-liked);
 }
+
 .DetailedPalette .BigLikeButton span:active {
 	color: #ddd;
 	background-color: #000;
@@ -136,11 +147,12 @@
 @media (max-width: 640px) {
 	.DetailedPalette {
 		margin: 5vw auto;
-		-webkit-flex: 1 1 240px;
+		grid-template-rows: 7fr 0fr 2.5fr;
+		-webkit-flex: 1 1 200px;
 		flex: 1 1 240px;
-		min-width: 250px;
+		min-width: 200px;
 		width: 90%;
-		height: 54vw;
+		height: 59vw;
 		gap: 1vw;
 	}
 
@@ -177,10 +189,8 @@
 		margin: 0;
 	}
 	.DetailedPalette .metadata .btn svg {
-		height: 2.5vw;
+		height: 2.9vw;
 	}
-}
-@media (max-width: 490px) {
 	.DetailedPalette .metadata .timestamp {
 		display: none;
 	}

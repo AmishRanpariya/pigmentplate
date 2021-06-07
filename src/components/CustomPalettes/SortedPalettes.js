@@ -2,11 +2,11 @@ import React from "react";
 
 import Palette from "../PaletteContainer/Palette/Palette";
 import SkeletonPalette from "../PaletteContainer/Palette/SkeletonPalette";
-import usePagination from "../../hooks/usePagination";
+import useSortedPagination from "../../hooks/useSortedPagination";
 
 //for App.js
-const Home = () => {
-	const { palettes } = usePagination();
+const SortedPalettes = ({ orderby, isAsc }) => {
+	const { palettes } = useSortedPagination(orderby, isAsc);
 
 	return (
 		<div className="wrapper">
@@ -29,4 +29,4 @@ const Home = () => {
 		</div>
 	);
 };
-export default Home;
+export default SortedPalettes;

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { db } from "../firebase/config";
-import { PAGINATE, PALETTE_COLLECTION } from "../Const";
+
+import { CACHE, LOCALSTORAGE, PAGINATE, PALETTE_COLLECTION } from "../Const";
 import handleInteraction from "../funtions/handleInteraction";
 
 const usePagination = () => {
@@ -10,7 +11,70 @@ const usePagination = () => {
 	const lastDoc = useRef(null);
 	const isReachedEnd = useRef(false);
 
-	const getNextPalettePage = async (callback) => {
+	const getLocalPalettes = (callback) => {
+		if (localStorage.getItem(LOCALSTORAGE.prefix_cached_palettes_date)) {
+			const lastTimestamp = localStorage.getItem(
+				LOCALSTORAGE.prefix_cached_palettes_date
+			);
+			if (
+				Date.now() - lastTimestamp < CACHE.maxCacheTime &&
+				localStorage.getItem(LOCALSTORAGE.prefix_cached_palettes)
+			) {
+				//means cache is fresh
+				//means fresh cache is there
+				const data = JSON.parse(
+					localStorage.getItem(LOCALSTORAGE.prefix_cached_palettes)
+				);
+				console.log("cache data used");
+				callback(data);
+				lastDoc.current = JSON.parse(
+					localStorage.getItem(LOCALSTORAGE.prefix_cached_lastDoc)
+				);
+				return true;
+			} else {
+				//means cache is old
+				//or cache in not there (deleted by user or something)
+				//so we need to clear cache
+				localStorage.removeItem(LOCALSTORAGE.prefix_cached_palettes);
+				localStorage.removeItem(LOCALSTORAGE.prefix_cached_lastDoc);
+				localStorage.removeItem(LOCALSTORAGE.prefix_cached_palettes_date);
+				return false; //returning false so new data will be fetched
+			}
+		} else {
+			return false;
+			//no cache date means no cache done previouly
+		}
+	};
+
+	const setLocalPalettes = (data) => {
+		localStorage.setItem(LOCALSTORAGE.prefix_cached_palettes_date, Date.now()); //store caching time
+
+		if (localStorage.getItem(LOCALSTORAGE.prefix_cached_palettes)) {
+			//means some data already stored now append new data to existing data
+			const oldData = JSON.parse(
+				localStorage.getItem(LOCALSTORAGE.prefix_cached_palettes)
+			);
+
+			console.log("data cached");
+			localStorage.setItem(
+				LOCALSTORAGE.prefix_cached_palettes,
+				JSON.stringify(oldData.concat(data))
+			);
+		} else {
+			//no old data there so only store new data
+			localStorage.setItem(
+				LOCALSTORAGE.prefix_cached_palettes,
+				JSON.stringify(data)
+			);
+		}
+
+		localStorage.setItem(
+			LOCALSTORAGE.prefix_cached_lastDoc,
+			JSON.stringify(lastDoc.current)
+		);
+	};
+
+	const getNextPalettePage = async (callback, localCallback) => {
 		handleInteraction();
 		let newPalettes = [];
 		let snap;
@@ -33,13 +97,27 @@ const usePagination = () => {
 		console.log("db used for page fetch");
 		if (snap && !snap.empty) {
 			snap.docs.forEach((doc) => {
-				newPalettes.push(doc.data());
+				newPalettes.push({
+					id: doc.get("id"),
+					colors: doc.get("colors"),
+					createdAt: doc.get("createdAt"),
+					likeCount: doc.get("likeCount"),
+				});
 			});
 
-			lastDoc.current = snap.docs[snap.docs.length - 1]; //saving last reference for next query
-			callback((palettes) => {
-				return palettes.concat(newPalettes);
+			lastDoc.current = snap.docs[snap.docs.length - 1].get("createdAt"); //saving last reference for next query
+			callback((_palettes) => {
+				return _palettes.concat(newPalettes);
 			});
+			localCallback(newPalettes);
+
+			if (
+				snap.docs.length !== PAGINATE.initialFetchCount &&
+				snap.docs.length !== PAGINATE.subSequentFetchCount
+			) {
+				//means last batch brought less data. means we reached end in db
+				isReachedEnd.current = true;
+			}
 		} else {
 			//reached end
 			isReachedEnd.current = true;
@@ -49,7 +127,9 @@ const usePagination = () => {
 	};
 
 	useEffect(() => {
-		getNextPalettePage(setPalettes); //call for initial page
+		if (!getLocalPalettes(setPalettes)) {
+			getNextPalettePage(setPalettes, setLocalPalettes); //call for initial page
+		}
 
 		const container = document.querySelector(".container");
 		const handleScroll = (e) => {
@@ -70,7 +150,7 @@ const usePagination = () => {
 	useEffect(() => {
 		if (isScrollComplete) {
 			if (!isReachedEnd.current) {
-				getNextPalettePage(setPalettes); //call fore next palettes
+				getNextPalettePage(setPalettes, setLocalPalettes); //call fore next palettes
 			}
 		}
 	}, [isScrollComplete]);

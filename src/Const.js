@@ -2,6 +2,8 @@ export const PALETTE_COLLECTION = {
 	collection_name: "palettes",
 	// collection_name: "test_palettes",
 	timeField: "createdAt",
+	likeCount: "likeCount",
+	id: "id",
 };
 
 export const PAGINATE = {
@@ -30,6 +32,24 @@ export const LOCALSTORAGE = {
 	prefix_created: "PigmentPlateCreated/",
 	prefix_userId: "PigmentPlateUID",
 	prefix_interaction: "PigmentPlate/interactionCount",
+
+	prefix_cached_palettes: "PigmentPlateCache",
+	prefix_cached_palettes_date: "PigmentPlateCacheDate",
+	prefix_cached_lastDoc: "PigmentPlateCacheLastDoc", //for firestore cursor in pagination
 };
 
-export const BASEURL = "pigmentplate.netlify.app";
+//in ms
+// const oneDay = 86400000;
+// const hours12 = 12 * 60 * 60 * 1000;
+// const hours6 = 6 * 60 * 60 * 1000;
+const hours1 = 60 * 60 * 1000;
+// const hoursHalf = 30 * 60 * 1000;
+// const minutes10 = 10 * 60 * 1000;
+// const minutes5 = 5 * 60 * 1000;
+// const minutes1 = 60 * 1000;
+
+export const CACHE = {
+	maxCacheTime: hours1, // time after cache will be renewed
+};
+
+export const BASEURL = "pigmentplate.netlify.app"; //for download palette

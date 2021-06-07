@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { LOCALSTORAGE } from "../../Const";
 import MinimalPalette from "./MinimalPalette/MinimalPalette";
 import "./ClientPaletteContainer.css";
+import handleInteraction from "../../funtions/handleInteraction";
 
 //for App.js
 const ClientPaletteContainer = () => {
@@ -36,10 +37,7 @@ const ClientPaletteContainer = () => {
 	useEffect(() => {
 		getLocalPalettes(LOCALSTORAGE.prefix_created, setMyPalettes);
 		getLocalPalettes(LOCALSTORAGE.prefix_liked, setFavPalettes);
-		localStorage.setItem(
-			LOCALSTORAGE.prefix_interaction,
-			+localStorage.getItem(LOCALSTORAGE.prefix_interaction) + 1
-		);
+		handleInteraction();
 	}, []);
 
 	let favPalettesJSX = (

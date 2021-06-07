@@ -29,10 +29,7 @@ const Palette = memo((props) => {
 		} else {
 			isLiked.current = true;
 			handlePaletteLike(Palette.id, userId, 1, setPalette);
-			localStorage.setItem(
-				LOCALSTORAGE.prefix_liked + Palette.id,
-				new Date().getTime()
-			);
+			localStorage.setItem(LOCALSTORAGE.prefix_liked + Palette.id, Date.now());
 		}
 	};
 

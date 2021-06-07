@@ -1,4 +1,4 @@
-import { PALETTE_COLLECTION, USER_COLLECTION } from "../Const";
+import { LOCALSTORAGE, PALETTE_COLLECTION, USER_COLLECTION } from "../Const";
 import { db, firebase } from "../firebase/config";
 import handleInteraction from "./handleInteraction";
 
@@ -12,6 +12,7 @@ const handlePaletteLike = (
 	callback = () => {}
 ) => {
 	let palette = {};
+
 	const likePalette = () => {
 		// Get a new write batch
 		let batch = db.batch();
@@ -76,6 +77,12 @@ const handlePaletteLike = (
 	};
 
 	const getPalette = (paletteId) => {
+		let localData;
+		if (localStorage.getItem(LOCALSTORAGE.prefix_cached_palettes)) {
+			localData = JSON.parse(
+				localStorage.getItem(LOCALSTORAGE.prefix_cached_palettes)
+			);
+		}
 		db.collection(PALETTE_COLLECTION.collection_name)
 			.doc(paletteId)
 			.get()
@@ -84,6 +91,22 @@ const handlePaletteLike = (
 				if (snap && snap.exists) {
 					callback(snap.data());
 					palette = snap.data();
+
+					const paletteIndex = localData.findIndex(
+						(palette) => palette.id === paletteId
+					);
+					if (paletteIndex >= 0 && paletteIndex < localData.length) {
+						localData[paletteIndex] = {
+							id: snap.get("id"),
+							colors: snap.get("colors"),
+							createdAt: snap.get("createdAt"),
+							likeCount: snap.get("likeCount"),
+						};
+						localStorage.setItem(
+							LOCALSTORAGE.prefix_cached_palettes,
+							JSON.stringify(localData)
+						);
+					}
 				}
 			})
 			.catch((err) => {

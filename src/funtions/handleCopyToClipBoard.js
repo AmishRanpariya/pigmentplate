@@ -1,6 +1,9 @@
+import handleInteraction from "./handleInteraction";
+
 export const handleCopyToClipBoard = (e) => {
 	e.preventDefault();
-
+	console.log("colorHEX copied");
+	handleInteraction();
 	//to copy HEXcode on clipboard by clicking this
 	let temp = document.createElement("input");
 	document.body.appendChild(temp);

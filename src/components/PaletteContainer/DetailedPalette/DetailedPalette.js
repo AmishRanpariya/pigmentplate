@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Redirect, useParams } from "react-router";
 import * as htmlToImage from "html-to-image";
@@ -11,6 +11,7 @@ import { handleCopyToClipBoard } from "../../../funtions/handleCopyToClipBoard";
 import "./downloadPaletteStyle.css";
 import handlePaletteLike from "../../../funtions/handlePaletteLike";
 import useFetchPalette from "../../../hooks/useFetchPalette";
+import { Link } from "react-router-dom";
 
 //animation
 const container = {
@@ -35,6 +36,14 @@ const DetailedPalette = () => {
 		localStorage.getItem(LOCALSTORAGE.prefix_liked + params.id) > 0
 	);
 
+	useEffect(() => {
+		//scrolling to top for every detailed palette
+		let bodyEle = document.querySelector("#root").offsetTop;
+		if (document.querySelector(".DetailedPalette")) {
+			document.querySelector(".container").scrollTop = bodyEle - 61.2;
+		}
+	}, [params, palette]);
+
 	const LikeButtonClickHandler = (e) => {
 		e.preventDefault();
 		if (isLiked.current === true) {
@@ -44,10 +53,7 @@ const DetailedPalette = () => {
 		} else {
 			isLiked.current = true;
 			handlePaletteLike(params.id, userId, 1, setPalette);
-			localStorage.setItem(
-				LOCALSTORAGE.prefix_liked + params.id,
-				new Date().getTime()
-			);
+			localStorage.setItem(LOCALSTORAGE.prefix_liked + params.id, Date.now());
 		}
 	};
 
@@ -103,7 +109,7 @@ const DetailedPalette = () => {
 	return (
 		<>
 			{error && <Redirect to="/" />}
-			{!palette && <div>Loading Detailed Palette...</div>}
+			{!palette && <div className="wrapper">Loading Detailed Palette...</div>}
 			{palette && palette.colors && (
 				<motion.div
 					className="DetailedPalette"
@@ -151,9 +157,9 @@ const DetailedPalette = () => {
 							{palette.tags
 								.slice(0, Math.min(5, palette.tags.length))
 								.map((tag, index) => (
-									<a key={index} href={"#" + tag}>
+									<Link key={index} to={"/palettes/" + tag}>
 										#{tag}
-									</a>
+									</Link>
 								))}
 						</div>
 						<TimeStamp classes="timestamp" timestamp={palette.createdAt} />

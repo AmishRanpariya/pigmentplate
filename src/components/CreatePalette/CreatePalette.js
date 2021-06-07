@@ -11,6 +11,7 @@ import {
 import handleInteraction from "../../funtions/handleInteraction";
 import ColorPicker from "./ColorPicker/ColorPicker";
 import "./CreatePalette.css";
+import TagList from "./TagList/TagList";
 
 //for App.js
 const CreatePalette = ({ userId }) => {
@@ -26,6 +27,51 @@ const CreatePalette = ({ userId }) => {
 	const [color3, setColor3] = useState("#" + palette.colors[2]);
 	const [color4, setColor4] = useState("#" + palette.colors[3]);
 
+	const [taglist] = useState([
+		"red",
+		"green",
+		"blue",
+		"black",
+		"white",
+		"yellow",
+		"pink",
+		"violet",
+		"purple",
+		"orange",
+		"brown",
+		"turquoise",
+		"gray",
+		"warm",
+		"cold",
+		"bright",
+		"neon",
+		"gold",
+		"pastel",
+		"skin",
+		"vintage",
+		"wedding",
+		"sunset",
+		"summer",
+		"automn",
+		"winter",
+		"spring",
+	]);
+
+	const handleTagClick = (e) => {
+		if (
+			e.target.classList.contains("activeTag") &&
+			+e.target.dataset.id < taglist.length
+		) {
+			setTags((_tags) =>
+				_tags
+					.split(" ")
+					.filter((tag) => tag !== taglist[+e.target.dataset.id])
+					.join(" ")
+			);
+		} else {
+			setTags((_tags) => _tags + " " + taglist[+e.target.dataset.id]);
+		}
+	};
 	const getRandomColor = () => {
 		const digits = "0123456789abcdef".split("");
 		const colors = [];
@@ -91,43 +137,64 @@ const CreatePalette = ({ userId }) => {
 				colors: [_col1, _col2, _col3, _col4],
 				tags: [..._tags],
 				likeCount: 0,
-				createdAt: new Date().getTime(),
+				createdAt: Date.now(),
 				createdBy: userId,
 				likedBy: [],
 				interactionCount: 1,
 			};
+			//first check if palette already created
+			db.collection(PALETTE_COLLECTION.collection_name)
+				.doc(_palette.id)
+				.get()
+				.then((snap) => {
+					if (snap && snap.exists) {
+						//already exist
+						console.log("already exist");
+						_history.push("/palette/" + _palette.id);
+					} else {
+						//doesnt exist
 
-			// Get a new write batch
-			let batch = db.batch();
+						// Get a new write batch
+						let batch = db.batch();
 
-			let paletteRef = db
-				.collection(PALETTE_COLLECTION.collection_name)
-				.doc(_palette.id);
-			batch.set(paletteRef, _palette);
+						let paletteRef = db
+							.collection(PALETTE_COLLECTION.collection_name)
+							.doc(_palette.id);
+						batch.set(paletteRef, _palette);
 
-			let userRef = db.collection(USER_COLLECTION.collection_name).doc(userId);
-			batch.update(userRef, {
-				interactionCount: firebase.firestore.FieldValue.increment(1),
-				createdPalette: firebase.firestore.FieldValue.arrayUnion(_palette.id),
-			});
+						let userRef = db
+							.collection(USER_COLLECTION.collection_name)
+							.doc(userId);
+						batch.update(userRef, {
+							interactionCount: firebase.firestore.FieldValue.increment(1),
+							createdPalette: firebase.firestore.FieldValue.arrayUnion(
+								_palette.id
+							),
+						});
 
-			// Commit the batch
-			batch
-				.commit()
-				.then(() => {
-					setIsPending(false);
-					setError(null);
-					handleInteraction();
-					localStorage.setItem(
-						LOCALSTORAGE.prefix_created + paletteId,
-						new Date().getTime()
-					);
-					_history.push("/palette/" + _palette.id);
+						// Commit the batch
+						batch
+							.commit()
+							.then(() => {
+								setIsPending(false);
+								setError(null);
+								handleInteraction();
+								localStorage.setItem(
+									LOCALSTORAGE.prefix_created + paletteId,
+									Date.now()
+								);
+								_history.push("/palette/" + _palette.id);
+							})
+							.catch((err) => {
+								console.log(err);
+								setError(err.message);
+								setIsPending(false);
+							});
+					}
 				})
 				.catch((err) => {
-					console.log(err);
-					setError(err.message);
-					setIsPending(false);
+					//couldnt fetch data due to network error but may be data exist
+					console.log("error catched at checking for createPalette");
 				});
 		} else {
 			console.log("Invalid HEXCODE");
@@ -135,42 +202,39 @@ const CreatePalette = ({ userId }) => {
 	};
 
 	return (
-		<div className="CreatePalette">
-			<div className=" ColorPicker">
-				<div className="color-grid">
-					<div className="color" style={{ backgroundColor: color1 }}></div>
-					<div className="color" style={{ backgroundColor: color2 }}></div>
-					<div className="color" style={{ backgroundColor: color3 }}></div>
-					<div className="color" style={{ backgroundColor: color4 }}></div>
+		<>
+			<div className="CreatePalette">
+				<div className=" ColorPicker">
+					<div className="color-grid">
+						<div className="color" style={{ backgroundColor: color1 }}></div>
+						<div className="color" style={{ backgroundColor: color2 }}></div>
+						<div className="color" style={{ backgroundColor: color3 }}></div>
+						<div className="color" style={{ backgroundColor: color4 }}></div>
+					</div>
+					<div className="PickerGrid">
+						<ColorPicker color={color1} onChangeHandler={handleChangeColor1} />
+						<ColorPicker color={color2} onChangeHandler={handleChangeColor2} />
+						<ColorPicker color={color3} onChangeHandler={handleChangeColor3} />
+						<ColorPicker color={color4} onChangeHandler={handleChangeColor4} />
+					</div>
+					<div className="TagInput">
+						<div></div>
+						<button
+							className="btn"
+							onClick={handleCreatePalette}
+							disabled={!isPending}
+						>
+							Create
+						</button>
+						<div></div>
+					</div>
+					{error && <div>Something Went Wrong</div>}
 				</div>
-				<div className="PickerGrid">
-					<ColorPicker color={color1} onChangeHandler={handleChangeColor1} />
-					<ColorPicker color={color2} onChangeHandler={handleChangeColor2} />
-					<ColorPicker color={color3} onChangeHandler={handleChangeColor3} />
-					<ColorPicker color={color4} onChangeHandler={handleChangeColor4} />
-				</div>
-				<div className="TagInput">
-					<form onSubmit={handleCreatePalette}>
-						<label htmlFor="tags">Tags:</label>
-						<input
-							name="tags"
-							placeholder="e.g. lemon lellow summer"
-							type="text"
-							value={tags}
-							onChange={(e) => setTags(e.target.value.toLowerCase())}
-						/>
-					</form>
-					<button
-						className="btn"
-						onClick={handleCreatePalette}
-						disabled={!isPending}
-					>
-						Create
-					</button>
+				<div className="wrapper tagWrapper">
+					<TagList taglist={taglist} handleClick={handleTagClick} />
 				</div>
 			</div>
-			{error && <div>Something Went Wrong</div>}
-		</div>
+		</>
 	);
 };
 

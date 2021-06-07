@@ -13,7 +13,7 @@ const useFetchFirestoreUser = () => {
 
 		function createNewUserId() {
 			// Public Domain/MIT
-			var d = new Date().getTime(); //Timestamp
+			var d = Date.now(); //Timestamp
 			var d2 =
 				(performance && performance.now && performance.now() * 1000) || 0; //Time in microseconds since page-load or 0 if unsupported
 			return "xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx".replace(/[xy]/g, function (c) {
@@ -39,7 +39,7 @@ const useFetchFirestoreUser = () => {
 		};
 
 		const createUser = (userId) => {
-			const timenow = new Date().getTime();
+			const timenow = Date.now();
 			const userData = {
 				id: userId,
 				createdAt: timenow,
@@ -82,7 +82,7 @@ const useFetchFirestoreUser = () => {
 					}
 				})
 				.catch((err) => {
-					console.log("getUser catch", err);
+					console.log("getUser catch", err, err.message);
 					setError(err.message);
 				});
 		};
