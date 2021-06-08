@@ -70,13 +70,15 @@
 .CreatePalette .ColorPicker .TagInput {
 	display: -webkit-flex;
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	-webkit-align-items: center;
 	align-items: center;
 	-webkit-justify-content: space-between;
 	justify-content: space-between;
-	padding: 0.5rem;
+	gap: 1rem;
+	padding: 0.5rem 0;
 }
+
 .CreatePalette .ColorPicker .TagInput label {
 	margin-left: 0.5rem;
 	font-size: 1rem;
@@ -93,11 +95,115 @@
 	padding: 0.1rem;
 	width: auto;
 }
-.CreatePalette .ColorPicker .btn {
+.CreatePalette .ColorPicker .createBtn {
 	width: 33%;
 	/* margin: 0.5rem auto; */
 	border-radius: 0.5rem;
 }
 .CreatePalette .ColorPicker .btn:hover {
 	border-color: var(--col-text-unliked);
+}
+
+@media (max-width: 570px) {
+	.CreatePalette {
+		width: 90%;
+		margin: 1rem auto;
+		justify-self: center;
+		-webkit-align-self: center;
+		align-self: center;
+		height: 652px;
+	}
+
+	.CreatePalette .ColorPicker {
+		margin: auto;
+		min-width: 200px;
+		display: grid;
+		grid-template-columns: 1fr 3fr;
+		grid-template-rows: 2fr 1.9fr;
+		gap: 0rem;
+		background-color: var(--col-bg-body);
+		border-radius: 1rem;
+		box-shadow: var(--shadow);
+		overflow: visible;
+		transition: all 0.2s ease-in-out;
+		position: relative;
+	}
+	.PickerDiv {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		overflow: visible;
+	}
+	.CreatePalette .ColorPicker .color-grid {
+		grid-column: 2/3;
+		grid-row: 1/2;
+		display: grid;
+		grid-template-columns: 1fr;
+		border-radius: 0rem 1rem 0 0;
+		z-index: 5;
+		overflow: hidden;
+	}
+
+	.CreatePalette .ColorPicker .color-grid .color {
+		box-shadow: var(--in-shadow);
+		height: 100%;
+		width: 100%;
+		position: relative;
+		transition: all 0.1s ease-in-out;
+	}
+
+	.CreatePalette .ColorPicker .PickerGrid {
+		grid-column: 1/2;
+		grid-row: 1/2;
+
+		display: -webkit-flex;
+		display: flex;
+		flex-direction: column;
+		/* -webkit-justify-content: space-around; */
+		/* justify-content: space-around; */
+		/* -webkit-align-items: flex-start; */
+		/* align-items: flex-start; */
+		align-items: center;
+		justify-content: space-around;
+	}
+
+	.CreatePalette .ColorPicker .TagInput {
+		grid-column: span 2;
+
+		display: -webkit-flex;
+		display: flex;
+		flex-direction: column;
+		-webkit-align-items: center;
+		align-items: center;
+		-webkit-justify-content: space-between;
+		justify-content: space-between;
+		padding: 1rem 0;
+		border-top: 1px solid #000;
+	}
+
+	.CreatePalette .ColorPicker .TagInput label {
+		margin-left: 0.5rem;
+		font-size: 1rem;
+		font-weight: 400;
+	}
+	.CreatePalette .ColorPicker .TagInput input {
+		margin-left: 0.5rem;
+		text-decoration: none;
+		font-weight: 400;
+		background-color: inherit;
+		outline: none;
+		border: none;
+		border-bottom: 1px solid var(--col-text-unliked);
+		padding: 0.1rem;
+		width: auto;
+	}
+	.CreatePalette .ColorPicker .createBtn {
+		width: 33%;
+		/* margin: 0.5rem auto; */
+		border-radius: 0.5rem;
+	}
+	.CreatePalette .ColorPicker .btn:hover {
+		border-color: var(--col-text-unliked);
+	}
 }

@@ -218,20 +218,18 @@ const CreatePalette = ({ userId }) => {
 						<ColorPicker color={color4} onChangeHandler={handleChangeColor4} />
 					</div>
 					<div className="TagInput">
-						<div></div>
+						<div className="tagWrapper">
+							<TagList taglist={taglist} handleClick={handleTagClick} />
+						</div>
 						<button
-							className="btn"
+							className="btn createBtn"
 							onClick={handleCreatePalette}
 							disabled={!isPending}
 						>
 							Create
 						</button>
-						<div></div>
 					</div>
 					{error && <div>Something Went Wrong</div>}
-				</div>
-				<div className="wrapper tagWrapper">
-					<TagList taglist={taglist} handleClick={handleTagClick} />
 				</div>
 			</div>
 		</>

@@ -1,7 +1,7 @@
 .btn.roundedTag {
 	border-radius: 1000px;
-	padding: 0.35rem 0.7rem;
-	font-size: 0.9rem;
+	padding: 0.3rem 0.5rem;
+	font-size: 0.75rem;
 }
 
 .btn.activeTag {
@@ -13,5 +13,16 @@
 }
 
 .tagWrapper {
-	gap: 0.5rem;
+	padding: 0rem 0.4rem;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: row;
+	flex-direction: row;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-align-items: center;
+	align-items: center;
 }
