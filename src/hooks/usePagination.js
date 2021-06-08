@@ -10,6 +10,7 @@ const usePagination = () => {
 	const [isScrollComplete, setIsScrollComplete] = useState(false); //isScrolled to end,if so , reuest more palettes
 	const lastDoc = useRef(null);
 	const isReachedEnd = useRef(false);
+	const mounted = useRef(true);
 
 	const getLocalPalettes = (callback) => {
 		if (localStorage.getItem(LOCALSTORAGE.prefix_cached_palettes_date)) {
@@ -26,7 +27,7 @@ const usePagination = () => {
 					localStorage.getItem(LOCALSTORAGE.prefix_cached_palettes)
 				);
 				console.log("cache data used");
-				callback(data);
+				mounted.current && callback(data);
 				lastDoc.current = JSON.parse(
 					localStorage.getItem(LOCALSTORAGE.prefix_cached_lastDoc)
 				);
@@ -106,9 +107,10 @@ const usePagination = () => {
 			});
 
 			lastDoc.current = snap.docs[snap.docs.length - 1].get("createdAt"); //saving last reference for next query
-			callback((_palettes) => {
-				return _palettes.concat(newPalettes);
-			});
+			mounted.current &&
+				callback((_palettes) => {
+					return _palettes.concat(newPalettes);
+				});
 			localCallback(newPalettes);
 
 			if (
@@ -127,6 +129,7 @@ const usePagination = () => {
 	};
 
 	useEffect(() => {
+		mounted.current = true;
 		if (!getLocalPalettes(setPalettes)) {
 			getNextPalettePage(setPalettes, setLocalPalettes); //call for initial page
 		}
@@ -134,25 +137,31 @@ const usePagination = () => {
 		const container = document.querySelector(".container");
 		const handleScroll = (e) => {
 			if (!isReachedEnd.current) {
-				setIsScrollComplete(
-					container.scrollHeight <=
-						container.scrollTop + container.offsetHeight + 20
-				);
+				mounted.current &&
+					setIsScrollComplete(
+						container.scrollHeight <=
+							container.scrollTop + container.offsetHeight + 20
+					);
 			}
 		};
 		container.addEventListener("scroll", handleScroll);
 		// cleanup
 		return () => {
 			window.removeEventListener("scroll", handleScroll);
+			mounted.current = false;
 		};
 	}, []);
 
 	useEffect(() => {
+		mounted.current = true;
 		if (isScrollComplete) {
 			if (!isReachedEnd.current) {
 				getNextPalettePage(setPalettes, setLocalPalettes); //call fore next palettes
 			}
 		}
+		return () => {
+			mounted.current = false;
+		};
 	}, [isScrollComplete]);
 	return { palettes };
 };

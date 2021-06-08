@@ -7,9 +7,8 @@ import { LOCALSTORAGE, USER_COLLECTION } from "../Const";
 const useFetchFirestoreUser = () => {
 	const [user, setUser] = useState(null);
 	const [error, setError] = useState(null);
-
 	useEffect(() => {
-		let unsub = () => {};
+		let mounted = true;
 
 		function createNewUserId() {
 			// Public Domain/MIT
@@ -54,11 +53,11 @@ const useFetchFirestoreUser = () => {
 				.set(userData)
 				.then(() => {
 					console.log("db used for user Creation");
-					setUser(userData);
+					mounted && setUser(userData);
 				})
 				.catch((err) => {
 					console.log("createUser catch", err);
-					setError(err.message);
+					mounted && setError(err.message);
 				});
 		};
 
@@ -69,7 +68,7 @@ const useFetchFirestoreUser = () => {
 				.then((snap) => {
 					console.log("db used for user fetch");
 					if (snap && snap.exists) {
-						setUser(snap.data());
+						mounted && setUser(snap.data());
 					} else if (snap && !snap.exists) {
 						console.log("user depricated so new creating");
 						//means can not find user in firestore with given userId
@@ -83,7 +82,7 @@ const useFetchFirestoreUser = () => {
 				})
 				.catch((err) => {
 					console.log("getUser catch", err, err.message);
-					setError(err.message);
+					mounted && setError(err.message);
 				});
 		};
 
@@ -99,7 +98,9 @@ const useFetchFirestoreUser = () => {
 			createUser(newUID);
 		}
 
-		return () => unsub();
+		return () => {
+			mounted = false;
+		};
 	}, []);
 
 	return { user, error };

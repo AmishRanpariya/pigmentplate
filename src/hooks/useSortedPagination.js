@@ -10,6 +10,8 @@ const useSortedPagination = (orderby, isAsc) => {
 	const [isScrollComplete, setIsScrollComplete] = useState(false); //isScrolled to end,if so , reuest more palettes
 	const lastDoc = useRef(null);
 	const isReachedEnd = useRef(false);
+	const mounted = useRef(true);
+
 	const orderByfield = useRef(orderby);
 	const direction = useRef(isAsc ? "asc" : "desc");
 
@@ -47,9 +49,10 @@ const useSortedPagination = (orderby, isAsc) => {
 
 			lastDoc.current = snap.docs[snap.docs.length - 1]; //saving last reference for next query
 
-			callback((_palettes) => {
-				return _palettes.concat(newPalettes);
-			});
+			mounted.current &&
+				callback((_palettes) => {
+					return _palettes.concat(newPalettes);
+				});
 
 			if (
 				snap.docs.length !== PAGINATE.initialFetchCount &&
@@ -67,30 +70,39 @@ const useSortedPagination = (orderby, isAsc) => {
 	};
 
 	useEffect(() => {
+		mounted.current = true;
+
 		getNextPalettePage(setPalettes); //call for initial page
 
 		const container = document.querySelector(".container");
 		const handleScroll = (e) => {
 			if (!isReachedEnd.current) {
-				setIsScrollComplete(
-					container.scrollHeight <=
-						container.scrollTop + container.offsetHeight + 20
-				);
+				mounted.current &&
+					setIsScrollComplete(
+						container.scrollHeight <=
+							container.scrollTop + container.offsetHeight + 20
+					);
 			}
 		};
 		container.addEventListener("scroll", handleScroll);
 		// cleanup
 		return () => {
 			window.removeEventListener("scroll", handleScroll);
+			mounted.current = false;
 		};
 	}, []);
 
 	useEffect(() => {
+		mounted.current = true;
+
 		if (isScrollComplete) {
 			if (!isReachedEnd.current) {
 				getNextPalettePage(setPalettes); //call fore next palettes
 			}
 		}
+		return () => {
+			mounted.current = false;
+		};
 	}, [isScrollComplete]);
 	return { palettes };
 };

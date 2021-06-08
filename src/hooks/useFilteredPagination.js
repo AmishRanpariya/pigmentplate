@@ -11,6 +11,7 @@ const useFilteredPagination = (tagname) => {
 	const lastDoc = useRef(null);
 	const isReachedEnd = useRef(false);
 	const tagName = useRef(tagname);
+	const mounted = useRef(true);
 
 	const getNextPalettePage = async (callback) => {
 		handleInteraction();
@@ -48,9 +49,10 @@ const useFilteredPagination = (tagname) => {
 
 			lastDoc.current = snap.docs[snap.docs.length - 1]; //saving last reference for next query
 
-			callback((_palettes) => {
-				return _palettes.concat(newPalettes);
-			});
+			mounted.current &&
+				callback((_palettes) => {
+					return _palettes.concat(newPalettes);
+				});
 
 			if (
 				snap.docs.length !== PAGINATE.initialFetchCount &&
@@ -68,30 +70,38 @@ const useFilteredPagination = (tagname) => {
 	};
 
 	useEffect(() => {
+		mounted.current = true;
+
 		getNextPalettePage(setPalettes); //call for initial page
 
 		const container = document.querySelector(".container");
 		const handleScroll = (e) => {
 			if (!isReachedEnd.current) {
-				setIsScrollComplete(
-					container.scrollHeight <=
-						container.scrollTop + container.offsetHeight + 20
-				);
+				mounted.current &&
+					setIsScrollComplete(
+						container.scrollHeight <=
+							container.scrollTop + container.offsetHeight + 20
+					);
 			}
 		};
 		container.addEventListener("scroll", handleScroll);
 		// cleanup
 		return () => {
 			window.removeEventListener("scroll", handleScroll);
+			mounted.current = false;
 		};
 	}, []);
 
 	useEffect(() => {
+		mounted.current = true;
 		if (isScrollComplete) {
 			if (!isReachedEnd.current) {
 				getNextPalettePage(setPalettes); //call fore next palettes
 			}
 		}
+		return () => {
+			mounted.current = false;
+		};
 	}, [isScrollComplete]);
 	return { palettes };
 };

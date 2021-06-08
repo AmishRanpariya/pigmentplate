@@ -9,16 +9,18 @@ const useFetchPalette = (paletteId) => {
 	const [palette, setPalette] = useState(null);
 	const [error, setError] = useState(null);
 	const history = useHistory();
+
 	useEffect(() => {
+		let mounted = true;
 		db.collection(PALETTE_COLLECTION.collection_name)
 			.doc(paletteId)
 			.get()
 			.then((doc) => {
 				if (doc && doc.exists) {
 					console.log("db used for palette fetched at useFetchPalette");
-					setPalette(doc.data());
+					mounted && setPalette(doc.data());
 					handleInteraction();
-					setError(null);
+					mounted && setError(null);
 				} else {
 					console.log("palette not exit");
 					history.push("/"); //redirect to home page if doesn't exist
@@ -26,8 +28,11 @@ const useFetchPalette = (paletteId) => {
 			})
 			.catch((err) => {
 				console.log("useFetchPalette catch", err);
-				setError(err.message);
+				mounted && setError(err.message);
 			});
+		return () => {
+			mounted = false;
+		};
 	}, [paletteId, history]);
 
 	return { palette, error, setPalette };
