@@ -16,6 +16,9 @@ random page
 
 error handling
 
+firestore rule update
+adding authentication
+
 admin app/page
 
 <!-- # useHistory in detailedpalette crash -->
@@ -25,3 +28,5 @@ admin app/page
 <!-- userID randomization -->
 
 <!-- emoji after copy tool tip -->
+
+# ppu1622565372548

@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Palette from "../PaletteContainer/Palette/Palette";
 import SkeletonPalette from "../PaletteContainer/Palette/SkeletonPalette";
 import useSortedPagination from "../../hooks/useSortedPagination";
+import handleInteraction from "../../funtions/handleInteraction";
 
 //for App.js
 const SortedPalettes = ({ orderby, isAsc }) => {
 	const { palettes } = useSortedPagination(orderby, isAsc);
+	useEffect(() => {
+		document.title = "Popular Palettes | Pigment Plate";
+		handleInteraction("popular_palette_open", { orderby });
+	}, [orderby]);
 
 	return (
 		<div className="wrapper">

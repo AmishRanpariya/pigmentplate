@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Palette from "../PaletteContainer/Palette/Palette";
 import SkeletonPalette from "../PaletteContainer/Palette/SkeletonPalette";
 import useFilteredPagination from "../../hooks/useFilteredPagination";
 import { useParams } from "react-router";
+import handleInteraction from "../../funtions/handleInteraction";
 
 //for App.js
 const FilteredPalettes = () => {
 	const params = useParams();
 	const { palettes } = useFilteredPagination(params.tagname);
+	useEffect(() => {
+		document.title = "Similar Palettes | Pigment Plate";
+		handleInteraction("filtered_palettes_open", {
+			forColor: params.tagname,
+		});
+	}, [params]);
 
 	return (
 		<div className="wrapper">

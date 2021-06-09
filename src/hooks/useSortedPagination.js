@@ -16,7 +16,6 @@ const useSortedPagination = (orderby, isAsc) => {
 	const direction = useRef(isAsc ? "asc" : "desc");
 
 	const getNextPalettePage = async (callback) => {
-		handleInteraction();
 		let newPalettes = [];
 		let snap;
 		if (!lastDoc.current) {
@@ -60,10 +59,12 @@ const useSortedPagination = (orderby, isAsc) => {
 			) {
 				//means last batch brought less data. means we reached end in db
 				isReachedEnd.current = true;
+				handleInteraction("reached_to_bottom", { scrolledFor: "popular" });
 			}
 		} else {
 			//reached end
 			isReachedEnd.current = true;
+			handleInteraction("reached_to_bottom", { scrolledFor: "popular" });
 			// throw new Error("no snaps");
 		}
 		return newPalettes;

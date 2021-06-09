@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import { db, firebase } from "../../firebase/config";
+import { db, firebase, timestamp } from "../../firebase/config";
 
 import {
 	DEFAULT_PALETTE,
@@ -26,6 +26,11 @@ const CreatePalette = ({ userId }) => {
 	const [color2, setColor2] = useState("#" + palette.colors[1]);
 	const [color3, setColor3] = useState("#" + palette.colors[2]);
 	const [color4, setColor4] = useState("#" + palette.colors[3]);
+
+	useEffect(() => {
+		document.title = "Create Palette | Pigment Plate";
+		handleInteraction("create_palette_open");
+	}, []);
 
 	const [taglist] = useState([
 		"red",
@@ -72,6 +77,7 @@ const CreatePalette = ({ userId }) => {
 			setTags((_tags) => _tags + " " + taglist[+e.target.dataset.id]);
 		}
 	};
+
 	const getRandomColor = () => {
 		const digits = "0123456789abcdef".split("");
 		const colors = [];
@@ -93,6 +99,7 @@ const CreatePalette = ({ userId }) => {
 		getRandomColor();
 		const handleKeyPress = (e) => {
 			if (e.keyCode === 43) {
+				//num plus
 				getRandomColor();
 			}
 		};
@@ -137,7 +144,7 @@ const CreatePalette = ({ userId }) => {
 				colors: [_col1, _col2, _col3, _col4],
 				tags: [..._tags],
 				likeCount: 0,
-				createdAt: Date.now(),
+				createdAt: timestamp(),
 				createdBy: userId,
 				likedBy: [],
 				interactionCount: 1,
@@ -151,6 +158,10 @@ const CreatePalette = ({ userId }) => {
 						//already exist
 						console.log("already exist");
 						_history.push("/palette/" + _palette.id);
+						handleInteraction("error_dupilicate_palette_create", {
+							paletteId,
+							err: "duplicate palette",
+						});
 					} else {
 						//doesnt exist
 
@@ -178,7 +189,7 @@ const CreatePalette = ({ userId }) => {
 							.then(() => {
 								setIsPending(false);
 								setError(null);
-								handleInteraction();
+								handleInteraction("palette_created", { paletteId });
 								localStorage.setItem(
 									LOCALSTORAGE.prefix_created + paletteId,
 									Date.now()
@@ -187,16 +198,29 @@ const CreatePalette = ({ userId }) => {
 							})
 							.catch((err) => {
 								console.log(err);
+								handleInteraction("error_palette_created", {
+									paletteId,
+									err: err.message,
+								});
 								setError(err.message);
 								setIsPending(false);
 							});
 					}
 				})
 				.catch((err) => {
+					handleInteraction("error_in_checking_dupilicate_palette_create", {
+						paletteId,
+						err: err.message,
+					});
 					//couldnt fetch data due to network error but may be data exist
 					console.log("error catched at checking for createPalette");
 				});
 		} else {
+			handleInteraction("warn_invalidHEX_palette_created", {
+				paletteId,
+				err: "invalid HEX",
+				title: document.title,
+			});
 			console.log("Invalid HEXCODE");
 		}
 	};

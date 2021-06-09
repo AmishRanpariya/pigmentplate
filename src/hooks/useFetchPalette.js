@@ -19,7 +19,7 @@ const useFetchPalette = (paletteId) => {
 				if (doc && doc.exists) {
 					console.log("db used for palette fetched at useFetchPalette");
 					mounted && setPalette(doc.data());
-					handleInteraction();
+					handleInteraction("fetched_palette", { paletteId });
 					mounted && setError(null);
 				} else {
 					console.log("palette not exit");
@@ -28,6 +28,7 @@ const useFetchPalette = (paletteId) => {
 			})
 			.catch((err) => {
 				console.log("useFetchPalette catch", err);
+				handleInteraction("err_fetching_palette", { err: err.message });
 				mounted && setError(err.message);
 			});
 		return () => {

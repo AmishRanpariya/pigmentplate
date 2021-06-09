@@ -12,6 +12,7 @@ import "./downloadPaletteStyle.css";
 import handlePaletteLike from "../../../funtions/handlePaletteLike";
 import useFetchPalette from "../../../hooks/useFetchPalette";
 import { Link } from "react-router-dom";
+import handleInteraction from "../../../funtions/handleInteraction";
 
 //animation
 const container = {
@@ -35,6 +36,13 @@ const DetailedPalette = () => {
 	const isLiked = useRef(
 		localStorage.getItem(LOCALSTORAGE.prefix_liked + params.id) > 0
 	);
+
+	useEffect(() => {
+		document.title = "Detailed Palette | Pigment Plate";
+		handleInteraction("detailed_palette_open", {
+			color: params.id,
+		});
+	}, [params]);
 
 	useEffect(() => {
 		//scrolling to top for every detailed palette
@@ -95,6 +103,7 @@ const DetailedPalette = () => {
 				link.href = dataUrl;
 				link.click();
 			});
+		handleInteraction("download_palette", { paletteId: palette.id });
 		setTimeout(() => {
 			if (
 				document.body.lastChild.classList.contains(

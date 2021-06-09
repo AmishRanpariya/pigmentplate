@@ -114,11 +114,12 @@ const handlePaletteLike = (
 			});
 	};
 
-	handleInteraction();
 	if (shouldUpdate > 0) {
 		likePalette();
+		handleInteraction("palette_liked", { paletteId });
 	} else if (shouldUpdate < 0) {
 		dislikePalette();
+		handleInteraction("palette_disliked", { paletteId });
 	} else {
 		getPalette(paletteId);
 	}

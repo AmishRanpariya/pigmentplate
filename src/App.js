@@ -1,14 +1,16 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { Switch, Route, NavLink, Redirect } from "react-router-dom";
 
 import "./App.css";
-import useFetchFirestoreUser from "./hooks/useFetchFirestoreUser";
 import NavBar from "./components/NavBar/NavBar";
 import Home from "./components/Home/Home";
 import DetailedPalette from "./components/PaletteContainer/DetailedPalette/DetailedPalette";
 import SortedPalettes from "./components/CustomPalettes/SortedPalettes";
 import FilteredPalettes from "./components/CustomPalettes/FilteredPalettes";
 import { PALETTE_COLLECTION } from "./Const";
+import useAuth from "./hooks/useAuth";
+import handleInteraction from "./funtions/handleInteraction";
+import { fa } from "./firebase/config";
 
 const CreatePalette = React.lazy(() =>
 	import("./components/CreatePalette/CreatePalette")
@@ -19,7 +21,19 @@ const ClientPaletteContainer = React.lazy(() =>
 
 //for index.js
 const App = () => {
-	const { user, error } = useFetchFirestoreUser();
+	const { user, error } = useAuth();
+
+	useEffect(() => {
+		document.title = "Home | Pigment Plate";
+	}, []);
+	useEffect(() => {
+		if (user) {
+			fa.setUserId(user.id);
+			handleInteraction("app_visit");
+		}
+	}, [user]);
+
+	// const { user, error } = useFetchFirestoreUser();
 	return (
 		<>
 			<NavBar>
@@ -101,6 +115,7 @@ const App = () => {
 					</li>
 				</ul>
 			</NavBar>
+
 			{!error ? (
 				<div className="container">
 					<Switch>

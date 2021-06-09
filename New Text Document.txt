@@ -1,0 +1,10 @@
+match /mycollection/{document**} {   
+   allow get if: hasTimestamp() && isCalm();    
+
+   function hasTimestamp() {     
+      return request.resource.data.timestamp == request.time   
+   }   
+   function isCalm() {     
+      return request.time > resource.data.timestamp + duration.value(5, 's')   
+   } 
+}

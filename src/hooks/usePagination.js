@@ -76,7 +76,6 @@ const usePagination = () => {
 	};
 
 	const getNextPalettePage = async (callback, localCallback) => {
-		handleInteraction();
 		let newPalettes = [];
 		let snap;
 		if (!lastDoc.current) {
@@ -119,10 +118,12 @@ const usePagination = () => {
 			) {
 				//means last batch brought less data. means we reached end in db
 				isReachedEnd.current = true;
+				handleInteraction("reached_to_bottom", { scrolledFor: "home" });
 			}
 		} else {
 			//reached end
 			isReachedEnd.current = true;
+			handleInteraction("reached_to_bottom", { scrolledFor: "home" });
 			// throw new Error("no snaps");
 		}
 		return newPalettes;

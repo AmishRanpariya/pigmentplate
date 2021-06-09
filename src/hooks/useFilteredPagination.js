@@ -14,7 +14,6 @@ const useFilteredPagination = (tagname) => {
 	const mounted = useRef(true);
 
 	const getNextPalettePage = async (callback) => {
-		handleInteraction();
 		let newPalettes = [];
 		let snap;
 		if (!lastDoc.current) {
@@ -60,10 +59,14 @@ const useFilteredPagination = (tagname) => {
 			) {
 				//means last batch brought less data. means we reached end in db
 				isReachedEnd.current = true;
+				handleInteraction("reached_to_bottom", {
+					scrolledFor: tagName.current,
+				});
 			}
 		} else {
 			//reached end
 			isReachedEnd.current = true;
+			handleInteraction("reached_to_bottom", { scrolledFor: tagName.current });
 			// throw new Error("no snaps");
 		}
 		return newPalettes;

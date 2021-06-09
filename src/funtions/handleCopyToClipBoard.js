@@ -2,8 +2,7 @@ import handleInteraction from "./handleInteraction";
 
 export const handleCopyToClipBoard = (e) => {
 	e.preventDefault();
-	console.log("colorHEX copied");
-	handleInteraction();
+
 	//to copy HEXcode on clipboard by clicking this
 	let temp = document.createElement("input");
 	document.body.appendChild(temp);
@@ -11,6 +10,9 @@ export const handleCopyToClipBoard = (e) => {
 	temp.select();
 	document.execCommand("copy");
 	temp.remove();
+
+	console.log("colorHEX copied");
+	handleInteraction("color_hex_copied", { color: e.target.innerText });
 
 	const emojis = [
 		"🥰",

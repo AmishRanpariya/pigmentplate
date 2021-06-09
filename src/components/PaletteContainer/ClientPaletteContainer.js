@@ -35,9 +35,10 @@ const ClientPaletteContainer = () => {
 	};
 
 	useEffect(() => {
+		document.title = "My Favourites | Pigment Plate";
 		getLocalPalettes(LOCALSTORAGE.prefix_created, setMyPalettes);
 		getLocalPalettes(LOCALSTORAGE.prefix_liked, setFavPalettes);
-		handleInteraction();
+		handleInteraction("fav_page_open");
 	}, []);
 
 	let favPalettesJSX = (
