@@ -12,24 +12,22 @@ import handlePaletteLike from "../../../funtions/handlePaletteLike";
 //for Home.js
 const Palette = memo((props) => {
 	const params = useParams();
-	const userId = localStorage.getItem(LOCALSTORAGE.prefix_userId);
+	const userId = useRef(
+		JSON.parse(localStorage.getItem(LOCALSTORAGE.prefix_cached_user)).id
+	);
 
 	const [Palette, setPalette] = useState(props.palette);
 
-	const isLiked = useRef(
-		localStorage.getItem(LOCALSTORAGE.prefix_liked + Palette.id) > 0
-	);
+	const isLiked = useRef(props.isLiked);
 
 	const LikeButtonClickHandler = (e) => {
 		e.preventDefault();
 		if (isLiked.current === true) {
 			isLiked.current = false;
-			handlePaletteLike(Palette.id, userId, -1, setPalette);
-			localStorage.removeItem(LOCALSTORAGE.prefix_liked + Palette.id);
+			handlePaletteLike(Palette.id, userId.current, -1, setPalette);
 		} else {
 			isLiked.current = true;
-			handlePaletteLike(Palette.id, userId, 1, setPalette);
-			localStorage.setItem(LOCALSTORAGE.prefix_liked + Palette.id, Date.now());
+			handlePaletteLike(Palette.id, userId.current, 1, setPalette);
 		}
 	};
 

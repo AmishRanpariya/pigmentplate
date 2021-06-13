@@ -19,7 +19,8 @@ const usePagination = () => {
 			);
 			if (
 				Date.now() - lastTimestamp < CACHE.maxCacheTime &&
-				localStorage.getItem(LOCALSTORAGE.prefix_cached_palettes)
+				localStorage.getItem(LOCALSTORAGE.prefix_cached_palettes) &&
+				localStorage.getItem(LOCALSTORAGE.prefix_cached_lastDoc)
 			) {
 				//means cache is fresh
 				//means fresh cache is there
@@ -82,6 +83,7 @@ const usePagination = () => {
 			//first query
 			snap = await db
 				.collection(PALETTE_COLLECTION.collection_name)
+				.where("status", "==", "public")
 				.orderBy(PALETTE_COLLECTION.timeField, "desc")
 				.limit(PAGINATE.initialFetchCount)
 				.get();
@@ -89,6 +91,7 @@ const usePagination = () => {
 			//next queries
 			snap = await db
 				.collection(PALETTE_COLLECTION.collection_name)
+				.where("status", "==", "public")
 				.orderBy(PALETTE_COLLECTION.timeField, "desc")
 				.startAfter(lastDoc.current)
 				.limit(PAGINATE.subSequentFetchCount)
@@ -105,7 +108,8 @@ const usePagination = () => {
 				});
 			});
 
-			lastDoc.current = snap.docs[snap.docs.length - 1].get("createdAt"); //saving last reference for next query
+			lastDoc.current =
+				snap.docs[snap.docs.length - 1].get("createdAt").seconds; //saving last reference for next query
 			mounted.current &&
 				callback((_palettes) => {
 					return _palettes.concat(newPalettes);

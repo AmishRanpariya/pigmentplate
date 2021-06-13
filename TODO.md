@@ -14,10 +14,10 @@ random page
 
 <!-- # also make tag hover effect -->
 
-error handling
+<!-- error handling -->
 
-firestore rule update
-adding authentication
+<!-- firestore rule update -->
+<!-- adding authentication -->
 
 admin app/page
 
@@ -30,3 +30,7 @@ admin app/page
 <!-- emoji after copy tool tip -->
 
 # ppu1622565372548
+
+pwa
+
+use liked palette from user doc not from localstorage to implement multi device support for signed in user

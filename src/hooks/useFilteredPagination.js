@@ -20,6 +20,7 @@ const useFilteredPagination = (tagname) => {
 			//first query
 			snap = await db
 				.collection(PALETTE_COLLECTION.collection_name)
+				.where("status", "==", "public")
 				.where("tags", "array-contains", tagName.current)
 				.orderBy(PALETTE_COLLECTION.timeField, "desc")
 				.limit(PAGINATE.initialFetchCount)
@@ -28,6 +29,7 @@ const useFilteredPagination = (tagname) => {
 			//next queries
 			snap = await db
 				.collection(PALETTE_COLLECTION.collection_name)
+				.where("status", "==", "public")
 				.where("tags", "array-contains", tagName.current)
 				.orderBy(PALETTE_COLLECTION.timeField, "desc")
 				.startAfter(lastDoc.current)

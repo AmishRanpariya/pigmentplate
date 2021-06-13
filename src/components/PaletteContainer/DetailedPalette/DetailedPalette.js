@@ -32,9 +32,13 @@ const item = {
 const DetailedPalette = () => {
 	const params = useParams();
 	const { palette, error, setPalette } = useFetchPalette(params.id);
-	const userId = localStorage.getItem(LOCALSTORAGE.prefix_userId);
+	const userId = useRef(
+		JSON.parse(localStorage.getItem(LOCALSTORAGE.prefix_cached_user)).id
+	);
 	const isLiked = useRef(
-		localStorage.getItem(LOCALSTORAGE.prefix_liked + params.id) > 0
+		JSON.parse(
+			localStorage.getItem(LOCALSTORAGE.prefix_cached_user)
+		).likedPalette.includes(params.id)
 	);
 
 	useEffect(() => {
@@ -42,6 +46,9 @@ const DetailedPalette = () => {
 		handleInteraction("detailed_palette_open", {
 			color: params.id,
 		});
+		isLiked.current = JSON.parse(
+			localStorage.getItem(LOCALSTORAGE.prefix_cached_user)
+		).likedPalette.includes(params.id);
 	}, [params]);
 
 	useEffect(() => {
@@ -56,12 +63,10 @@ const DetailedPalette = () => {
 		e.preventDefault();
 		if (isLiked.current === true) {
 			isLiked.current = false;
-			handlePaletteLike(params.id, userId, -1, setPalette);
-			localStorage.removeItem(LOCALSTORAGE.prefix_liked + params.id);
+			handlePaletteLike(params.id, userId.current, -1, setPalette);
 		} else {
 			isLiked.current = true;
-			handlePaletteLike(params.id, userId, 1, setPalette);
-			localStorage.setItem(LOCALSTORAGE.prefix_liked + params.id, Date.now());
+			handlePaletteLike(params.id, userId.current, 1, setPalette);
 		}
 	};
 

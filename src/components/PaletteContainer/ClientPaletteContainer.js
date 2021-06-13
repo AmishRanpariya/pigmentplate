@@ -1,43 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { LOCALSTORAGE } from "../../Const";
 import MinimalPalette from "./MinimalPalette/MinimalPalette";
 import "./ClientPaletteContainer.css";
 import handleInteraction from "../../funtions/handleInteraction";
+import { LOCALSTORAGE } from "../../Const";
 
 //for App.js
 const ClientPaletteContainer = () => {
 	const [favPalettes, setFavPalettes] = useState([]);
 	const [myPalettes, setMyPalettes] = useState([]);
 
-	const getLocalPalettes = (type, callback) => {
-		const palettes = [];
-		for (let index = 0, len = localStorage.length; index < len; index++) {
-			let key = localStorage.key(index);
-			if (key.indexOf(type) === 0) {
-				let timestamp = localStorage.getItem(key);
-				key = key.slice(key.length - 24);
-				const palette = {
-					id: key,
-					savedAt: +timestamp,
-					colors: [
-						key.slice(0, 6),
-						key.slice(6, 12),
-						key.slice(12, 18),
-						key.slice(18, 24),
-					],
-				};
-				palettes.push(palette);
-			}
-		}
-		callback([...palettes]);
+	const getLocalPaletteFromUser = (type, callback) => {
+		const _user = JSON.parse(
+			localStorage.getItem(LOCALSTORAGE.prefix_cached_user)
+		);
+		const palettes = _user[type].map((paletteId) => {
+			return {
+				id: paletteId,
+				colors: [
+					paletteId.slice(0, 6),
+					paletteId.slice(6, 12),
+					paletteId.slice(12, 18),
+					paletteId.slice(18, 24),
+				],
+			};
+		});
+		callback(palettes);
 	};
 
 	useEffect(() => {
 		document.title = "My Favourites | Pigment Plate";
-		getLocalPalettes(LOCALSTORAGE.prefix_created, setMyPalettes);
-		getLocalPalettes(LOCALSTORAGE.prefix_liked, setFavPalettes);
+		getLocalPaletteFromUser("likedPalette", setFavPalettes);
+		getLocalPaletteFromUser("createdPalette", setMyPalettes);
 		handleInteraction("fav_page_open");
 	}, []);
 

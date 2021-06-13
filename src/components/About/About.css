@@ -1,0 +1,43 @@
+.aboutWrapper {
+	width: 80%;
+	min-width: 100px;
+	max-width: 756px;
+	margin: 5rem auto;
+}
+.aboutWrapper .centered {
+	text-align: center;
+}
+.aboutWrapper h2 {
+	background-color: var(--col-bg-body);
+	border-radius: 1rem;
+	font-size: 2.5rem;
+	line-height: 1.4;
+	font-weight: 700;
+	padding: 1.5rem 1rem 1.5rem;
+	color: #06104b;
+	margin-top: 2.2rem;
+}
+.aboutWrapper p {
+	background-color: var(--col-bg-body);
+	border-radius: 1rem;
+	margin-top: 0.2rem;
+	padding: 0.2rem 1rem 1rem;
+	line-height: 1.5;
+	font-size: 1.1rem;
+	color: #252a34;
+}
+.aboutWrapper a {
+	text-decoration: underline;
+}
+
+@media (max-width: 550px) {
+	.aboutWrapper {
+		width: 90%;
+	}
+	.aboutWrapper h2 {
+		font-size: 2rem;
+	}
+	.aboutWrapper p {
+		font-size: 1rem;
+	}
+}

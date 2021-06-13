@@ -148,6 +148,7 @@ const CreatePalette = ({ userId }) => {
 				createdBy: userId,
 				likedBy: [],
 				interactionCount: 1,
+				status: "inreview",
 			};
 			//first check if palette already created
 			db.collection(PALETTE_COLLECTION.collection_name)
@@ -189,11 +190,19 @@ const CreatePalette = ({ userId }) => {
 							.then(() => {
 								setIsPending(false);
 								setError(null);
+
 								handleInteraction("palette_created", { paletteId });
-								localStorage.setItem(
-									LOCALSTORAGE.prefix_created + paletteId,
-									Date.now()
+
+								const _user = JSON.parse(
+									localStorage.getItem(LOCALSTORAGE.prefix_cached_user)
 								);
+								_user.createdPalette.push(paletteId);
+
+								localStorage.setItem(
+									LOCALSTORAGE.prefix_cached_user,
+									JSON.stringify(_user)
+								);
+
 								_history.push("/palette/" + _palette.id);
 							})
 							.catch((err) => {

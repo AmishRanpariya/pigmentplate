@@ -22,6 +22,7 @@ const useSortedPagination = (orderby, isAsc) => {
 			//first query
 			snap = await db
 				.collection(PALETTE_COLLECTION.collection_name)
+				.where("status", "==", "public")
 				.orderBy(orderByfield.current, direction.current)
 				.limit(PAGINATE.initialFetchCount)
 				.get();
@@ -29,6 +30,7 @@ const useSortedPagination = (orderby, isAsc) => {
 			//next queries
 			snap = await db
 				.collection(PALETTE_COLLECTION.collection_name)
+				.where("status", "==", "public")
 				.orderBy(orderByfield.current, direction.current)
 				.startAfter(lastDoc.current)
 				.limit(PAGINATE.subSequentFetchCount)

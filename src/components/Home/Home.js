@@ -1,13 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 import Palette from "../PaletteContainer/Palette/Palette";
 import SkeletonPalette from "../PaletteContainer/Palette/SkeletonPalette";
 import usePagination from "../../hooks/usePagination";
 import handleInteraction from "../../funtions/handleInteraction";
+import { LOCALSTORAGE } from "../../Const";
 
 //for App.js
 const Home = () => {
 	const { palettes } = usePagination();
+
+	const likedPalettes = useRef(
+		JSON.parse(localStorage.getItem(LOCALSTORAGE.prefix_cached_user))
+			.likedPalette
+	);
 
 	useEffect(() => {
 		document.title = "Home | Pigment Plate";
@@ -21,7 +27,11 @@ const Home = () => {
 		<div className="wrapper">
 			{palettes && palettes.length > 0
 				? palettes.map((palette) => (
-						<Palette key={palette.id} palette={palette} />
+						<Palette
+							key={palette.id}
+							palette={palette}
+							isLiked={likedPalettes.current.includes(palette.id)}
+						/>
 				  ))
 				: [
 						<SkeletonPalette key="1" />,

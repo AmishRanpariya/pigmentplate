@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 import Palette from "../PaletteContainer/Palette/Palette";
 import SkeletonPalette from "../PaletteContainer/Palette/SkeletonPalette";
 import useSortedPagination from "../../hooks/useSortedPagination";
 import handleInteraction from "../../funtions/handleInteraction";
+import { LOCALSTORAGE } from "../../Const";
 
 //for App.js
 const SortedPalettes = ({ orderby, isAsc }) => {
@@ -13,11 +14,20 @@ const SortedPalettes = ({ orderby, isAsc }) => {
 		handleInteraction("popular_palette_open", { orderby });
 	}, [orderby]);
 
+	const likedPalettes = useRef(
+		JSON.parse(localStorage.getItem(LOCALSTORAGE.prefix_cached_user))
+			.likedPalette
+	);
+
 	return (
 		<div className="wrapper">
 			{palettes && palettes.length > 0
 				? palettes.map((palette) => (
-						<Palette key={palette.id} palette={palette} />
+						<Palette
+							key={palette.id}
+							palette={palette}
+							isLiked={likedPalettes.current.includes(palette.id)}
+						/>
 				  ))
 				: [
 						<SkeletonPalette key="1" />,

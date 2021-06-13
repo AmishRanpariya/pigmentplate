@@ -12,7 +12,6 @@ const handlePaletteLike = (
 	callback = () => {}
 ) => {
 	let palette = {};
-
 	const likePalette = () => {
 		// Get a new write batch
 		let batch = db.batch();
@@ -38,6 +37,15 @@ const handlePaletteLike = (
 			.then(() => {
 				console.log("db used for palette liked");
 				getPalette(paletteId);
+				const _user = JSON.parse(
+					localStorage.getItem(LOCALSTORAGE.prefix_cached_user)
+				);
+				_user.likedPalette.push(paletteId);
+
+				localStorage.setItem(
+					LOCALSTORAGE.prefix_cached_user,
+					JSON.stringify(_user)
+				);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -70,6 +78,16 @@ const handlePaletteLike = (
 			.then(() => {
 				console.log("db used for palette unliked");
 				getPalette(paletteId);
+				const _user = JSON.parse(
+					localStorage.getItem(LOCALSTORAGE.prefix_cached_user)
+				);
+				_user.likedPalette = _user.likedPalette.filter(
+					(id) => id !== paletteId
+				);
+				localStorage.setItem(
+					LOCALSTORAGE.prefix_cached_user,
+					JSON.stringify(_user)
+				);
 			})
 			.catch((err) => {
 				console.log("disLikePalette catch", err);

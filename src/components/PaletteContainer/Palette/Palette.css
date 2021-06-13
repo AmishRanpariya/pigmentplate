@@ -17,10 +17,11 @@
 	-webkit-transform: translate(0, -2px);
 	transform: translate(0, -5px);
 	transition: all 0.1s ease-in-out;
+	outline: auto;
 }
 .Palette .color-grid {
 	display: grid;
-	/* grid-template-columns: 67fr 55fr 43fr 33fr; */
+	/* grid-template-columns: 41fr 26fr 18fr 15fr; */
 	grid-template-columns: repeat(4, 1fr);
 	border-radius: 0.3rem;
 	overflow: hidden;
