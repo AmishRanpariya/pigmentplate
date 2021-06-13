@@ -52,4 +52,4 @@ export const CACHE = {
 	maxCacheTime: hours1, // time after cache will be renewed
 };
 
-export const BASEURL = "pigmentplate.web.app/"; //for download palette
+export const BASEURL = "pigmentplate.web.app"; //for download palette
