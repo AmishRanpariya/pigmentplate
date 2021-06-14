@@ -49,7 +49,7 @@ const hours1 = 60 * 60 * 1000;
 // const minutes1 = 60 * 1000;
 
 export const CACHE = {
-	maxCacheTime: hours1, // time after cache will be renewed
+	maxCacheTime: hours1, // time after cache will be renewed again
 };
 
 export const BASEURL = "pigmentplate.web.app"; //for download palette

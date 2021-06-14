@@ -2,14 +2,14 @@
   "short_name": "Pigment Plate",
   "name": "Pigment Plate",
   "categories": [
-    "colors",
+    "color",
     "sharing",
     "community"
   ],
   "description": "Pigment Plate is an open collection of colors and an environment to share trendy color inspiration that others can use.",
   "start_url": ".",
   "display": "standalone",
-  "orientation": "portrait",
+  "orientation": "portrait-primary",
   "theme_color": "#06104b",
   "background_color": "#fdfdfd",
   "icons": [
