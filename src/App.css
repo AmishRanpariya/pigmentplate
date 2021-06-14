@@ -13,9 +13,7 @@
 	--col3: hsl(293, 66%, 67%);
 	--col4: hsl(271, 56%, 56%);
 
-	--shadow: 0 10px 15px -3px rgba(0, 64, 109, 0.1),
-		0 4px 6px -2px rgba(0, 64, 109, 0.05);
-	/* --shadow: 0px 1px 25px -10px rgba(0, 64, 128, 0.4); */
+	--shadow: 0px 1px 25px -10px rgba(0, 64, 128, 0.4);
 	--btn-shadow: 0 0 10px -5px rgb(0, 28, 64, 0.4);
 	/* --in-shadow: inset 5px 5px 15px -10px #3340; */
 	--in-shadow: none;

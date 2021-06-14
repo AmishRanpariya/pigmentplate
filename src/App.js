@@ -132,7 +132,7 @@ const App = () => {
 						</NavLink>
 					</li>
 					<li className="dropdownHover">
-						<div className="btn">
+						<div className="btn" tabIndex="0">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								className="h-6 w-6"

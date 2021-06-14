@@ -8,10 +8,10 @@
   ],
   "description": "Pigment Plate is an open collection of colors and an environment to share trendy color inspiration that others can use.",
   "start_url": ".",
-  "display": "fullscreen",
+  "display": "standalone",
   "orientation": "portrait",
   "theme_color": "#fdfdfd",
-  "background_color": "#06104b",
+  "background_color": "#fdfdfd",
   "icons": [
     {
       "src": "manifest-icon-192.png",
