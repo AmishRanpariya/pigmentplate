@@ -29,27 +29,27 @@
   "screenshots": [
     {
       "src": "home.jpeg",
-      "sizes": "586x1269",
+      "sizes": "586x1080",
       "type": "image/jpeg"
     },
     {
       "src": "detailed.jpeg",
-      "sizes": "586x1269",
+      "sizes": "586x1080",
       "type": "image/jpeg"
     },
     {
       "src": "favourite.jpeg",
-      "sizes": "586x1269",
+      "sizes": "586x1080",
       "type": "image/jpeg"
     },
     {
       "src": "create.jpeg",
-      "sizes": "586x1269",
+      "sizes": "586x1080",
       "type": "image/jpeg"
     },
     {
       "src": "about.jpeg",
-      "sizes": "586x1269",
+      "sizes": "586x1080",
       "type": "image/jpeg"
     }
   ],
