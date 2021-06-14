@@ -7,22 +7,12 @@
     "community"
   ],
   "description": "Pigment Plate is an open collection of colors and an environment to share trendy color inspiration that others can use.",
+  "start_url": ".",
+  "display": "minimal-ui",
+  "orientation": "portrait",
+  "theme_color": "#06104b",
+  "background_color": "#fdfdfd",
   "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    },
     {
       "src": "manifest-icon-192.png",
       "sizes": "192x192",
@@ -36,36 +26,31 @@
       "purpose": "maskable any"
     }
   ],
-  "start_url": "https://pigmentplate.web.app",
-  "scope": "/",
-  "display": "standalone",
-  "theme_color": "#06104b",
-  "background_color": "#fdfdfd",
   "screenshots": [
     {
-      "src": "home.jpg",
+      "src": "home.jpeg",
       "sizes": "586x1269",
-      "type": "image/jpg"
+      "type": "image/jpeg"
     },
     {
-      "src": "detailed.jpg",
+      "src": "detailed.jpeg",
       "sizes": "586x1269",
-      "type": "image/jpg"
+      "type": "image/jpeg"
     },
     {
-      "src": "favourite.jpg",
+      "src": "favourite.jpeg",
       "sizes": "586x1269",
-      "type": "image/jpg"
+      "type": "image/jpeg"
     },
     {
-      "src": "create.jpg",
+      "src": "create.jpeg",
       "sizes": "586x1269",
-      "type": "image/jpg"
+      "type": "image/jpeg"
     },
     {
-      "src": "about.jpg",
+      "src": "about.jpeg",
       "sizes": "586x1269",
-      "type": "image/jpg"
+      "type": "image/jpeg"
     }
   ],
   "shortcuts": [
@@ -76,7 +61,7 @@
       "icons": [
         {
           "src": "fav.png",
-          "sizes": "63x63",
+          "sizes": "96x96",
           "type": "image/png"
         }
       ]
@@ -88,7 +73,7 @@
       "icons": [
         {
           "src": "create.png",
-          "sizes": "63x63",
+          "sizes": "96x96",
           "type": "image/png"
         }
       ]
@@ -100,7 +85,7 @@
       "icons": [
         {
           "src": "home.png",
-          "sizes": "63x63",
+          "sizes": "96x96",
           "type": "image/png"
         }
       ]
@@ -112,7 +97,7 @@
       "icons": [
         {
           "src": "fire.png",
-          "sizes": "63x63",
+          "sizes": "96x96",
           "type": "image/png"
         }
       ]

@@ -224,7 +224,7 @@ const App = () => {
 				</ul>
 			</NavBar>
 
-			{!error && user ? (
+			{!error ? (
 				<div className="container">
 					<Switch>
 						<Route exact path="/create">
@@ -233,7 +233,7 @@ const App = () => {
 									<div className="wrapper">Loading Create Palette...</div>
 								}
 							>
-								<CreatePalette userId={user.id} />
+								{user && <CreatePalette userId={user.id} />}
 							</Suspense>
 						</Route>
 
@@ -243,32 +243,34 @@ const App = () => {
 									<div className="wrapper">Loading Favourite Palettes...</div>
 								}
 							>
-								<ClientPaletteContainer />
+								{user && <ClientPaletteContainer />}
 							</Suspense>
 						</Route>
 
 						<Route exact path="/about">
 							<About />
 						</Route>
-						<Route exact path="/trendy">
+						{/* <Route exact path="/trendy">
 							trending
-						</Route>
+						</Route> */}
 						<Route exact path="/popular">
-							<SortedPalettes
-								orderby={PALETTE_COLLECTION.likeCount}
-								isAsc={false}
-							/>
+							{user && (
+								<SortedPalettes
+									orderby={PALETTE_COLLECTION.likeCount}
+									isAsc={false}
+								/>
+							)}
 						</Route>
-						<Route exact path="/random">
+						{/* <Route exact path="/random">
 							random
-						</Route>
+						</Route> */}
 
 						<Route exact path="/palette/:id([a-f\d]{24})">
-							<DetailedPalette />
-							<Home />
+							{user && <DetailedPalette />}
+							{user && <Home />}
 						</Route>
 						<Route exact path="/palettes/:tagname">
-							<FilteredPalettes />
+							{user && <FilteredPalettes />}
 						</Route>
 						<Route path="/" exact>
 							{user && <Home />}
@@ -279,7 +281,7 @@ const App = () => {
 					</Switch>
 				</div>
 			) : (
-				<div className="wrapper">{error}</div>
+				<div className="wrapper">Internet Connection Required</div>
 			)}
 		</>
 	);
