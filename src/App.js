@@ -1,17 +1,18 @@
 import React, { Suspense, useEffect } from "react";
 import { Switch, Route, NavLink, Redirect } from "react-router-dom";
+import { fa } from "./firebase/config";
 
+import logo from "./logo.svg";
 import "./App.css";
+import { PALETTE_COLLECTION } from "./Const";
 import NavBar from "./components/NavBar/NavBar";
 import Home from "./components/Home/Home";
 import DetailedPalette from "./components/PaletteContainer/DetailedPalette/DetailedPalette";
 import SortedPalettes from "./components/CustomPalettes/SortedPalettes";
 import FilteredPalettes from "./components/CustomPalettes/FilteredPalettes";
-import { PALETTE_COLLECTION } from "./Const";
-import useAuth from "./hooks/useAuth";
-import handleInteraction from "./funtions/handleInteraction";
-import { fa } from "./firebase/config";
 import About from "./components/About/About";
+import handleInteraction from "./funtions/handleInteraction";
+import useAuth from "./hooks/useAuth";
 
 const CreatePalette = React.lazy(() =>
 	import("./components/CreatePalette/CreatePalette")
@@ -40,7 +41,8 @@ const App = () => {
 			<NavBar>
 				<ul>
 					<li>
-						<NavLink to="/">
+						<NavLink to="/" className="logoWrapper">
+							<img src={logo} alt="app logo" />
 							<strong>PigmentPlate</strong>
 						</NavLink>
 					</li>
@@ -124,10 +126,10 @@ const App = () => {
 							>
 								<path
 									fillRule="evenodd"
-									d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+									d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"
 									clipRule="evenodd"
 								/>
-							</svg>{" "}
+							</svg>
 							About
 						</NavLink>
 					</li>
@@ -212,10 +214,10 @@ const App = () => {
 									>
 										<path
 											fillRule="evenodd"
-											d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+											d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"
 											clipRule="evenodd"
 										/>
-									</svg>{" "}
+									</svg>
 									About
 								</NavLink>
 							</li>

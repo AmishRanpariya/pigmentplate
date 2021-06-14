@@ -1,5 +1,6 @@
-import { LOCALSTORAGE, PALETTE_COLLECTION, USER_COLLECTION } from "../Const";
 import { db, firebase } from "../firebase/config";
+
+import { LOCALSTORAGE, PALETTE_COLLECTION, USER_COLLECTION } from "../Const";
 import handleInteraction from "./handleInteraction";
 
 //for

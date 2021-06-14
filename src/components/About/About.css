@@ -30,6 +30,35 @@
 	text-decoration: underline;
 }
 
+.animatedLogoWrapper {
+	width: 250px;
+	margin: auto;
+}
+.animatedLogoWrapper img {
+	width: 100%;
+	animation: animateLogo 8s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite
+		forwards;
+}
+
+@keyframes animateLogo {
+	from {
+		transform: translate(0, 0) scale(1) rotateZ(0deg);
+	}
+	25% {
+		transform: translate(0, 0px) scale(1.1) rotateZ(0deg);
+	}
+	50% {
+		transform: translate(0, 0) scale(1) rotateZ(0deg);
+		filter: hue-rotate(360deg);
+	}
+	75% {
+		transform: translate(0, 0px) scale(1.1) rotateZ(0deg);
+	}
+	to {
+		transform: translate(0, 0) scale(1) rotateZ(0deg);
+	}
+}
+
 @media (max-width: 550px) {
 	.aboutWrapper {
 		width: 90%;

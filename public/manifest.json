@@ -79,24 +79,24 @@
       ]
     },
     {
-      "name": "Home",
-      "short_name": "Home",
-      "url": "/",
-      "icons": [
-        {
-          "src": "home.png",
-          "sizes": "96x96",
-          "type": "image/png"
-        }
-      ]
-    },
-    {
       "name": "Popular Palettes",
       "short_name": "Popular",
       "url": "/popular",
       "icons": [
         {
           "src": "fire.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Home",
+      "short_name": "Home",
+      "url": "/",
+      "icons": [
+        {
+          "src": "home.png",
           "sizes": "96x96",
           "type": "image/png"
         }

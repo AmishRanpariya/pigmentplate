@@ -18,7 +18,16 @@
 	z-index: 100;
 	max-height: 61.2px;
 }
-
+.NavBar .logoWrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.2rem;
+}
+.NavBar img {
+	/* width: 100%; */
+	width: 3rem;
+}
 .NavBar ul {
 	display: -webkit-flex;
 	display: flex;
@@ -84,11 +93,17 @@ ul li.dropdownHover ul li {
 	justify-content: center;
 }
 
-@media (max-width: 668px) {
+@media (max-width: 729px) {
 	.hideOnSmall {
 		display: none;
 	}
 	.dropdownHover {
 		display: block;
+	}
+	.NavBar {
+		padding: 1rem;
+	}
+	strong {
+		font-size: 1.2rem;
 	}
 }

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import { PALETTE_COLLECTION } from "../Const";
 import { db } from "../firebase/config";
+
+import { PALETTE_COLLECTION } from "../Const";
 import handleInteraction from "../funtions/handleInteraction";
 
 //for DetailedPalette.js

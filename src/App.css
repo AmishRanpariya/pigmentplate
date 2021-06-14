@@ -70,8 +70,8 @@ a {
 	cursor: pointer;
 }
 strong {
-	font-weight: 600;
-	font-size: 1.2rem;
+	font-weight: 400;
+	font-size: 1.5rem;
 	letter-spacing: 0.1rem;
 }
 li {
@@ -150,10 +150,6 @@ svg {
 
 	/* max-height: 100%; */
 	/* overflow: auto; */
-}
-
-.wrapper::-webkit-scrollbar {
-	/* display: none; */
 }
 
 @media (max-width: 1080px) {
