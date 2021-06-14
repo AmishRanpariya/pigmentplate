@@ -20,7 +20,7 @@
 	flex-direction: row;
 	-webkit-flex-wrap: wrap;
 	flex-wrap: wrap;
-	gap: 0.4rem;
+	gap: 0.3rem;
 	-webkit-justify-content: center;
 	justify-content: center;
 	-webkit-align-items: center;

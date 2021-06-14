@@ -14,8 +14,6 @@
 	transition: all 0.1s ease-in-out;
 }
 .Palette:hover {
-	-webkit-transform: translate(0, -2px);
-	transform: translate(0, -5px);
 	transition: all 0.1s ease-in-out;
 	outline: auto;
 }
@@ -42,8 +40,7 @@
 	display: flex;
 	-webkit-justify-content: space-between;
 	justify-content: space-between;
-	-webkit-align-items: flex-end;
-	align-items: flex-end;
+	align-items: center;
 	position: relative;
 	font-size: 0.9rem;
 }
@@ -123,8 +120,10 @@
 		min-height: 121px;
 		min-width: 121px;
 	}
-	.Palette .metadata .timestamp,
 	.Palette .metadata .styling {
 		display: none;
+	}
+	.Palette .metadata .timestamp {
+		font-size: 0.8em;
 	}
 }

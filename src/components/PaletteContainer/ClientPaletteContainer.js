@@ -54,18 +54,26 @@ const ClientPaletteContainer = () => {
 			);
 		} else {
 			favPalettesJSX = (
-				<div className="wrapper">
-					<span>No Favourite Palettes Yet</span>
+				<div className="wrapper vertical">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						className="h-6 w-6"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+					>
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							strokeWidth={2}
+							d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+						/>
+					</svg>
+
+					<span>No palettes in collection</span>
+					<p>You haven't liked anything yet!</p>
 					<Link to="/" className="btn">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							className="h-5 w-5"
-							viewBox="0 0 20 20"
-							fill="currentColor"
-						>
-							<path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-						</svg>
-						Back To Home
+						Find beautiful palettes
 					</Link>
 				</div>
 			);
@@ -88,29 +96,31 @@ const ClientPaletteContainer = () => {
 			);
 		} else {
 			myPalettesJSX = (
-				<div className="wrapper">
-					<span>No Palettes Created Yet</span>
+				<div className="wrapper vertical">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						className="h-6 w-6"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+					>
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							strokeWidth={2}
+							d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+						/>
+					</svg>
+					<span>No palettes in your collection</span>
+					<p>You haven't created anything yet!</p>
 					<Link to="/create" className="btn">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							className="h-6 w-6"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth={2}
-								d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-							/>
-						</svg>
 						Create New
 					</Link>
 				</div>
 			);
 		}
 	}
+
 	return (
 		<div className="ClientPaletteContainer">
 			<div className="partition">

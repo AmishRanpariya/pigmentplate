@@ -28,3 +28,24 @@
 	padding: 0;
 	width: 90%;
 }
+
+.ClientPaletteContainer .partition .wrapper.vertical {
+	flex-direction: column;
+}
+
+.ClientPaletteContainer .partition .wrapper.vertical svg {
+	margin-top: 2rem;
+	width: 60px;
+	stroke: #333;
+}
+
+.ClientPaletteContainer .partition .wrapper.vertical span {
+	font-size: 1.2em;
+}
+
+.ClientPaletteContainer .partition .wrapper.vertical p {
+	font-size: 0.8em;
+}
+.ClientPaletteContainer .partition .wrapper.vertical .btn {
+	margin-top: 1rem;
+}

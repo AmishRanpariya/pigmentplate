@@ -76,7 +76,7 @@ const App = () => {
 									clipRule="evenodd"
 								/>
 							</svg>
-							Fav
+							Collection
 						</NavLink>
 					</li>
 

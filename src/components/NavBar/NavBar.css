@@ -93,7 +93,7 @@ ul li.dropdownHover ul li {
 	justify-content: center;
 }
 
-@media (max-width: 729px) {
+@media (max-width: 820px) {
 	.hideOnSmall {
 		display: none;
 	}

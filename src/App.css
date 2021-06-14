@@ -6,7 +6,7 @@
 	--col-bg-liked: #f6dfeb;
 	--col-bg-unliked: #fdfdfd;
 	--col-border-liked: #e4bad4;
-	--col-border-unliked: #8888;
+	--col-border-unliked: #88888840;
 	--col-bg-body: #fdfdfd;
 	--col1: hsl(116, 66%, 67%);
 	--col2: hsl(59, 66%, 67%);
@@ -34,7 +34,7 @@
 
 html,
 body {
-	font-size: 16px;
+	font-size: 16px !important;
 	/* dont change this */
 }
 
@@ -43,8 +43,8 @@ body {
 	overflow: hidden;
 }
 
+/* for polka dot background */
 body::before {
-	/* for polka dot background */
 	line-height: 0;
 	content: "";
 	position: fixed;
@@ -82,15 +82,25 @@ svg {
 	display: inline-block;
 }
 
+/* input {
+	text-decoration: none;
+	outline: none;
+	border: none;
+	border-radius: 1000px;
+	border: 1px solid var(--col-border-unliked);
+	background-color: var(--col-bg-unliked);
+	box-shadow: var(--btn-shadow);
+} */
+
 .btn {
 	display: inline-block;
 	border: none;
 	cursor: pointer;
 	border: 1px solid var(--col-border-unliked);
 	background-color: var(--col-bg-unliked);
-	border-radius: 0.25rem;
-	padding: 0.3rem 0.5rem;
-	box-shadow: var(--btn-shadow);
+	border-radius: 0.5rem;
+	padding: 0.35rem 0.5rem;
+	/* box-shadow: var(--btn-shadow); */
 	overflow: hidden;
 	display: flex;
 	flex-direction: row;
@@ -134,8 +144,11 @@ svg {
 
 .wrapper {
 	margin: 1rem 2rem 0rem 2rem;
+	margin-left: auto;
+	margin-right: auto;
 	padding: 1rem;
 	padding-bottom: 0rem;
+	max-width: 1080px;
 	display: -webkit-flex;
 	display: flex;
 	-webkit-flex-direction: row;

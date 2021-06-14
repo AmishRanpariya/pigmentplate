@@ -22,7 +22,7 @@ const Tag = ({ id, text, handleClick }) => {
 			}}
 			data-id={id}
 		>
-			#{text}
+			{text}
 		</div>
 	);
 };
