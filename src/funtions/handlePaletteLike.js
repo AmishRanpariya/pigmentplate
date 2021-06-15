@@ -1,4 +1,4 @@
-import { db, firebase } from "../firebase/config";
+import { db, firebase, timestamp } from "../firebase/config";
 
 import { LOCALSTORAGE, PALETTE_COLLECTION, USER_COLLECTION } from "../Const";
 import handleInteraction from "./handleInteraction";
@@ -21,6 +21,7 @@ const handlePaletteLike = (
 		batch.update(userRef, {
 			interactionCount: firebase.firestore.FieldValue.increment(1),
 			likedPalette: firebase.firestore.FieldValue.arrayUnion(paletteId),
+			lastActivityAt: timestamp(),
 		});
 
 		let paletteRef = db
@@ -28,7 +29,7 @@ const handlePaletteLike = (
 			.doc(paletteId);
 		batch.update(paletteRef, {
 			interactionCount: firebase.firestore.FieldValue.increment(1),
-			likedBy: firebase.firestore.FieldValue.arrayUnion(userId),
+			// likedBy: firebase.firestore.FieldValue.arrayUnion(userId),
 			likeCount: firebase.firestore.FieldValue.increment(1),
 		});
 
@@ -62,6 +63,7 @@ const handlePaletteLike = (
 		batch.update(userRef, {
 			interactionCount: firebase.firestore.FieldValue.increment(1),
 			likedPalette: firebase.firestore.FieldValue.arrayRemove(paletteId),
+			lastActivityAt: timestamp(),
 		});
 
 		let paletteRef = db
@@ -69,7 +71,7 @@ const handlePaletteLike = (
 			.doc(paletteId);
 		batch.update(paletteRef, {
 			interactionCount: firebase.firestore.FieldValue.increment(1),
-			likedBy: firebase.firestore.FieldValue.arrayRemove(userId),
+			// likedBy: firebase.firestore.FieldValue.arrayRemove(userId),
 			likeCount: firebase.firestore.FieldValue.increment(-1),
 		});
 

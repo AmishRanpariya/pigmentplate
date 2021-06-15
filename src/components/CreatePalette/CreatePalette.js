@@ -13,13 +13,244 @@ import ColorPicker from "./ColorPicker/ColorPicker";
 import "./CreatePalette.css";
 import TagList from "./TagList/TagList";
 
+// "a21dcf" example
+function hexToRGB(hexcode) {
+	return {
+		r: parseInt(hexcode.substring(0, 2), 16),
+		g: parseInt(hexcode.substring(2, 4), 16),
+		b: parseInt(hexcode.substring(4, 6), 16),
+	};
+}
+
+function RGBToHSL(r, g, b) {
+	r /= 255;
+	g /= 255;
+	b /= 255;
+
+	let max = Math.max(r, g, b);
+	let min = Math.min(r, g, b);
+	let h;
+	let s;
+	let l = (max + min) / 2;
+
+	if (max === min) {
+		h = s = 0; // achromatic
+	} else {
+		let d = max - min;
+		s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+		switch (max) {
+			case r:
+				h = (g - b) / d + (g < b ? 6 : 0);
+				break;
+			case g:
+				h = (b - r) / d + 2;
+				break;
+			case b:
+				h = (r - g) / d + 4;
+				break;
+			default:
+				break;
+		}
+
+		h /= 6;
+	}
+
+	return {
+		h: Math.round(h * 100),
+		s: Math.round(s * 100),
+		l: Math.round(l * 100),
+	};
+}
+
+function suggestTags(rgbcolor) {
+	const color = RGBToHSL(rgbcolor.r, rgbcolor.g, rgbcolor.b);
+
+	const suggestedTags = [];
+	const colorMap = [
+		{
+			color: "blue",
+			hMin: 53,
+			hMax: 70,
+			sMin: 30,
+			sMax: 100,
+			lMin: 15,
+			lMax: 95,
+		},
+		{
+			color: "green",
+			hMin: 22,
+			hMax: 43,
+			sMin: 30,
+			sMax: 100,
+			lMin: 15,
+			lMax: 95,
+		},
+		{
+			color: "red",
+			hMin: 0,
+			hMax: 2,
+			sMin: 50,
+			sMax: 100,
+			lMin: 30,
+			lMax: 70,
+		},
+		{
+			color: "red",
+			hMin: 95,
+			hMax: 100,
+			sMin: 50,
+			sMax: 100,
+			lMin: 30,
+			lMax: 70,
+		},
+		{
+			color: "pink",
+			hMin: 85,
+			hMax: 100,
+			sMin: 50,
+			sMax: 100,
+			lMin: 60,
+			lMax: 100,
+		},
+		{
+			color: "black",
+			hMin: 0,
+			hMax: 100,
+			sMin: 0,
+			sMax: 100,
+			lMin: 0,
+			lMax: 8,
+		},
+		{
+			color: "yellow",
+			hMin: 12,
+			hMax: 18,
+			sMin: 60,
+			sMax: 100,
+			lMin: 50,
+			lMax: 100,
+		},
+		{
+			color: "grey",
+			hMin: 0,
+			hMax: 100,
+			sMin: 0,
+			sMax: 10,
+			lMin: 20,
+			lMax: 90,
+		},
+		{
+			color: "orange",
+			hMin: 3,
+			hMax: 10,
+			sMin: 70,
+			sMax: 100,
+			lMin: 40,
+			lMax: 80,
+		},
+		{
+			color: "white",
+			hMin: 0,
+			hMax: 100,
+			sMin: 0,
+			sMax: 100,
+			lMin: 97,
+			lMax: 100,
+		},
+		{
+			color: "brown",
+			hMin: 3,
+			hMax: 10,
+			sMin: 20,
+			sMax: 100,
+			lMin: 10,
+			lMax: 40,
+		},
+		{
+			color: "purple",
+			hMin: 70,
+			hMax: 88,
+			sMin: 30,
+			sMax: 100,
+			lMin: 20,
+			lMax: 90,
+		},
+		{
+			color: "beige",
+			hMin: 8,
+			hMax: 15,
+			sMin: 30,
+			sMax: 90,
+			lMin: 80,
+			lMax: 100,
+		},
+		{
+			color: "navy",
+			hMin: 53,
+			hMax: 70,
+			sMin: 30,
+			sMax: 100,
+			lMin: 15,
+			lMax: 30,
+		},
+		{
+			color: "peach",
+			hMin: 0,
+			hMax: 7,
+			sMin: 50,
+			sMax: 100,
+			lMin: 70,
+			lMax: 100,
+		},
+		{
+			color: "teal",
+			hMin: 48,
+			hMax: 50,
+			sMin: 30,
+			sMax: 100,
+			lMin: 15,
+			lMax: 95,
+		},
+		{
+			color: "maroon",
+			hMin: 0,
+			hMax: 3,
+			sMin: 50,
+			sMax: 100,
+			lMin: 10,
+			lMax: 40,
+		},
+		{
+			color: "maroon",
+			hMin: 95,
+			hMax: 100,
+			sMin: 50,
+			sMax: 100,
+			lMin: 10,
+			lMax: 40,
+		},
+	];
+	colorMap.forEach((tag) => {
+		if (
+			color["h"] >= tag["hMin"] &&
+			color["h"] <= tag["hMax"] &&
+			color["s"] >= tag["sMin"] &&
+			color["s"] <= tag["sMax"] &&
+			color["l"] >= tag["lMin"] &&
+			color["l"] <= tag["lMax"]
+		) {
+			suggestedTags.push(tag["color"]);
+		}
+	});
+	return suggestedTags;
+}
+
 //for App.js
 const CreatePalette = ({ userId }) => {
 	const [palette] = useState(DEFAULT_PALETTE);
 	const [isPending, setIsPending] = useState(true);
 	const [error, setError] = useState(null);
-
-	const [tags, setTags] = useState("");
 
 	//default initial color
 	const [color1, setColor1] = useState("#" + palette.colors[0]);
@@ -32,62 +263,191 @@ const CreatePalette = ({ userId }) => {
 		handleInteraction("create_palette_open");
 	}, []);
 
-	const [taglist] = useState([
-		"red",
-		"green",
-		"blue",
-		"black",
-		"white",
-		"yellow",
-		"pink",
-		"violet",
-		"purple",
-		"orange",
-		"brown",
-		"turquoise",
-		"gray",
-		"navy",
-		"peach",
-		"teal",
-		"maroon",
-		"warm",
-		"cold",
-		"bright",
-		"neon",
-		"gold",
-		"pastel",
-		"skin",
-		"happy",
-		"kids",
-		"food",
-		"rainbow",
-		"space",
-		"earth",
-		"nature",
-		"cream",
-		"coffe",
-		"vintage",
-		"wedding",
-		"sunset",
-		"summer",
-		"automn",
-		"winter",
-		"spring",
+	const [tagList, setTagList] = useState([
+		{
+			text: "red",
+			isActive: false,
+		},
+		{
+			text: "green",
+			isActive: false,
+		},
+		{
+			text: "blue",
+			isActive: false,
+		},
+		{
+			text: "black",
+			isActive: false,
+		},
+		{
+			text: "white",
+			isActive: false,
+		},
+		{
+			text: "yellow",
+			isActive: false,
+		},
+		{
+			text: "pink",
+			isActive: false,
+		},
+		{
+			text: "violet",
+			isActive: false,
+		},
+		{
+			text: "purple",
+			isActive: false,
+		},
+		{
+			text: "orange",
+			isActive: false,
+		},
+		{
+			text: "brown",
+			isActive: false,
+		},
+		{
+			text: "turquoise",
+			isActive: false,
+		},
+		{
+			text: "grey",
+			isActive: false,
+		},
+		{
+			text: "navy",
+			isActive: false,
+		},
+		{
+			text: "beige",
+			isActive: false,
+		},
+		{
+			text: "peach",
+			isActive: false,
+		},
+		{
+			text: "teal",
+			isActive: false,
+		},
+		{
+			text: "maroon",
+			isActive: false,
+		},
+		{
+			text: "warm",
+			isActive: false,
+		},
+		{
+			text: "cold",
+			isActive: false,
+		},
+		{
+			text: "bright",
+			isActive: false,
+		},
+		{
+			text: "neon",
+			isActive: false,
+		},
+		{
+			text: "gold",
+			isActive: false,
+		},
+		{
+			text: "pastel",
+			isActive: false,
+		},
+		{
+			text: "skin",
+			isActive: false,
+		},
+		{
+			text: "happy",
+			isActive: false,
+		},
+		{
+			text: "kids",
+			isActive: false,
+		},
+		{
+			text: "food",
+			isActive: false,
+		},
+		{
+			text: "rainbow",
+			isActive: false,
+		},
+		{
+			text: "space",
+			isActive: false,
+		},
+		{
+			text: "earth",
+			isActive: false,
+		},
+		{
+			text: "ocean",
+			isActive: false,
+		},
+		{
+			text: "nature",
+			isActive: false,
+		},
+		{
+			text: "cream",
+			isActive: false,
+		},
+		{
+			text: "coffee",
+			isActive: false,
+		},
+		{
+			text: "vintage",
+			isActive: false,
+		},
+		{
+			text: "wedding",
+			isActive: false,
+		},
+		{
+			text: "sunset",
+			isActive: false,
+		},
+		{
+			text: "summer",
+			isActive: false,
+		},
+		{
+			text: "automn",
+			isActive: false,
+		},
+		{
+			text: "winter",
+			isActive: false,
+		},
+		{
+			text: "spring",
+			isActive: false,
+		},
 	]);
 
 	const handleTagClick = (e) => {
 		if (
 			e.target.classList.contains("activeTag") &&
-			+e.target.dataset.id < taglist.length
+			+e.target.dataset.id < tagList.length
 		) {
-			setTags((_tags) =>
-				_tags
-					.split(" ")
-					.filter((tag) => tag !== taglist[+e.target.dataset.id])
-					.join(" ")
-			);
+			setTagList((_tagList) => {
+				_tagList[+e.target.dataset.id].isActive = false;
+				return [..._tagList];
+			});
 		} else {
-			setTags((_tags) => _tags + " " + taglist[+e.target.dataset.id]);
+			setTagList((_tagList) => {
+				_tagList[+e.target.dataset.id].isActive = true;
+				return [..._tagList];
+			});
 		}
 	};
 
@@ -144,22 +504,36 @@ const CreatePalette = ({ userId }) => {
 		const _col4 = color4.slice(1, 7).toLowerCase();
 		const paletteId = _col1 + _col2 + _col3 + _col4;
 
-		let _tags = [
-			...new Set(
-				tags.split(" ").filter((tag) => tag.trim().match(/^[A-Za-z]{1,15}$/))
-			),
-		];
-		_tags = _tags.slice(0, Math.min(10, _tags.length));
+		let col1Tag = suggestTags(hexToRGB(_col1)).map((tagtext) =>
+			tagtext.toLowerCase()
+		);
+		let col2Tag = suggestTags(hexToRGB(_col2)).map((tagtext) =>
+			tagtext.toLowerCase()
+		);
+		let col3Tag = suggestTags(hexToRGB(_col3)).map((tagtext) =>
+			tagtext.toLowerCase()
+		);
+		let col4Tag = suggestTags(hexToRGB(_col4)).map((tagtext) =>
+			tagtext.toLowerCase()
+		);
 
+		let _tags = tagList.filter((tag) => tag.isActive).map((tag) => tag.text);
+
+		_tags = [
+			...new Set([..._tags, ...col1Tag, ...col2Tag, ...col3Tag, ...col4Tag]),
+		];
 		if (paletteId.match(/[a-f\d]{24}/)) {
 			const _palette = {
 				id: paletteId,
 				colors: [_col1, _col2, _col3, _col4],
 				tags: [..._tags],
+				col1Tag,
+				col2Tag,
+				col3Tag,
+				col4Tag,
 				likeCount: 0,
 				createdAt: timestamp(),
 				createdBy: userId,
-				likedBy: [],
 				interactionCount: 1,
 				status: "inreview",
 			};
@@ -195,6 +569,7 @@ const CreatePalette = ({ userId }) => {
 							createdPalette: firebase.firestore.FieldValue.arrayUnion(
 								_palette.id
 							),
+							lastActivityAt: timestamp(),
 						});
 
 						// Commit the batch
@@ -265,7 +640,7 @@ const CreatePalette = ({ userId }) => {
 					</div>
 					<div className="TagInput">
 						<div className="tagWrapper">
-							<TagList taglist={taglist} handleClick={handleTagClick} />
+							<TagList tagList={tagList} handleClick={handleTagClick} />
 						</div>
 						<button
 							className="btn createBtn"

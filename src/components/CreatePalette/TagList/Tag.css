@@ -8,9 +8,6 @@
 	border-color: var(--col-border-liked);
 	color: var(--col-text-liked);
 }
-.btn.roundedTag:active {
-	background-color: var(--col-border-liked);
-}
 
 .tagWrapper {
 	padding: 0rem 0.4rem;

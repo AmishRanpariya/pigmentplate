@@ -27,6 +27,7 @@ const useAuth = () => {
 				interactionCount: 1,
 				likedPalette: [],
 				createdPalette: [],
+				lastActivityAt: timestamp(),
 			}; //initial user data
 
 			//creating user User

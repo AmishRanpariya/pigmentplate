@@ -100,7 +100,7 @@
 	/* margin: 0.5rem auto; */
 	border-radius: 0.5rem;
 }
-.CreatePalette .ColorPicker .btn:hover {
+.CreatePalette .ColorPicker .createBtn:hover {
 	border-color: var(--col-text-unliked);
 }
 

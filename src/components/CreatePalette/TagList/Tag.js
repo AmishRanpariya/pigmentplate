@@ -1,22 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 
 import "./Tag.css";
-const Tag = ({ id, text, handleClick }) => {
-	const [isActive, setIsActive] = useState(false);
-	const handelIsActive = () => {
-		setIsActive((_isActive) => !_isActive);
-	};
+const Tag = ({ id, text, handleClick, active }) => {
 	return (
 		<div
 			tabIndex="0"
-			className={isActive ? "btn roundedTag activeTag" : "btn roundedTag "}
+			className={active ? "btn roundedTag activeTag" : "btn roundedTag "}
 			onClick={(e) => {
-				handelIsActive();
 				handleClick(e);
 			}}
 			onKeyDown={(e) => {
 				if (e.key === " ") {
-					handelIsActive();
 					handleClick(e);
 				}
 			}}
