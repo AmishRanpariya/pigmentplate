@@ -29,7 +29,7 @@ export const LOCALSTORAGE = {
 	// prefix_liked: "PigmentPlateLiked/",
 	// prefix_created: "PigmentPlateCreated/",
 	// prefix_userId: "PigmentPlateUID",
-	prefix_interaction: "PigmentPlate/interactionCount",
+	prefix_interaction: "PigmentPlateIC",
 
 	prefix_cached_user: "PigmentPlateUser",
 

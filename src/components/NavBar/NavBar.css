@@ -1,3 +1,17 @@
+.navContainer {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	height: 61.2px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--col-bg-body);
+	box-shadow: var(--shadow);
+	z-index: 50;
+}
+
 .NavBar {
 	display: -webkit-flex;
 	display: flex;
@@ -14,9 +28,9 @@
 	margin: auto;
 	text-align: center;
 	background-color: var(--col-bg-body);
-	box-shadow: var(--shadow);
 	z-index: 100;
 	max-height: 61.2px;
+	max-width: 1080px;
 }
 
 .NavBar .logoWrapper {
@@ -46,6 +60,7 @@
 
 .dropdownHandle {
 	position: relative;
+	z-index: 50 !important;
 }
 
 .backdrop {
@@ -56,6 +71,7 @@
 	right: 0;
 	bottom: 0;
 	background-color: #0001;
+	z-index: 49;
 }
 
 .dropdown {
@@ -74,16 +90,19 @@
 	border: var(--col-border-unliked);
 	overflow: hidden;
 	transition: all 0.2s ease-in-out;
+	z-index: 50 !important;
 }
 
 .dropdown.open {
 	right: 0;
 	transform: rotateZ(0deg);
 	transition: all 0.2s ease-in-out;
+	z-index: 50 !important;
 }
 
 .dropdown li {
 	width: 120px;
+	z-index: 1001 !important;
 }
 
 @media (min-width: 820px) {

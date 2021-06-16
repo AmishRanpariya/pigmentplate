@@ -32,13 +32,7 @@
 	width: 2.5rem;
 	margin: 0.1rem;
 }
-/* .PickerDiv .Picker {
-	z-index: 8888;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-} */
+
 .CreatePalette .ColorPicker .color-grid {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
