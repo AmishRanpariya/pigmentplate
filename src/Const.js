@@ -35,7 +35,7 @@ export const LOCALSTORAGE = {
 
 	prefix_cached_palettes: "PigmentPlateCache",
 	prefix_cached_palettes_date: "PigmentPlateCacheDate",
-	prefix_cached_lastDoc: "PigmentPlateCacheLastDoc", //for firestore cursor in pagination
+	prefix_cached_lastDoc: "PigmentPlateCachedLastDoc", //for firestore cursor in pagination
 };
 
 //in ms
