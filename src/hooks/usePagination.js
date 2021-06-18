@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { db } from "../firebase/config";
+import { db, Timestamp } from "../firebase/config";
 
 import { CACHE, LOCALSTORAGE, PAGINATE, PALETTE_COLLECTION } from "../Const";
 import handleInteraction from "../funtions/handleInteraction";
@@ -93,7 +93,9 @@ const usePagination = () => {
 				.collection(PALETTE_COLLECTION.collection_name)
 				.where("status", "==", "public")
 				.orderBy(PALETTE_COLLECTION.timeField, "desc")
-				.startAfter(lastDoc.current)
+				.startAfter(
+					new Timestamp(lastDoc.current.seconds, lastDoc.current.nanoseconds)
+				)
 				.limit(PAGINATE.subSequentFetchCount)
 				.get();
 		}
@@ -107,9 +109,7 @@ const usePagination = () => {
 					likeCount: doc.get("likeCount"),
 				});
 			});
-
-			lastDoc.current =
-				snap.docs[snap.docs.length - 1].get("createdAt").seconds; //saving last reference for next query
+			lastDoc.current = snap.docs[snap.docs.length - 1].get("createdAt"); //saving last reference for next query
 			mounted.current &&
 				callback((_palettes) => {
 					return _palettes.concat(newPalettes);

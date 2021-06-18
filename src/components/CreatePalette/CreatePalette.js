@@ -457,9 +457,13 @@ const CreatePalette = ({ userId }) => {
 		for (let j = 0; j < 4; j++) {
 			let _col = "#";
 			for (let i = 0; i < 6; i++) {
-				_col += digits[Math.floor(Math.random() * 16)];
+				_col += digits[Math.floor(Math.random() * digits.length)];
 			}
 			colors.push(_col);
+		}
+		colors.sort();
+		if (Math.random() > 0.5) {
+			colors.reverse();
 		}
 		setColor1(colors[0]);
 		setColor2(colors[1]);

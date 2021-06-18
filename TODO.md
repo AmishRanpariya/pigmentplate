@@ -1,4 +1,6 @@
-create about page
+<!-- ## first fix scroll load issue -->
+
+<!-- create about page -->
 
 trendy page
 
@@ -19,7 +21,7 @@ random page
 <!-- firestore rule update -->
 <!-- adding authentication -->
 
-admin app/page
+<!-- admin app/page -->
 
 <!-- # useHistory in detailedpalette crash -->
 
@@ -31,6 +33,6 @@ admin app/page
 
 # ppu1622565372548
 
-pwa
+<!-- pwa -->
 
 use liked palette from user doc not from localstorage to implement multi device support for signed in user

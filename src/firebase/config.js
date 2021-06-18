@@ -43,6 +43,6 @@ firebase
 const db = firebase.firestore();
 const auth = firebase.auth();
 const fa = firebase.analytics();
-
+const Timestamp = firebase.firestore.Timestamp;
 const timestamp = firebase.firestore.FieldValue.serverTimestamp;
-export { db, timestamp, firebase, auth, fa };
+export { db, timestamp, firebase, auth, fa, Timestamp };

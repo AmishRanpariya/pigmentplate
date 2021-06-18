@@ -3,7 +3,7 @@
 	left: 0;
 	right: 0;
 	top: 0;
-	height: 61.2px;
+	/* height: 61.2px; */
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -22,8 +22,8 @@
 	-webkit-align-items: center;
 	align-items: center;
 	padding: 1rem 2rem;
-	position: fixed;
-	top: 0;
+	/* position: fixed; */
+	/* top: 0; */
 	width: 100%;
 	margin: auto;
 	text-align: center;

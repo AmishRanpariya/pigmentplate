@@ -6,7 +6,7 @@ export const PALETTE_COLLECTION = {
 };
 
 export const PAGINATE = {
-	initialFetchCount: 40,
+	initialFetchCount: 30,
 	subSequentFetchCount: 10,
 };
 
