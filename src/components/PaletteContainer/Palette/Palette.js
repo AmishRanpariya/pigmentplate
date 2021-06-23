@@ -16,7 +16,7 @@ const Palette = memo((props) => {
 		JSON.parse(localStorage.getItem(LOCALSTORAGE.prefix_cached_user)).id
 	);
 
-	const [Palette, setPalette] = useState(props.palette);
+	const [PaletteData, setPaletteData] = useState(props.palette);
 
 	const isLiked = useRef(props.isLiked);
 
@@ -24,10 +24,10 @@ const Palette = memo((props) => {
 		e.preventDefault();
 		if (isLiked.current === true) {
 			isLiked.current = false;
-			handlePaletteLike(Palette.id, userId.current, -1, setPalette);
+			handlePaletteLike(PaletteData.id, userId.current, -1, setPaletteData);
 		} else {
 			isLiked.current = true;
-			handlePaletteLike(Palette.id, userId.current, 1, setPalette);
+			handlePaletteLike(PaletteData.id, userId.current, 1, setPaletteData);
 		}
 	};
 
@@ -35,30 +35,30 @@ const Palette = memo((props) => {
 		return null; //dont show this palette if Detailed palette is showing this palette there
 	}
 	return (
-		<Link className="Palette" to={"/palette/" + Palette.id}>
+		<Link className="Palette" to={"/palette/" + PaletteData.id}>
 			<motion.div
 				className="color-grid"
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
 			>
-				{Palette.colors.map((color, index) => (
+				{PaletteData.colors.map((color, index) => (
 					<div
 						key={index}
 						className="color"
 						style={{ backgroundColor: "#" + color }}
 					>
-						<CopyHex color={color} />
+						<CopyHex color={color} paletteId={PaletteData.id} />
 					</div>
 				))}
 			</motion.div>
 			<div className="metadata">
 				<LikeButton
 					isLiked={isLiked.current === true}
-					likeCount={Palette.likeCount}
+					likeCount={PaletteData.likeCount}
 					onclicked={LikeButtonClickHandler}
 				/>
-				<TimeStamp classes="timestamp" timestamp={Palette.createdAt} />
-				<div className="styling">{Palette.likeCount}</div>
+				<TimeStamp classes="timestamp" timestamp={PaletteData.createdAt} />
+				<div className="styling">{PaletteData.likeCount}</div>
 			</div>
 		</Link>
 	);

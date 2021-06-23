@@ -154,6 +154,7 @@
 		width: 90%;
 		height: 59vw;
 		gap: 1vw;
+		border-radius: 0.5rem;
 	}
 
 	.DetailedPalette .color span {
@@ -185,8 +186,9 @@
 		width: 5.5vw;
 	}
 	.DetailedPalette .metadata .btn {
-		padding: 0.5vw 3vw;
+		padding: 0.6vw 3vw;
 		margin: 0;
+		border-radius: 0.3rem;
 	}
 	.DetailedPalette .metadata .btn svg {
 		height: 2.9vw;

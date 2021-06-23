@@ -18,12 +18,12 @@ const useFetchPalette = (paletteId) => {
 			.get()
 			.then((doc) => {
 				if (doc && doc.exists) {
-					console.log("db used for palette fetched at useFetchPalette");
+					// console.log("db used for palette fetched at useFetchPalette");
 					mounted && setPalette(doc.data());
 					handleInteraction("fetched_palette", { paletteId });
 					mounted && setError(null);
 				} else {
-					console.log("palette not exit");
+					// console.log("palette not exit");
 					history.push("/"); //redirect to home page if doesn't exist
 				}
 			})

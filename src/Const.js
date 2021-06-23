@@ -5,6 +5,13 @@ export const PALETTE_COLLECTION = {
 	id: "id",
 };
 
+export const COLORS_COLLECTION = {
+	collection_name: "colors",
+	timeField: "createdAt",
+	likeCount: "likeCount",
+	id: "id",
+};
+
 export const PAGINATE = {
 	initialFetchCount: 30,
 	subSequentFetchCount: 10,

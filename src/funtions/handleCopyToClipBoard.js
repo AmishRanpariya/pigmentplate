@@ -1,7 +1,48 @@
+import { PALETTE_COLLECTION } from "../Const";
+import { db, firebase } from "../firebase/config";
 import handleInteraction from "./handleInteraction";
 
-export const handleCopyToClipBoard = (e) => {
+export const handleCopyToClipBoard = (e, paletteId) => {
 	e.preventDefault();
+
+	const colorCode = e.target.innerText.substr(1).toLowerCase();
+	// db.collection(COLORS_COLLECTION.collection_name)
+	// 	.doc(colorCode)
+	// 	.set({
+	// 		codeCopyCount: firebase.firestore.FieldValue.increment(1),
+	// 	});
+	const docRef = db
+		.collection(PALETTE_COLLECTION.collection_name)
+		.doc(paletteId);
+
+	switch (paletteId.indexOf(colorCode) / 6) {
+		case 0:
+			docRef.update({
+				interactionCount: firebase.firestore.FieldValue.increment(1),
+				col1CopyCount: firebase.firestore.FieldValue.increment(1),
+			});
+			break;
+		case 1:
+			docRef.update({
+				interactionCount: firebase.firestore.FieldValue.increment(1),
+				col2CopyCount: firebase.firestore.FieldValue.increment(1),
+			});
+			break;
+		case 2:
+			docRef.update({
+				interactionCount: firebase.firestore.FieldValue.increment(1),
+				col3CopyCount: firebase.firestore.FieldValue.increment(1),
+			});
+			break;
+		case 3:
+			docRef.update({
+				interactionCount: firebase.firestore.FieldValue.increment(1),
+				col4CopyCount: firebase.firestore.FieldValue.increment(1),
+			});
+			break;
+		default:
+			console.log("unexpected color hex copied");
+	}
 
 	//to copy HEXcode on clipboard by clicking this
 	let temp = document.createElement("input");
@@ -11,7 +52,6 @@ export const handleCopyToClipBoard = (e) => {
 	document.execCommand("copy");
 	temp.remove();
 
-	console.log("colorHEX copied");
 	handleInteraction("color_hex_copied", { color: e.target.innerText });
 
 	const emojis = [

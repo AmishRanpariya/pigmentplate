@@ -17,7 +17,7 @@ const MinimalPalette = ({ palette }) => {
 						className="color"
 						style={{ backgroundColor: "#" + color }}
 					>
-						<CopyHex color={color} />
+						<CopyHex color={color} paletteId={Palette.id} />
 					</div>
 				))}
 			</div>

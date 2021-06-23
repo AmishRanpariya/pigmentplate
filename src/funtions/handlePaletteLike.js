@@ -37,7 +37,7 @@ const handlePaletteLike = (
 		batch
 			.commit()
 			.then(() => {
-				console.log("db used for palette liked");
+				// console.log("db used for palette liked");
 				getPalette(paletteId);
 				const _user = JSON.parse(
 					localStorage.getItem(LOCALSTORAGE.prefix_cached_user)
@@ -50,7 +50,6 @@ const handlePaletteLike = (
 				);
 			})
 			.catch((err) => {
-				console.log(err);
 				console.log("likePalette catch", err);
 			});
 	};
@@ -79,7 +78,7 @@ const handlePaletteLike = (
 		batch
 			.commit()
 			.then(() => {
-				console.log("db used for palette unliked");
+				// console.log("db used for palette unliked");
 				getPalette(paletteId);
 				const _user = JSON.parse(
 					localStorage.getItem(LOCALSTORAGE.prefix_cached_user)
@@ -108,7 +107,7 @@ const handlePaletteLike = (
 			.doc(paletteId)
 			.get()
 			.then((snap) => {
-				console.log("db used for fetching palette");
+				// console.log("db used for fetching palette");
 				if (snap && snap.exists) {
 					callback(snap.data());
 					palette = snap.data();

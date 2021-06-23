@@ -16,9 +16,8 @@ import handleInteraction from "../../../funtions/handleInteraction";
 
 //animation
 const container = {
-	hidden: { scale: 0, y: "20vh" },
+	hidden: { y: "20vh" },
 	visible: {
-		scale: 1,
 		y: 0,
 		transition: { delayChildren: 0, staggerChildren: 0.1 },
 	},
@@ -138,7 +137,7 @@ const DetailedPalette = () => {
 								className="color"
 								style={{ backgroundColor: "#" + color }}
 								variants={item}
-								onClick={handleCopyToClipBoard}
+								onClick={(e) => handleCopyToClipBoard(e, params.id)}
 							>
 								<span>{"#" + color.toUpperCase()}</span>
 							</motion.div>

@@ -35,13 +35,18 @@ const useAuth = () => {
 				.doc(userId)
 				.set(userData)
 				.then(() => {
-					console.log("db used for user Creation");
+					// console.log("db used for user Creation");
 					setUserCache({
 						...userData,
 						createdAt: { seconds: Date.now() / 1000 },
+						lastActivityAt: { seconds: Date.now() / 1000 },
 					});
 					mounted &&
-						setUser({ ...userData, createdAt: { seconds: Date.now() / 1000 } });
+						setUser({
+							...userData,
+							createdAt: { seconds: Date.now() / 1000 },
+							lastActivityAt: { seconds: Date.now() / 1000 },
+						});
 				})
 				.catch((err) => {
 					console.log("createUser catch", err);
@@ -54,12 +59,12 @@ const useAuth = () => {
 				.doc(userId)
 				.get()
 				.then((snap) => {
-					console.log("db used for user fetch");
+					// console.log("db used for user fetch");
 					if (snap && snap.exists) {
 						setUserCache(snap.data());
 						mounted && setUser(snap.data());
 					} else if (snap && !snap.exists) {
-						console.log("user depricated so new creating");
+						// console.log("user depricated so new creating");
 						//means can not find user in firestore with given userId
 						//means userId is depricated
 						// so create new user
@@ -68,7 +73,7 @@ const useAuth = () => {
 					}
 				})
 				.catch((err) => {
-					console.log("getUser catch", err, err.message);
+					console.log("getUser catch", err);
 					mounted && setError(err.message);
 				});
 		};
@@ -77,7 +82,7 @@ const useAuth = () => {
 			auth
 				.signInAnonymously()
 				.then(() => {
-					console.log("signed in anon");
+					// console.log("signed in anon");
 				})
 				.catch((err) => {
 					console.log("sign in error", err);
@@ -88,7 +93,7 @@ const useAuth = () => {
 		const listenAuthStateChanges = () => {
 			auth.onAuthStateChanged((_userAuth) => {
 				if (_userAuth) {
-					console.log("logged in");
+					// console.log("logged in");
 					handleInteraction("user_signed_in");
 					// get that userData
 					// if not exist we will create it in getUser
@@ -96,7 +101,7 @@ const useAuth = () => {
 					getUser(_userAuth.uid);
 					setUserAuth(_userAuth);
 				} else {
-					console.log("not signed in till now");
+					// console.log("not signed in till now");
 				}
 			});
 		};

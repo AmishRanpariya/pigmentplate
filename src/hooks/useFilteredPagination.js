@@ -37,7 +37,7 @@ const useFilteredPagination = (tagname) => {
 				.get();
 		}
 
-		console.log("db used for page fetch");
+		// console.log("db used for page fetch");
 		if (snap && !snap.empty) {
 			snap.docs.forEach((doc) => {
 				newPalettes.push({

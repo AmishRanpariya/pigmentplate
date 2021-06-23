@@ -548,7 +548,7 @@ const CreatePalette = ({ userId }) => {
 				.then((snap) => {
 					if (snap && snap.exists) {
 						//already exist
-						console.log("already exist");
+						// console.log("already exist");
 						_history.push("/palette/" + _palette.id);
 						handleInteraction("error_dupilicate_palette_create", {
 							paletteId,
@@ -614,7 +614,7 @@ const CreatePalette = ({ userId }) => {
 						err: err.message,
 					});
 					//couldnt fetch data due to network error but may be data exist
-					console.log("error catched at checking for createPalette");
+					// console.log("error catched at checking for createPalette");
 				});
 		} else {
 			handleInteraction("warn_invalidHEX_palette_created", {

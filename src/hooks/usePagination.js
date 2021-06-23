@@ -27,7 +27,7 @@ const usePagination = () => {
 				const data = JSON.parse(
 					localStorage.getItem(LOCALSTORAGE.prefix_cached_palettes)
 				);
-				console.log("cache data used");
+				// console.log("cache data used");
 				mounted.current && callback(data);
 				lastDoc.current = JSON.parse(
 					localStorage.getItem(LOCALSTORAGE.prefix_cached_lastDoc)
@@ -57,7 +57,7 @@ const usePagination = () => {
 				localStorage.getItem(LOCALSTORAGE.prefix_cached_palettes)
 			);
 
-			console.log("data cached");
+			// console.log("data cached");
 			localStorage.setItem(
 				LOCALSTORAGE.prefix_cached_palettes,
 				JSON.stringify(oldData.concat(data))
@@ -99,7 +99,7 @@ const usePagination = () => {
 				.limit(PAGINATE.subSequentFetchCount)
 				.get();
 		}
-		console.log("db used for page fetch");
+		// console.log("db used for page fetch");
 		if (snap && !snap.empty) {
 			snap.docs.forEach((doc) => {
 				newPalettes.push({
