@@ -5,36 +5,42 @@
 	background-color: var(--col-bg-body);
 	box-shadow: var(--shadow);
 	z-index: 555;
+	padding-bottom: 0.5rem;
+	border-radius: 0.7rem 0.7rem 0 0;
 }
-.Footer .btn {
-	border: none;
 
+.Footer .btn-footer {
+	position: relative;
+	cursor: pointer;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: none;
+	border-radius: 1000px;
 	background-color: var(--col-bg-body);
 	padding: 0.7rem;
-	position: relative;
 	width: min-content;
+	color: #5e5e5e;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 	transition: all 0.2s ease-in-out;
-	color: #303030;
-}
-.Footer .btn svg {
-	height: 1.5rem;
 }
 
-.Footer .active.btn {
-	transform: translate(0, -0.4rem) scale(1.2);
+.Footer .btn-footer svg {
+	height: 1.4rem;
+}
+
+.Footer .active.btn-footer {
+	transform: translate(0, -0.6rem) scale(1.2);
 	transition: all 0.2s ease-in-out;
 	border-radius: 1000px;
 	background-color: #e0e0e8;
-	/* box-shadow: var(--shadow); */
 	color: rgb(0, 0, 0);
-}
-
-.Footer .active.btn::before {
-	content: "";
-	position: absolute;
-	height: 3rem;
-	width: 3rem;
-	border-radius: 100%;
 }
 
 .Footer ul {

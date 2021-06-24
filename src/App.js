@@ -95,11 +95,11 @@ const App = () => {
 							<Redirect to="/" />
 						</Route>
 					</Switch>
-					<Footer />
 				</div>
 			) : (
 				<div className="wrapper">Internet Connection Required</div>
 			)}
+			<Footer />
 		</>
 	);
 };

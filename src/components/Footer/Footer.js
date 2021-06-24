@@ -7,7 +7,7 @@ const Footer = () => {
 		<div className="Footer hideOnNonMobile">
 			<ul>
 				<li>
-					<NavLink to="/create" className="btn" exact>
+					<NavLink to="/create" className="btn-footer " exact>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							className="h-6 w-6"
@@ -25,7 +25,7 @@ const Footer = () => {
 					</NavLink>
 				</li>
 				<li>
-					<NavLink to="/" className="btn" exact>
+					<NavLink to="/" className="btn-footer " exact>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							className="h-6 w-6"
@@ -44,7 +44,7 @@ const Footer = () => {
 				</li>
 
 				<li>
-					<NavLink to="/likes" className="btn" exact>
+					<NavLink to="/likes" className="btn-footer " exact>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							className="h-6 w-6"

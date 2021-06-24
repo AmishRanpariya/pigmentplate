@@ -10,6 +10,7 @@
 	background-color: var(--col-bg-body);
 	box-shadow: var(--shadow);
 	z-index: 50;
+	border-radius: 0 0 0.7rem 0.7rem;
 }
 
 .NavBar {
@@ -28,6 +29,7 @@
 	margin: auto;
 	text-align: center;
 	background-color: var(--col-bg-body);
+	border-radius: 0 0 0.7rem 0.7rem;
 	z-index: 100;
 	max-height: 61.2px;
 	max-width: 1080px;
