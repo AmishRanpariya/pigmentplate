@@ -1,0 +1,61 @@
+.Footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	background-color: var(--col-bg-body);
+	box-shadow: var(--shadow);
+	z-index: 555;
+}
+.Footer .btn {
+	border: none;
+
+	background-color: var(--col-bg-body);
+	padding: 0.7rem;
+	position: relative;
+	width: min-content;
+	transition: all 0.2s ease-in-out;
+	color: #303030;
+}
+.Footer .btn svg {
+	height: 1.5rem;
+}
+
+.Footer .active.btn {
+	transform: translate(0, -0.4rem) scale(1.2);
+	transition: all 0.2s ease-in-out;
+	border-radius: 1000px;
+	background-color: #e0e0e8;
+	/* box-shadow: var(--shadow); */
+	color: rgb(0, 0, 0);
+}
+
+.Footer .active.btn::before {
+	content: "";
+	position: absolute;
+	height: 3rem;
+	width: 3rem;
+	border-radius: 100%;
+}
+
+.Footer ul {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	gap: 0.2rem;
+}
+.Footer li {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.Footer.hideOnNonMobile {
+	display: none;
+}
+
+@media (max-width: 600px) {
+	.Footer.hideOnNonMobile {
+		display: block;
+	}
+}

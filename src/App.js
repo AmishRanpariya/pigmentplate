@@ -5,6 +5,7 @@ import { fa } from "./firebase/config";
 import "./App.css";
 import { PALETTE_COLLECTION } from "./Const";
 import NavBar from "./components/NavBar/NavBar";
+import Footer from "./components/Footer/Footer";
 import Home from "./components/Home/Home";
 import DetailedPalette from "./components/PaletteContainer/DetailedPalette/DetailedPalette";
 import SortedPalettes from "./components/CustomPalettes/SortedPalettes";
@@ -94,6 +95,7 @@ const App = () => {
 							<Redirect to="/" />
 						</Route>
 					</Switch>
+					<Footer />
 				</div>
 			) : (
 				<div className="wrapper">Internet Connection Required</div>

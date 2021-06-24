@@ -168,7 +168,7 @@ svg {
 	justify-content: center;
 	-webkit-align-items: center;
 	align-items: center;
-
+	padding-bottom: 4rem;
 	/* max-height: 100%; */
 	/* overflow: auto; */
 }

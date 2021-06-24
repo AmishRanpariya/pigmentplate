@@ -5,6 +5,7 @@
 	-webkit-align-self: center;
 	align-self: center;
 	/* height: 600px; */
+	margin-bottom: 9rem;
 }
 
 .CreatePalette .ColorPicker {

@@ -54,7 +54,6 @@ const NavBar = () => {
 							Collection
 						</NavLink>
 					</li>
-
 					<li className="hideOnSmall ">
 						<NavLink to="/create" className="btn">
 							<svg
