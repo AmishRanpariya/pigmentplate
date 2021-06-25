@@ -1,0 +1,5 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "app.web.pigmentplate.twa",
+                   "sha256_cert_fingerprints": ["53:4D:BF:2D:AE:BB:7F:AE:59:A8:65:A1:15:CA:92:AA:34:FA:3C:8D:AC:27:88:46:86:50:D7:16:C3:8C:FA:59"] }
+    }]
