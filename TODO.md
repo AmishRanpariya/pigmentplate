@@ -31,10 +31,12 @@ random page
 
 <!-- emoji after copy tool tip -->
 
-# ppu1622565372548
+<!-- # ppu1622565372548 -->
 
 <!-- pwa -->
 
 use liked palette from user doc not from localstorage to implement multi device support for signed in user
 
-when user log in and like dislike palette or create palette write the time in database as well so its easy to delete non interative users
+<!-- when user log in and like dislike palette or create palette write the time in database as well so its easy to delete non interative users -->
+
+create chrome extension
