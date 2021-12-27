@@ -1,70 +1,93 @@
-# Getting Started with Create React App
+<p align="center" > 
+<img width="150px" src="./img/manifest-icon-512.png">
+</p>
+<a align="center" >
+<h1>
+Pigment Plate Web App
+</h1>
+<p>
+Personal project, Color Inspiration App
+</p>
+</a>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+  <img src="./img/shotsnapp-1624516445.829.png">
 
-## Available Scripts
+## Table of contents
 
-In the project directory, you can run:
+- [Table of contents](#table-of-contents)
+- [Overview](#overview)
+  - [Screenshot](#screenshot)
+- [Palette Download Sample](#palette-download-sample)
+- [Social Post Download Sample](#social-post-download-sample)
+  - [Links](#links)
+  - [Built with](#built-with)
+- [Author](#author)
 
-### `npm start`
+## Overview
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+🎨 Pigment Plate is a community generated, open collection of color palettes.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+I tried to give people **an environment to share color schemes** that others may use. Users can surf the palettes and inspire themselves with diverse and unique, community-generated color palettes.
 
-### `npm test`
+My goal with this project was to create a **minimal and responsive UI** with a **powerful expandable backend**. I used many technologies like **React, Redux, Firebase, PWA**; and learned so many new things and problem-solving.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+If you have beautiful palette ideas, contribute to pigmentplate website - **[@pigmentplate]("https://pigmentplate.web.app/")**.
 
-### `npm run build`
+Visit **[pigmentplate]("https://pigmentplate.web.app/")** for such palettes.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Screenshot
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<a href="https://pigmentplate.web.app/" target="_blank">
+  <img width="350px" src="./img/photo_2021-06-23_18-01-38.jpg">
+  <img width="350px" src="./img/photo_2021-06-23_18-01-37.jpg">
+  <img width="350px" src="./img/photo_2021-06-23_18-01-32.jpg">
+  <img width="350px" src="./img/create.jpg">
+   <img width="350px" src="./img/about.jpg">
+</a>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+<a href="https://pigmentplate.web.app/" target="_blank">
+  <img src="./img/Screenshot%20(131).png">
+  <img src="./img/shotsnapp-1624516445.829.png">
+  <img src="./img/shotsnapp-1624516802.142.png">
+  <img src="./img/shotsnapp-1624516659.139.png">
+</a>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+---
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Palette Download Sample
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+<a href="https://pigmentplate.web.app/" target="_blank">
+  <img  width="600px" src="./img/PigmentPlate_042a38f7f5ebb32442760933.png">
+</a>
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+---
 
-## Learn More
+## Social Post Download Sample
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<a href="https://pigmentplate.web.app/" target="_blank">
+  <img width="350px" src="./img/PigmentPlatePost_f01159dff8fe82cde5003458.png">
+  <img width="350px" src="./img/iPhone%2011%20Pro%20Max%20-%203post.png">
+</a>
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+### Links
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Code URL : [https://github.com/AmishRanpariya/pigmentplate](https://github.com/AmishRanpariya/pigmentplate)
+- Live Site URL : [https://pigmentplate.web.app/](https://pigmentplate.web.app/)
 
-### Analyzing the Bundle Size
+### Built with
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Semantic HTML5 markup
+- CSS Grid & Flex
+- Firebase - Realtime Database & Authentication
+- React - JS library
+- PWA
 
-### Making a Progressive Web App
+## Author
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Website - [@pigmentplate](https://pigmentplate.web.app/)
+- Github - [@amishranpariya](https://github.com/AmishRanpariya)
+- LinkedIn - [@amishranpariya](https://www.linkedin.com/in/amish-ranpariya-753662156/)
